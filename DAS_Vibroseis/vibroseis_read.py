@@ -34,17 +34,21 @@ def main():
 
     t_ax = np.arange(1, len(traces[0]) + 1) / fs
 
-    trace1 = traces[0] / np.max(traces[0])
-    trace2 = traces[100] / np.max(traces[100])
-    trace3 = traces[200] / np.max(traces[200])
+    trace1 = signal.resample(traces[0], 6000)
+    trace2 = signal.resample(traces[100], 6000)
+    trace3 = signal.resample(traces[200], 6000)
 
     trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
     trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
     trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
 
-    trace1_fil = trace1_fil / np.max(trace1_fil)
-    trace2_fil = trace2_fil / np.max(trace2_fil)
-    trace3_fil = trace3_fil / np.max(trace3_fil)
+    trace1 = trace1 / np.max(np.abs(trace1))
+    trace2 = trace2 / np.max(np.abs(trace2))
+    trace3 = trace3 / np.max(np.abs(trace3))
+
+    trace1_fil = trace1_fil / np.max(np.abs(trace1_fil))
+    trace2_fil = trace2_fil / np.max(np.abs(trace2_fil))
+    trace3_fil = trace3_fil / np.max(np.abs(trace3_fil))
 
     plt.figure()
     plt.subplot(311)
@@ -91,7 +95,7 @@ def main():
     plt.savefig('Imgs/TrazasDAS_fil.png')
 
     plt.clf()
-    line_st, = plt.plot(signal.resample(trace1, 6000), label='DAS')
+    line_st, = plt.plot(trace1, label='DAS')
     line_das, = plt.plot(st_trace, label='STEAD')
     plt.grid(True)
     plt.xlabel('Muestras [-]')
@@ -108,7 +112,7 @@ def main():
     plt.ylabel('Strain [-]')
     plt.title('Traza STEAD y traza DAS Vibroseis')
     plt.subplot(212)
-    plt.plot(signal.resample(trace1, 6000))
+    plt.plot(trace1)
     plt.grid(True)
     plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
