@@ -66,7 +66,7 @@ def main():
     plt.xlabel('Tiempo [s]')
 
     plt.subplot(313)
-    plt.plot(t_ax, trace2)
+    plt.plot(t_ax, trace3)
     plt.grid(True)
     plt.ylabel('Strain [-]')
     plt.xlabel('Tiempo [s]')
