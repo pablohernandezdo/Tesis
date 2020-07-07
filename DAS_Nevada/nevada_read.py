@@ -32,8 +32,6 @@ def main():
 
     t_ax = np.arange(1, len(traces[0]) + 1) / fs
 
-    print(len(traces), fs)
-
     trace1 = traces[0] / np.max(traces[0])
     trace2 = traces[100] / np.max(traces[100])
     trace3 = traces[200] / np.max(traces[200])
@@ -46,7 +44,8 @@ def main():
     trace2_fil = trace2_fil / np.max(trace2_fil)
     trace3_fil = trace3_fil / np.max(trace3_fil)
 
-
+    print(traces.shape)
+    
     plt.figure()
     plt.subplot(311)
     plt.plot(t_ax, trace1)
@@ -95,7 +94,7 @@ def main():
     line_st, = plt.plot(signal.resample(trace1, 6000), label='DAS')
     line_das, = plt.plot(st_trace, label='STEAD')
     plt.grid(True)
-    plt.xlabel('Muestras [s]')
+    plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
     plt.title('Traza STEAD y traza DAS Nevada')
     plt.legend(handles=[line_st, line_das], loc='upper left')
@@ -105,13 +104,13 @@ def main():
     plt.subplot(211)
     plt.plot(st_trace)
     plt.grid(True)
-    plt.xlabel('Muestras [s]')
+    plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
     plt.title('Traza STEAD y traza DAS Nevada')
     plt.subplot(212)
     plt.plot(signal.resample(trace1_fil, 6000))
     plt.grid(True)
-    plt.xlabel('Muestras [s]')
+    plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
     plt.savefig('Imgs/STEADNevada1.png')
 
