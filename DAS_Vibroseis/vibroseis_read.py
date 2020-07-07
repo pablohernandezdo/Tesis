@@ -46,9 +46,9 @@ def main():
     trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
     trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
 
-    trace1_resamp = trace1 / np.max(np.abs(trace1_resamp))
-    trace2_resamp = trace2 / np.max(np.abs(trace2_resamp))
-    trace3_resamp = trace3 / np.max(np.abs(trace3_resamp))
+    trace1_resamp = trace1_resamp / np.max(np.abs(trace1_resamp))
+    trace2_resamp = trace2_resamp / np.max(np.abs(trace2_resamp))
+    trace3_resamp = trace3_resamp / np.max(np.abs(trace3_resamp))
 
     trace1_fil = trace1_fil / np.max(np.abs(trace1_fil))
     trace2_fil = trace2_fil / np.max(np.abs(trace2_fil))
