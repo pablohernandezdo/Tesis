@@ -30,6 +30,8 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
+    t_ax = np.arange(1, len(traces[0]) + 1) / fs
+
     trace1 = traces[0]
     trace2 = traces[100]
     trace3 = traces[200]
@@ -38,9 +40,9 @@ def main():
     trace2_resamp = signal.resample(traces[100], 6000)
     trace3_resamp = signal.resample(traces[200], 6000)
 
-    trace1_fil = butter_bandpass_filter(trace1_resamp, 0.1, 10, fs, order=3)
-    trace2_fil = butter_bandpass_filter(trace2_resamp, 0.1, 10, fs, order=3)
-    trace3_fil = butter_bandpass_filter(trace3_resamp, 0.1, 10, fs, order=3)
+    trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
+    trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
+    trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
 
     trace1_resamp = trace1 / np.max(np.abs(trace1_resamp))
     trace2_resamp = trace2 / np.max(np.abs(trace2_resamp))
@@ -49,8 +51,6 @@ def main():
     trace1_fil = trace1_fil / np.max(np.abs(trace1_fil))
     trace2_fil = trace2_fil / np.max(np.abs(trace2_fil))
     trace3_fil = trace3_fil / np.max(np.abs(trace3_fil))
-
-    t_ax = np.arange(1, len(traces[0]) + 1) / fs
 
     plt.figure()
     plt.subplot(311)
