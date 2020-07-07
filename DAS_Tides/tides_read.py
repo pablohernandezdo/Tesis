@@ -21,7 +21,6 @@ def main():
     file = '../Data_Tides/CSULB_T13_EarthTide_earthtide_mean_360_519.mat'
 
     with h5py.File(file, 'r') as f:
-        print(f.keys())
         data = f['clipdata'][()]
         fs = 1000
 
