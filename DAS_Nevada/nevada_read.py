@@ -44,8 +44,6 @@ def main():
     trace2_fil = trace2_fil / np.max(trace2_fil)
     trace3_fil = trace3_fil / np.max(trace3_fil)
 
-    print(traces.shape)
-    
     plt.figure()
     plt.subplot(311)
     plt.plot(t_ax, trace1)

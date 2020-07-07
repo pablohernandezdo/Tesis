@@ -30,6 +30,7 @@ def main():
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
 
     t_ax = np.arange(1, len(traces[0]) + 1) / fs
 
