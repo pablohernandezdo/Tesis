@@ -32,20 +32,21 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    t_ax = np.arange(1, len(traces[0]) + 1) / fs
+    # t_ax = np.arange(1, len(traces[0]) + 1) / fs
+    #
+    # trace1 = traces[0] / np.max(traces[0])
+    # trace2 = traces[100] / np.max(traces[100])
+    # trace3 = traces[200] / np.max(traces[200])
+    #
+    # trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
+    # trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
+    # trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
+    #
+    # trace1_fil = trace1_fil / np.max(trace1_fil)
+    # trace2_fil = trace2_fil / np.max(trace2_fil)
+    # trace3_fil = trace3_fil / np.max(trace3_fil)
 
-    trace1 = traces[0] / np.max(traces[0])
-    trace2 = traces[100] / np.max(traces[100])
-    trace3 = traces[200] / np.max(traces[200])
-
-    trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
-    trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
-    trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
-
-    trace1_fil = trace1_fil / np.max(trace1_fil)
-    trace2_fil = trace2_fil / np.max(trace2_fil)
-    trace3_fil = trace3_fil / np.max(trace3_fil)
-
+    print(traces.shape)
 
 def butter_bandpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
