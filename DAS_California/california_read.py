@@ -25,7 +25,7 @@ def main():
     data = f['singdecmatrix']
     fs = 1000
 
-    # 196 trazas de 953432 muestras
+    # 196 trazas de 953432 muestras (139 ?)
 
     traces = data.transpose()
 
@@ -33,11 +33,11 @@ def main():
 
     trace1 = traces[0]
     trace2 = traces[75]
-    trace3 = traces[150]
+    trace3 = traces[100]
 
     trace1_resamp = signal.resample(traces[0], 6000)
     trace2_resamp = signal.resample(traces[75], 6000)
-    trace3_resamp = signal.resample(traces[150], 6000)
+    trace3_resamp = signal.resample(traces[100], 6000)
 
     trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
     trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
