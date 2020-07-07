@@ -50,7 +50,7 @@ def main():
     plt.grid(True)
     plt.ylabel('Strain [-]')
     plt.xlabel('Tiempo [s]')
-    plt.title('Trazas DAS datos Nevada')
+    plt.title('Trazas DAS datos Hydraulic')
 
     plt.subplot(312)
     plt.plot(t_ax, trace2)
