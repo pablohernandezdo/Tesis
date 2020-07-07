@@ -46,8 +46,6 @@ def main():
     trace2_fil = trace2_fil / np.max(trace2_fil)
     trace3_fil = trace3_fil / np.max(trace3_fil)
 
-    print(traces.shape)
-
     plt.figure()
     plt.subplot(311)
     plt.plot(t_ax, trace1)
@@ -110,7 +108,7 @@ def main():
     plt.ylabel('Strain [-]')
     plt.title('Traza STEAD y traza DAS Vibroseis')
     plt.subplot(212)
-    plt.plot(signal.resample(trace1_fil, 6000))
+    plt.plot(signal.resample(trace1, 6000))
     plt.grid(True)
     plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
