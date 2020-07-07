@@ -79,7 +79,7 @@ def main():
     plt.grid(True)
     plt.ylabel('Strain [-]')
     plt.xlabel('Tiempo [s]')
-    plt.title('Trazas DAS datos Vibroseis filtrados 1 - 10 Hz')
+    plt.title('Trazas DAS datos California filtrados 1 - 10 Hz')
 
     plt.subplot(312)
     plt.plot(t_ax, trace2_fil)
@@ -101,9 +101,9 @@ def main():
     plt.grid(True)
     plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Vibroseis')
+    plt.title('Traza STEAD y traza DAS California')
     plt.legend(handles=[line_st, line_das], loc='upper left')
-    plt.savefig('Imgs/STEADVibroseis.png')
+    plt.savefig('Imgs/STEADCalifornia.png')
 
     plt.clf()
     plt.subplot(211)
@@ -111,13 +111,13 @@ def main():
     plt.grid(True)
     plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Vibroseis')
+    plt.title('Traza STEAD y traza DAS California')
     plt.subplot(212)
     plt.plot(trace1_resamp)
     plt.grid(True)
     plt.xlabel('Muestras [-]')
     plt.ylabel('Strain [-]')
-    plt.savefig('Imgs/STEADVibroseis1.png')
+    plt.savefig('Imgs/STEADCalifornia1.png')
 
 
 def butter_bandpass(lowcut, highcut, fs, order=5):
