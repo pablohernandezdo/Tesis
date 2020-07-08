@@ -92,7 +92,7 @@ def main():
 
                     outputs = net(inputs)
                     tb.add_scalar('Output', outputs[0].item(), loss_id)
-                    loss = criterion(outputs, labels)
+                    loss = criterion(outputs, labels.float())
                     loss.backward()
                     optimizer.step()
 
