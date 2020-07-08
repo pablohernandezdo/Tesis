@@ -27,6 +27,7 @@ def main():
     traces = data[:, :6000]
 
     t_ax = np.arange(1, len(traces[0]) + 1) / fs
+    t_ax = np.squeeze(t_ax)
 
     trace1 = traces[0]
     trace2 = traces[450]
@@ -43,9 +44,6 @@ def main():
     trace1_fil = trace1_fil / np.max(np.abs(trace1_fil))
     trace2_fil = trace2_fil / np.max(np.abs(trace2_fil))
     trace3_fil = trace3_fil / np.max(np.abs(trace3_fil))
-
-    print(f't_ax: {t_ax.shape}'
-          f'trace1: {trace1.shape}')
 
     plt.figure()
     plt.subplot(311)
