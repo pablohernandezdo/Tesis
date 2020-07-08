@@ -4,8 +4,8 @@ mkdir -p ../logs/XXL_train
 mkdir -p ../logs/XXL_eval
 mkdir -p ../models
 
-trn="../Train_data.hdf5"
-tst="../Test_data.hdf5"
+trn="Train_data.hdf5"
+tst="Test_data.hdf5"
 
 # lr = 0.000001, bs = 32, Classifier_XXL
 echo "Starting training, lr = 0.000001, epochs = 20, batch_size = 32"

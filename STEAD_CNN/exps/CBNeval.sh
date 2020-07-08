@@ -5,8 +5,8 @@
 mkdir -p ../logs/CBN_eval
 mkdir -p ../models
 
-trn="../Train_data.hdf5"
-tst="../Test_data.hdf5"
+trn="Train_data.hdf5"
+tst="Test_data.hdf5"
 
 # Classifier CBN
 echo "Starting evaluation #1"
