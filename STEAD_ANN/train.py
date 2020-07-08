@@ -111,63 +111,14 @@ def main():
 
     # Save model
     torch.save(net.state_dict(), '../models/' + args.model_name + '.pth')
-    training_time = time.time()
 
-    # Evaluate model on test dataset
-    net.eval()
-
-    # True/False Positives/Negatives
-    correct = 0
-    total = 0
-    tp, fp, tn, fn = 0, 0, 0, 0
-
-    with torch.no_grad():
-        for data in testloader:
-            traces, labels = data[0].to(device), data[1].to(device)
-            outputs = net(traces)
-            predicted = torch.round(outputs.data)
-            total += labels.size(0)
-
-            for i, pred in enumerate(predicted):
-                if pred:
-                    if pred == labels[i]:
-                        tp += 1
-                    else:
-                        fp += 1
-                else:
-                    if pred == labels[i]:
-                        tn += 1
-                    else:
-                        fn += 1
-
-            correct += (predicted == labels).sum().item()
-
-        precision = tp / (tp + fp)
-        recall = tp / (tp + fn)
-        fscore = 2 * (precision * recall) / (precision + recall)
-
-    # Measure training, evaluation and execution times
+    # Measure training, and execution times
     end_tm = time.time()
 
-    tr_t = training_time - start_time
-    ev_t = end_tm - training_time
-    ex_t = end_tm - start_time
+    # Training time
+    tr_t = end_tm - start_time
 
-    print(f'\nTraining time: {format_timespan(tr_t)}\n'
-          f'Evaluation time: {format_timespan(ev_t)}\n'
-          f'Execution time: {format_timespan(ex_t)}\n\n'
-          f'Evaluation results:\n'
-          f'correct: {correct}, total: {total}\n'
-          f'True positives: {tp}\n\n'
-          f'False positives: {fp}\n'
-          f'True negatives: {tn}\n'
-          f'False negatives: {fn}\n\n'
-          f'Evaluation metrics:\n\n'
-          f'Precision: {precision:5.2f}\n'
-          f'Recall: {recall:5.2f}\n'
-          f'F-score: {fscore:5.2f}\n')
-
-    print('Accuracy of the network on the test set: %d %%' % (100 * correct / total))
+    print(f'Training time: {format_timespan(tr_t)}')
 
 
 if __name__ == "__main__":

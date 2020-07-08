@@ -66,7 +66,7 @@ def main():
             for data in trainloader:
                 traces, labels = data[0].to(device), data[1].to(device)
                 outputs = net(traces)
-                predicted = torch.round(outputs.data)
+                predicted = torch.round(outputs)
                 total += labels.size(0)
 
                 for i, pred in enumerate(predicted):
@@ -90,14 +90,15 @@ def main():
     fscore = 2 * (precision * recall) / (precision + recall)
 
     eval_1 = time.time()
+    ev_1 = eval_1 - start_time
 
-    print(f'Training evaluation time: {eval_1 - start_time}\n'
-          f'Evaluation results: \n'
+    print(f'Training Evaluation results: \n'
           f'correct: {correct}, total: {total}\n'
-          f'True positives: {tp}\n'
+          f'True positives: {tp}\n\n'
           f'False positives: {fp}\n'
           f'True negatives: {tn}\n'
           f'False negatives: {fn}\n\n'
+          f'Evaluation metrics:\n\n'
           f'Precision: {precision:5.3f}\n'
           f'Recall: {recall:5.3f}\n'
           f'F-score: {fscore:5.3f}\n')
@@ -116,7 +117,7 @@ def main():
             for data in testloader:
                 traces, labels = data[0].to(device), data[1].to(device)
                 outputs = net(traces)
-                predicted = torch.round(outputs.data)
+                predicted = torch.round(outputs)
                 total += labels.size(0)
 
                 for i, pred in enumerate(predicted):
@@ -139,16 +140,24 @@ def main():
     recall = tp / (tp + fn)
     fscore = 2 * (precision * recall) / (precision + recall)
 
-    print(f'Test evaluation time: {time.time() - eval_1}\n'
-          f'Evaluation results: \n'
+    eval_2 = time.time()
+    ev_2 = eval_2 - eval_1
+    ev_t = eval_2 - start_time
+
+    print(f'Test Evaluation results: \n'
           f'correct: {correct}, total: {total}\n'
-          f'True positives: {tp}\n'
+          f'True positives: {tp}\n\n'
           f'False positives: {fp}\n'
           f'True negatives: {tn}\n'
           f'False negatives: {fn}\n\n'
+          f'Evaluation metrics:\n\n'
           f'Precision: {precision:5.3f}\n'
           f'Recall: {recall:5.3f}\n'
-          f'F-score: {fscore:5.3f}\n')
+          f'F-score: {fscore:5.3f}\n\n')
+
+    print(f'Training evaluation time: {format_timespan(ev_1)}\n'
+          f'Test evaluation time: {format_timespan(ev_2)}\n'
+          f'Total execution time: {format_timespan(ev_t)}\n\n')
 
     print('Accuracy of the network on the test set: %d %%' % (100 * correct / total))
 
