@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# ANN Classifier comparison
-
 mkdir -p ../logs/XXLtrain
 mkdir -p ../models
 

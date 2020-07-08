@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# ANN Classifier comparison
+# CNN Classifier evaluation
 
-mkdir -p ../logs/CBNeval
+mkdir -p ../logs/CBN_eval
 mkdir -p ../models
 
-trnpath="../Train_data.hdf5"
-tstpath="../Test_data.hdf5"
+trn="../Train_data.hdf5"
+tst="../Test_data.hdf5"
 
-# Classifier_XXL
+# Classifier CBN
 echo "Starting evaluation #1"
-python ../eval.py --train_path $trnpath --test_path $tstpath --classifier CBN --model_name CBN_10epch > ../logs/CBNeval/CBN_10epch.txt
+python ../eval.py --train_path $trn --test_path $tst --classifier CBN --model_name CBN_10epch > ../logs/CBN_eval/CBN_10epch.txt
 
 echo "Finished"
