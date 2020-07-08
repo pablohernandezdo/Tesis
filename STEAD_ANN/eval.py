@@ -28,11 +28,11 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Train dataset
-    train_dataset = HDF5Dataset('../' + args.train_path)
+    train_dataset = HDF5Dataset(args.train_path)
     trainloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
 
     # Test dataset
-    test_dataset = HDF5Dataset('../' + args.test_path)
+    test_dataset = HDF5Dataset(args.test_path)
     testloader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
 
     # Load specified Classifier

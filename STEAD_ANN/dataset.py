@@ -11,7 +11,7 @@ class HDF5Dataset(data.Dataset):
     def __init__(self, file_path):
         super().__init__()
         # HDF5 dataset path
-        self.file_path = file_path
+        self.file_path = '../../Data_STEAD/' + file_path
 
         # Read file and groups
         with h5py.File(self.file_path, 'r') as h5_file:

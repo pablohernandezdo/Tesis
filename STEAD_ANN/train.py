@@ -44,11 +44,11 @@ def main():
     tb = SummaryWriter('../runs/Seismic')
 
     # Train dataset
-    train_dataset = HDF5Dataset('../' + args.train_path)
+    train_dataset = HDF5Dataset(args.train_path)
     trainloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
 
     # Test dataset
-    test_dataset = HDF5Dataset('../' + args.test_path)
+    test_dataset = HDF5Dataset(args.test_path)
     testloader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
 
     # Load specified Classifier
@@ -110,7 +110,7 @@ def main():
     tb.close()
 
     # Save model
-    torch.save(net.state_dict(), '../models/ANN/' + args.model_name + '.pth')
+    torch.save(net.state_dict(), '../models/' + args.model_name + '.pth')
     training_time = time.time()
 
     # Evaluate model on test dataset
