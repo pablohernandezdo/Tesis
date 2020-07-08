@@ -3,6 +3,8 @@ import tqdm
 import torch
 import argparse
 
+from humanfriendly import format_timespan
+
 from dataset import HDF5Dataset
 from torch.utils.data import DataLoader
 
@@ -145,17 +147,16 @@ def main():
     ev_t = eval_2 - start_time
 
     print(f'Test Evaluation results: \n'
-          f'correct: {correct}, total: {total}\n'
-          f'True positives: {tp}\n\n'
+          f'correct: {correct}, total: {total}\n\n'
+          f'True positives: {tp}\n'
           f'False positives: {fp}\n'
           f'True negatives: {tn}\n'
           f'False negatives: {fn}\n\n'
           f'Evaluation metrics:\n\n'
           f'Precision: {precision:5.3f}\n'
           f'Recall: {recall:5.3f}\n'
-          f'F-score: {fscore:5.3f}\n\n')
-
-    print(f'Training evaluation time: {format_timespan(ev_1)}\n'
+          f'F-score: {fscore:5.3f}\n\n'
+          f'Training evaluation time: {format_timespan(ev_1)}\n'
           f'Test evaluation time: {format_timespan(ev_2)}\n'
           f'Total execution time: {format_timespan(ev_t)}\n\n')
 
