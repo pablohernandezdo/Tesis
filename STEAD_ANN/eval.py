@@ -94,7 +94,7 @@ def main():
     eval_1 = time.time()
     ev_1 = eval_1 - start_time
 
-    print(f'Training Evaluation results: \n'
+    print(f'Training Evaluation results: \n\n\n'
           f'correct: {correct}, total: {total}\n'
           f'True positives: {tp}\n\n'
           f'False positives: {fp}\n'
@@ -146,7 +146,7 @@ def main():
     ev_2 = eval_2 - eval_1
     ev_t = eval_2 - start_time
 
-    print(f'Test Evaluation results: \n'
+    print(f'Test Evaluation results: \n\n\n'
           f'correct: {correct}, total: {total}\n\n'
           f'True positives: {tp}\n'
           f'False positives: {fp}\n'
