@@ -15,7 +15,7 @@ tst="Test_data.hdf5"
 #python ../train.py --train_path $trn --test_path $tst --classifier CBN --model_name CBN_10epch --n_epochs 10 > ../logs/CBN_train/CBN_10epch.txt
 
 # Evaluating model
-echo "Starting evaluation on test set"
+echo "Starting evaluation on $trn and $tst datasets"
 python ../eval.py --train_path $trn --test_path $tst --classifier CBN --model_name CBN_10epch > ../logs/CBN_eval/CBN_10epch.txt
 
 echo "Finished"
