@@ -46,7 +46,7 @@ def main():
     net.to(device)
 
     # Load parameters from trained model
-    net.load_state_dict(torch.load('models/' + args.model_name + '.pth'))
+    net.load_state_dict(torch.load('../models/' + args.model_name + '.pth'))
     net.eval()
 
     # Evaluate model on training dataset
