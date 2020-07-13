@@ -27,8 +27,8 @@ def main():
     # Fig. 3fo and 3bb.
     # Comparacion entre registros de un telesismo por fibra optica y sismometro
 
-    file_fo = 'Jousset_et_al_2018_003_Figure3_fo.ascii'
-    file_bb = 'Jousset_et_al_2018_003_Figure3_bb.ascii'
+    file_fo = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_fo.ascii'
+    file_bb = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_bb.ascii'
 
     fs = 20
 
@@ -114,7 +114,7 @@ def main():
     # Fig. 5a_fo
     # Registro de sismo local con DAS
 
-    file = 'Jousset_et_al_2018_003_Figure5a_fo.ascii'
+    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_fo.ascii'
     n_trazas = 26
     plt_tr = 10
     fs = 200
@@ -175,7 +175,7 @@ def main():
     # # Fig. 5a_gph
     # # Registro de sismo local con geofono
 
-    file = 'Jousset_et_al_2018_003_Figure5a_gph.ascii'
+    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_gph.ascii'
     n_trazas = 26
     plt_tr = 10
     fs = 200
@@ -238,7 +238,7 @@ def main():
     # Fig. 5b
     # Registro de sismo local con DAS
 
-    file = 'Jousset_et_al_2018_003_Figure5b.ascii'
+    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5b.ascii'
     n_trazas = 2551
     plt_tr = 1000
     fs = 200
@@ -312,7 +312,7 @@ def main():
 
     # Fig.2a
 
-    # file = 'Jousset_et_al_2018_003_Figure2a.ascii'
+    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure2a.ascii'
     # n_trazas = 101
     # fs = 200
     #
@@ -359,7 +359,7 @@ def main():
 
     # # Fig. 2b
     #
-    # file = 'Jousset_et_al_2018_003_Figure2b.ascii'
+    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure2b.ascii'
     # n_trazas = 2401
     #
     # data = {
@@ -388,7 +388,7 @@ def main():
 
     # # Fig. 7-8
     #
-    # file = 'Jousset_et_al_2018_003_Figure7_8.ascii'
+    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure7_8.ascii'
     # l_traza = 76600
     #
     # data = {

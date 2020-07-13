@@ -1,7 +1,7 @@
 import h5py
 import numpy as np
-import scipy.io
 
+import scipy.io as sio
 import scipy.signal as signal
 import matplotlib.pyplot as plt
 
@@ -21,7 +21,7 @@ def main():
 
     # Registro de 1 minuto de sismo M1.9 a 100 Km NE del cable
 
-    f = scipy.io.loadmat("Earthquake_1p9_Var_BP_2p5_15Hz.mat")
+    f = sio.loadmat("../Data_Francia/Earthquake_1p9_Var_BP_2p5_15Hz.mat")
 
     traces = f["StrainFilt"]
     # time= f["Time"]

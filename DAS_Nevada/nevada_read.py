@@ -19,10 +19,10 @@ def main():
             st_trace = grp[dts][:, 0] / np.max(grp[dts][:, 0])
             break
 
-    # f = 'PoroTomo_iDAS16043_160321073751.sgy'
-    # f = 'PoroTomo_iDAS16043_160321073721.sgy'
-    # f = 'PoroTomo_iDAS025_160321073747.sgy'
-    f = 'PoroTomo_iDAS025_160321073717.sgy'
+    # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
+    # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
+    # f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+    f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
 
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
