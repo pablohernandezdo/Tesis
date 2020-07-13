@@ -3,6 +3,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
+import scipy.io as sio
 import scipy.signal as signal
 from scipy.signal import butter, lfilter
 
@@ -20,9 +21,9 @@ def main():
 
     # 4192 canales, 42000 muestra por traza
 
-    f = scipy.io.loadmat("mat_2018_08_19_00h28m05s_Parkwind_HDAS_2Dmap_StrainData_2D.mat")
+    f = sio.loadmat("mat_2018_08_19_00h28m05s_Parkwind_HDAS_2Dmap_StrainData_2D.mat")
 
-    traces= f['Data_2D']
+    traces = f['Data_2D']
     plt_tr = 4000
     fs = 10
 
@@ -253,6 +254,7 @@ def main():
     plt.ylabel('Strain [-]')
     plt.savefig('Imgs/STEADBelgicaAVGfil1.png')
 
+
 # Filtro pasabanda butterworth
 def butter_bandpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
@@ -267,6 +269,7 @@ def butter_bandpass_filter(dat, lowcut, highcut, fs, order=5):
     y = lfilter(b, a, dat)
     return y
 
+
 def butter_lowpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
     low = lowcut / nyq
@@ -279,6 +282,7 @@ def butter_lowpasspass_filter(dat, lowcut, highcut, fs, order=5):
     b, a = butter_lowpass(lowcut, highcut, fs, order=order)
     y = lfilter(b, a, dat)
     return y
+
 
 if __name__ == '__main__':
     main()
