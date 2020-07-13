@@ -5,7 +5,7 @@ import numpy as np
 def main():
     # Carga traza STEAD
 
-    st = '../Train_data.hdf5'
+    st = '../Data_STEAD/Train_data.hdf5'
 
     with h5py.File(st, 'r') as h5_file:
         grp = h5_file['earthquake']['local']
