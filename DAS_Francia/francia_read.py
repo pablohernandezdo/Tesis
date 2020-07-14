@@ -44,9 +44,7 @@ def main():
     ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
                                     repeat=False)
 
-    #ani.save('traces.mp4')
-
-    plt.show()
+    ani.save('traces.mp4')
 
     # for trace in traces:
     #     yf = sfft.fftshift(sfft.fft(trace))
