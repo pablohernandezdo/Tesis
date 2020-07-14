@@ -28,7 +28,7 @@ def main():
     print(data.shape)
     print(fs)
 
-    fi = '../Data_Hydraulic/CSULB500Pa10secP141210174309.mat'
+    fi = '../Data_Hydraulic/CSULB500Pa10secP_141210174309.mat'
 
     with h5py.File(fi, 'r') as f:
         data = f['data'][()]
@@ -38,7 +38,7 @@ def main():
     print(data.shape)
     print(fs)
 
-    fi = '../Data_Hydraulic/CSULB500Pa100secP141210175257.mat'
+    fi = '../Data_Hydraulic/CSULB500Pa100secP_141210175257.mat'
 
     with h5py.File(fi, 'r') as f:
         data = f['data'][()]
