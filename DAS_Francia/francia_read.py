@@ -50,6 +50,7 @@ def main():
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
     for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
         im = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
         ims.append(im)
 
