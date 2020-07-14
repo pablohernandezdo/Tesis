@@ -45,8 +45,6 @@ def main():
 
     ani.save('traces.mp4')
 
-
-
     # for trace in traces:
     #     yf = sfft.fftshift(sfft.fft(trace))
     #     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
