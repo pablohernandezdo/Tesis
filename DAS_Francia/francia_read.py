@@ -40,7 +40,7 @@ def main():
         plt.plot(trace)
         plt.subplot(212)
         plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.show()
+        plt.show(block=False)
         plt.pause(0.1)
         plt.close()
 
