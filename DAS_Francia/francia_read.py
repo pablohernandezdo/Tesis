@@ -25,17 +25,11 @@ def main():
     f = sio.loadmat("../Data_Francia/Earthquake_1p9_Var_BP_2p5_15Hz.mat")
 
     traces = f["StrainFilt"]
-    time= f["Time"]
-    distance = f["Distance_fiber"]
+    # time= f["Time"]
+    # distance = f["Distance_fiber"]
     plt_tr = 3000
     fs = 100
     N = len(traces[0])
-
-    print(f'traces shape: {traces.shape}')
-    print(f'time shape: {time.shape}')
-    print(f'distance shape: {distance.shape}')
-    print(time[0][1]-time[0][0])
-    print(time[0][2]-time[0][1])
 
     plt.figure()
     for trace in traces:
