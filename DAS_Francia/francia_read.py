@@ -40,7 +40,7 @@ def main():
         im = plt.plot(trace, animated=True)
         ims.append(im)
 
-    ani = animation.ArtistAnimation(fig, ims, interval=10, blit=True,
+    ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
                                     repeat=False)
 
     ani.save('traces.mp4')
