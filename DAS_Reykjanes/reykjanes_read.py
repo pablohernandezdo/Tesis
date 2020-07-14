@@ -136,7 +136,7 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
-    print(f'Sismo local 1: {len(data_das)}')
+    print(f'Sismo local 1: {len(data["strain"])}')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
@@ -261,7 +261,7 @@ def main():
     data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
 
-    print(f'Sismo local 1: {len(data["strain"])}')
+    print(f'Sismo local 2: {len(data["strain"])}')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
