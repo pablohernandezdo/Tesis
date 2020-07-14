@@ -2,6 +2,7 @@ import h5py
 import numpy as np
 
 import scipy.io as sio
+import scipy.fftpack as sfft
 import scipy.signal as signal
 import matplotlib.pyplot as plt
 
@@ -28,11 +29,17 @@ def main():
     # distance = f["Distance_fiber"]
     plt_tr = 3000
     fs = 100
+    N = len(traces[0])
 
     plt.figure()
     for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
+        xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
         plt.clf()
+        plt.subplot(211)
         plt.plot(trace)
+        plt.subplot(212)
+        plt.plot(xf, 2.0 / N * np.abs(yf))
         plt.show()
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
