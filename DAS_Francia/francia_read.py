@@ -4,7 +4,9 @@ import numpy as np
 import scipy.io as sio
 import scipy.fftpack as sfft
 import scipy.signal as signal
+
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 from scipy.signal import butter, lfilter
 
@@ -31,18 +33,32 @@ def main():
     fs = 100
     N = len(traces[0])
 
-    plt.figure()
+    fig = plt.figure()
+
+    ims = []
+
     for trace in traces:
-        yf = sfft.fftshift(sfft.fft(trace))
-        xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
-        plt.clf()
-        plt.subplot(211)
-        plt.plot(trace)
-        plt.subplot(212)
-        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.show(block=False)
-        plt.pause(1.5)
-        plt.close()
+        im = plt.plot(trace, animated=True)
+        ims.append(im)
+
+    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
+                                    repeat_delay=1000)
+
+    #ani.save('traces.mp4')
+
+    plt.show()
+
+    # for trace in traces:
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+    #     plt.clf()
+    #     plt.subplot(211)
+    #     plt.plot(trace)
+    #     plt.subplot(212)
+    #     plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.show(block=False)
+    #     plt.pause(1.5)
+    #     plt.close()
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
     #
