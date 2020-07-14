@@ -55,7 +55,7 @@ def main():
                 val = line.strip()
                 data_bb['strain'].append(float(val))
 
-    print(f'Telesismo: {data_fo["strain"].shape}')
+    print(f'Telesismo: {len(data_fo["strain"])}')
 
     # t_ax = np.arange(len(data_fo['strain'])) / fs
     #
