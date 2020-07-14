@@ -55,7 +55,7 @@ def main():
                 val = line.strip()
                 data_bb['strain'].append(float(val))
 
-    print(f'Telesismo: {len(data_fo["strain"])}')
+    print(f'Telesismo: {data_fo["strain"].shape}')
 
     # t_ax = np.arange(len(data_fo['strain'])) / fs
     #
@@ -136,7 +136,7 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
-    print(f'Sismo local 1: {len(data["strain"])}')
+    print(f'Sismo local 1: {data["strain"].shape}')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
@@ -261,7 +261,7 @@ def main():
     data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
 
-    print(f'Sismo local 2: {len(data["strain"])}')
+    print(f'Sismo local 2: {data["strain"].shape}')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
