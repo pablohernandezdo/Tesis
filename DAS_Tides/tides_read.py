@@ -24,6 +24,8 @@ def main():
         data = f['clipdata'][()]
         fs = 1000
 
+    print(data.shape)
+
     # data = data / np.max(np.abs(data))
     # data_cut = data[:(data.size // 6000) * 6000]
     # traces = data_cut.reshape((data.size // 6000, -1))
