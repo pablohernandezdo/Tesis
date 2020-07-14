@@ -31,7 +31,7 @@ def main():
 
     print(traces.shape)
     print(fs)
-    
+
     # t_ax = np.arange(1, len(traces[0]) + 1) / fs
     #
     # trace1 = traces[0]

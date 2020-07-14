@@ -29,7 +29,11 @@ def main():
     plt_tr = 3000
     fs = 100
 
-    print(traces.shape)
+    plt.figure()
+    for trace in traces:
+        plt.clf()
+        plt.plot(trace)
+        plt.show()
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
     #
