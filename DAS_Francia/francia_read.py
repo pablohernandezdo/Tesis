@@ -42,7 +42,7 @@ def main():
 
     ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
                                     repeat=False)
-    ani.save('traces.mp4')
+    ani.save('Francia_traces.mp4')
 
     fig = plt.figure()
 
@@ -57,7 +57,7 @@ def main():
     ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
                                     repeat=False)
 
-    ani.save('spectrums.mp4')
+    ani.save('Francia_spectrums.mp4')
 
     # for trace in traces:
     #     yf = sfft.fftshift(sfft.fft(trace))

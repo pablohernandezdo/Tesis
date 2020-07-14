@@ -28,7 +28,33 @@ def main():
     plt_tr = 4000
     fs = 10
 
-    print(traces.shape)
+    N = len(traces[0])
+
+    fig = plt.figure()
+
+    ims = []
+    for trace in traces:
+        im = plt.plot(trace, animated=True)
+        ims.append(im)
+
+    ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
+                                    repeat=False)
+    ani.save('Belgica_traces.mp4')
+
+    fig = plt.figure()
+
+    ims = []
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
+        ims.append(im)
+
+    ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
+                                    repeat=False)
+
+    ani.save('Francia_spectrums.mp4')
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
     #
