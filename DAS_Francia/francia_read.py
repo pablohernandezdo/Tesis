@@ -42,7 +42,7 @@ def main():
         ims.append(im)
 
     ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
-                                    repeat_delay=1000)
+                                    repeat=False)
 
     #ani.save('traces.mp4')
 
