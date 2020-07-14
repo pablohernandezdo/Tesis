@@ -34,17 +34,21 @@ def main():
     N = len(traces[0])
 
     fig = plt.figure()
+    plt.plot(traces[0])
+    plt.show()
 
-    ims = []
+    #ims = []
 
-    for trace in traces:
-        im = plt.plot(trace, animated=True)
-        ims.append(im)
+    # for trace in traces:
+    #     im = plt.plot(trace, animated=True)
+    #     ims.append(im)
+    #
+    # ani = animation.ArtistAnimation(fig, ims, interval=10, blit=True,
+    #                                 repeat=False)
+    #
+    # ani.save('traces.mp4')
 
-    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
-                                    repeat=False)
 
-    ani.save('traces.mp4')
 
     # for trace in traces:
     #     yf = sfft.fftshift(sfft.fft(trace))
