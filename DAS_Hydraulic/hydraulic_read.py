@@ -24,6 +24,27 @@ def main():
         data = f['data'][()]
         fs = f['fs_f'][()]
 
+    print('CSULB500Pa600secP_141210183813')
+    print(data.shape)
+    print(fs)
+
+    fi = '../Data_Hydraulic/CSULB500Pa10secP141210174309.mat'
+
+    with h5py.File(fi, 'r') as f:
+        data = f['data'][()]
+        fs = f['fs_f'][()]
+
+    print('CSULB500Pa10secP141210174309')
+    print(data.shape)
+    print(fs)
+
+    fi = '../Data_Hydraulic/CSULB500Pa100secP141210175257.mat'
+
+    with h5py.File(fi, 'r') as f:
+        data = f['data'][()]
+        fs = f['fs_f'][()]
+
+    print('CSULB500Pa100secP141210175257')
     print(data.shape)
     print(fs)
 
