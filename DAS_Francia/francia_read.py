@@ -34,9 +34,8 @@ def main():
     print(f'traces shape: {traces.shape}')
     print(f'time shape: {time.shape}')
     print(f'distance shape: {distance.shape}')
-    print(time[0][0])
-    print(time[0][1])
-    print(time[0][2])
+    print(time[0][1]-time[0][0])
+    print(time[0][2]-time[0][1])
 
     plt.figure()
     for trace in traces:
