@@ -30,6 +30,43 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
+    print('FILE PoroTomo_iDAS025_160321073717.sgy')
+    print(traces.shape)
+    print(fs)
+
+    f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    print('FILE PoroTomo_iDAS025_160321073747.sgy')
+    print(traces.shape)
+    print(fs)
+
+    f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    print('FILE PoroTomo_iDAS16043_160321073721.sgy')
+    print(traces.shape)
+    print(fs)
+
+    f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    print('FILE PoroTomo_iDAS16043_160321073751.sgy')
     print(traces.shape)
     print(fs)
 
