@@ -39,7 +39,7 @@ def main():
         plt.subplot(211)
         plt.plot(trace)
         plt.subplot(212)
-        plt.plot(xf, 2.0 / N * np.abs(yf))
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
         plt.show()
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
