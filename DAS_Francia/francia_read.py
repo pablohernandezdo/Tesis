@@ -42,8 +42,21 @@ def main():
 
     ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
                                     repeat=False)
-
     ani.save('traces.mp4')
+
+    fig = plt.figure()
+
+    ims = []
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    for trace in traces:
+        im = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
+        ims.append(im)
+
+    ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
+                                    repeat=False)
+
+    ani.save('spectrums.mp4')
 
     # for trace in traces:
     #     yf = sfft.fftshift(sfft.fft(trace))
