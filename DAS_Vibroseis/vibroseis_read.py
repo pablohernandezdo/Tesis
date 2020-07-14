@@ -32,96 +32,136 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    t_ax = np.arange(1, len(traces[0]) + 1) / fs
+    print('FILE PoroTomo_iDAS16043_160325140118.sgy')
+    print(traces.shape)
+    print(fs)
 
-    trace1 = traces[0]
-    trace2 = traces[100]
-    trace3 = traces[200]
+    f = '../Data_Vibroseis/PoroTomo_iDAS16043_160325140048.sgy'
 
-    trace1_resamp = signal.resample(traces[0], 6000)
-    trace2_resamp = signal.resample(traces[100], 6000)
-    trace3_resamp = signal.resample(traces[200], 6000)
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
 
-    trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
-    trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
-    trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
 
-    trace1_resamp = trace1_resamp / np.max(np.abs(trace1_resamp))
-    trace2_resamp = trace2_resamp / np.max(np.abs(trace2_resamp))
-    trace3_resamp = trace3_resamp / np.max(np.abs(trace3_resamp))
+    print('FILE PoroTomo_iDAS16043_160325140048.sgy')
+    print(traces.shape)
+    print(fs)
 
-    trace1_fil = trace1_fil / np.max(np.abs(trace1_fil))
-    trace2_fil = trace2_fil / np.max(np.abs(trace2_fil))
-    trace3_fil = trace3_fil / np.max(np.abs(trace3_fil))
+    f = '../Data_Vibroseis/PoroTomo_iDAS025_160325140117.sgy'
 
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
 
-    plt.figure()
-    plt.subplot(311)
-    plt.plot(t_ax, trace1)
-    plt.grid(True)
-    plt.ylabel('Strain [-]')
-    plt.xlabel('Tiempo [s]')
-    plt.title('Trazas DAS datos Vibroseis')
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
 
-    plt.subplot(312)
-    plt.plot(t_ax, trace2)
-    plt.grid(True)
-    plt.ylabel('Strain [-]')
-    plt.xlabel('Tiempo [s]')
+    print('FILE PoroTomo_iDAS025_160325140117.sgy')
+    print(traces.shape)
+    print(fs)
 
-    plt.subplot(313)
-    plt.plot(t_ax, trace3)
-    plt.grid(True)
-    plt.ylabel('Strain [-]')
-    plt.xlabel('Tiempo [s]')
-    plt.tight_layout()
-    plt.savefig('Imgs/TrazasDAS.png')
+    f = '../Data_Vibroseis/PoroTomo_iDAS025_160325140047.sgy'
 
-    plt.clf()
-    plt.subplot(311)
-    plt.plot(t_ax, trace1_fil)
-    plt.grid(True)
-    plt.ylabel('Strain [-]')
-    plt.xlabel('Tiempo [s]')
-    plt.title('Trazas DAS datos Vibroseis filtrados 1 - 10 Hz')
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
 
-    plt.subplot(312)
-    plt.plot(t_ax, trace2_fil)
-    plt.grid(True)
-    plt.ylabel('Strain [-]')
-    plt.xlabel('Tiempo [s]')
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
 
-    plt.subplot(313)
-    plt.plot(t_ax, trace3_fil)
-    plt.grid(True)
-    plt.ylabel('Strain [-]')
-    plt.xlabel('Tiempo [s]')
-    plt.tight_layout()
-    plt.savefig('Imgs/TrazasDAS_fil.png')
+    print('FILE PoroTomo_iDAS025_160325140047.sgy')
+    print(traces.shape)
+    print(fs)
 
-    plt.clf()
-    line_st, = plt.plot(trace1_resamp, label='DAS')
-    line_das, = plt.plot(st_trace, label='STEAD')
-    plt.grid(True)
-    plt.xlabel('Muestras [-]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Vibroseis')
-    plt.legend(handles=[line_st, line_das], loc='upper left')
-    plt.savefig('Imgs/STEADVibroseis.png')
-
-    plt.clf()
-    plt.subplot(211)
-    plt.plot(st_trace)
-    plt.grid(True)
-    plt.xlabel('Muestras [-]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Vibroseis')
-    plt.subplot(212)
-    plt.plot(trace1_resamp)
-    plt.grid(True)
-    plt.xlabel('Muestras [-]')
-    plt.ylabel('Strain [-]')
-    plt.savefig('Imgs/STEADVibroseis1.png')
+    # t_ax = np.arange(1, len(traces[0]) + 1) / fs
+    #
+    # trace1 = traces[0]
+    # trace2 = traces[100]
+    # trace3 = traces[200]
+    #
+    # trace1_resamp = signal.resample(traces[0], 6000)
+    # trace2_resamp = signal.resample(traces[100], 6000)
+    # trace3_resamp = signal.resample(traces[200], 6000)
+    #
+    # trace1_fil = butter_bandpass_filter(trace1, 0.1, 10, fs, order=3)
+    # trace2_fil = butter_bandpass_filter(trace2, 0.1, 10, fs, order=3)
+    # trace3_fil = butter_bandpass_filter(trace3, 0.1, 10, fs, order=3)
+    #
+    # trace1_resamp = trace1_resamp / np.max(np.abs(trace1_resamp))
+    # trace2_resamp = trace2_resamp / np.max(np.abs(trace2_resamp))
+    # trace3_resamp = trace3_resamp / np.max(np.abs(trace3_resamp))
+    #
+    # trace1_fil = trace1_fil / np.max(np.abs(trace1_fil))
+    # trace2_fil = trace2_fil / np.max(np.abs(trace2_fil))
+    # trace3_fil = trace3_fil / np.max(np.abs(trace3_fil))
+    #
+    #
+    # plt.figure()
+    # plt.subplot(311)
+    # plt.plot(t_ax, trace1)
+    # plt.grid(True)
+    # plt.ylabel('Strain [-]')
+    # plt.xlabel('Tiempo [s]')
+    # plt.title('Trazas DAS datos Vibroseis')
+    #
+    # plt.subplot(312)
+    # plt.plot(t_ax, trace2)
+    # plt.grid(True)
+    # plt.ylabel('Strain [-]')
+    # plt.xlabel('Tiempo [s]')
+    #
+    # plt.subplot(313)
+    # plt.plot(t_ax, trace3)
+    # plt.grid(True)
+    # plt.ylabel('Strain [-]')
+    # plt.xlabel('Tiempo [s]')
+    # plt.tight_layout()
+    # plt.savefig('Imgs/TrazasDAS.png')
+    #
+    # plt.clf()
+    # plt.subplot(311)
+    # plt.plot(t_ax, trace1_fil)
+    # plt.grid(True)
+    # plt.ylabel('Strain [-]')
+    # plt.xlabel('Tiempo [s]')
+    # plt.title('Trazas DAS datos Vibroseis filtrados 1 - 10 Hz')
+    #
+    # plt.subplot(312)
+    # plt.plot(t_ax, trace2_fil)
+    # plt.grid(True)
+    # plt.ylabel('Strain [-]')
+    # plt.xlabel('Tiempo [s]')
+    #
+    # plt.subplot(313)
+    # plt.plot(t_ax, trace3_fil)
+    # plt.grid(True)
+    # plt.ylabel('Strain [-]')
+    # plt.xlabel('Tiempo [s]')
+    # plt.tight_layout()
+    # plt.savefig('Imgs/TrazasDAS_fil.png')
+    #
+    # plt.clf()
+    # line_st, = plt.plot(trace1_resamp, label='DAS')
+    # line_das, = plt.plot(st_trace, label='STEAD')
+    # plt.grid(True)
+    # plt.xlabel('Muestras [-]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Vibroseis')
+    # plt.legend(handles=[line_st, line_das], loc='upper left')
+    # plt.savefig('Imgs/STEADVibroseis.png')
+    #
+    # plt.clf()
+    # plt.subplot(211)
+    # plt.plot(st_trace)
+    # plt.grid(True)
+    # plt.xlabel('Muestras [-]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Vibroseis')
+    # plt.subplot(212)
+    # plt.plot(trace1_resamp)
+    # plt.grid(True)
+    # plt.xlabel('Muestras [-]')
+    # plt.ylabel('Strain [-]')
+    # plt.savefig('Imgs/STEADVibroseis1.png')
 
 
 def butter_bandpass(lowcut, highcut, fs, order=5):
