@@ -16,7 +16,7 @@ def main():
     with h5py.File(st, 'r') as h5_file:
         grp = h5_file['earthquake']['local']
         for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(grp[dts][:, 0])
+            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
             break
 
     # Registro de 1 minuto de sismo M1.9 a 100 Km NE del cable

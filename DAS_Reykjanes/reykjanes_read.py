@@ -8,8 +8,6 @@ import scipy.signal as signal
 from scipy.signal import butter, lfilter
 
 
-# RECREAR FIGURAS DEL PAPER DE JOUSSET
-
 def main():
     # Carga traza STEAD
 
@@ -18,11 +16,10 @@ def main():
     with h5py.File(st, 'r') as h5_file:
         grp = h5_file['earthquake']['local']
         for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(grp[dts][:, 0])
+            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
             break
 
-
-    ########## DATOS UTILES ##########
+    # Datos Utiles
 
     # Fig. 3fo and 3bb.
     # Comparacion entre registros de un telesismo por fibra optica y sismometro
@@ -58,58 +55,59 @@ def main():
                 val = line.strip()
                 data_bb['strain'].append(float(val))
 
-    t_ax = np.arange(len(data_fo['strain'])) / fs
+    print(f'Telesismo: {len(data_fo["strain"])}')
 
-    plt.figure()
-    plt.plot(t_ax, data_fo['strain'])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registro telesismo DAS')
-    plt.savefig('Imgs/TelesismoDAS.png')
-
-    plt.clf()
-    plt.plot(t_ax, data_bb['strain'])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registro telesismo sismómetro')
-    plt.savefig('Imgs/TelesismoBBS.png')
-
-    plt.clf()
-    line_fo, = plt.plot(t_ax, data_fo['strain'], label='DAS')
-    line_bb, = plt.plot(t_ax, data_bb['strain'], label='Sismómetro')
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registros telesismo DAS y sismómetro')
-    plt.legend(handles=[line_fo, line_bb], loc='upper left')
-    plt.savefig('Imgs/TelesismoComp.png')
-
-    plt.clf()
-    line_st, = plt.plot(signal.resample(data_fo['strain'], 6000), label='DAS')
-    line_das, = plt.plot(st_trace, label='STEAD')
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Reykjanes telesismo')
-    plt.legend(handles=[line_st, line_das], loc='upper left')
-    plt.savefig('Imgs/STEADTelesismo.png')
-
-    plt.clf()
-    plt.subplot(211)
-    plt.plot(st_trace)
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Reykjanes telesismo')
-    plt.subplot(212)
-    plt.plot(signal.resample(data_fo['strain'], 6000))
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.savefig('Imgs/STEADTelesismo1.png')
-
+    # t_ax = np.arange(len(data_fo['strain'])) / fs
+    #
+    # plt.figure()
+    # plt.plot(t_ax, data_fo['strain'])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro telesismo DAS')
+    # plt.savefig('Imgs/TelesismoDAS.png')
+    #
+    # plt.clf()
+    # plt.plot(t_ax, data_bb['strain'])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro telesismo sismómetro')
+    # plt.savefig('Imgs/TelesismoBBS.png')
+    #
+    # plt.clf()
+    # line_fo, = plt.plot(t_ax, data_fo['strain'], label='DAS')
+    # line_bb, = plt.plot(t_ax, data_bb['strain'], label='Sismómetro')
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registros telesismo DAS y sismómetro')
+    # plt.legend(handles=[line_fo, line_bb], loc='upper left')
+    # plt.savefig('Imgs/TelesismoComp.png')
+    #
+    # plt.clf()
+    # line_st, = plt.plot(signal.resample(data_fo['strain'], 6000), label='DAS')
+    # line_das, = plt.plot(st_trace, label='STEAD')
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Reykjanes telesismo')
+    # plt.legend(handles=[line_st, line_das], loc='upper left')
+    # plt.savefig('Imgs/STEADTelesismo.png')
+    #
+    # plt.clf()
+    # plt.subplot(211)
+    # plt.plot(st_trace)
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Reykjanes telesismo')
+    # plt.subplot(212)
+    # plt.plot(signal.resample(data_fo['strain'], 6000))
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.savefig('Imgs/STEADTelesismo1.png')
 
     # Fig. 5a_fo
     # Registro de sismo local con DAS
@@ -138,102 +136,104 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
-    t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+    print(f'Sismo local 1: {len(data_das)}')
 
-    plt.clf()
-    plt.plot(t_ax, data['strain'][plt_tr])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registro sismo local DAS')
-    plt.savefig('Imgs/SismolocalDAS.png')
-
-    plt.clf()
-    line_st, = plt.plot(st_trace, label='STEAD')
-    line_das, = plt.plot(signal.resample(data['strain'][plt_tr], 6000), label='DAS')
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Reykjanes sismo local')
-    plt.legend(handles=[line_st, line_das], loc='upper left')
-    plt.savefig('Imgs/STEADLocal.png')
-
-    plt.clf()
-    plt.subplot(211)
-    plt.plot(st_trace)
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Reykjanes sismo local')
-    plt.subplot(212)
-    plt.plot(signal.resample(data['strain'][plt_tr], 6000))
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.savefig('Imgs/STEADLocal1.png')
+    # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+    #
+    # plt.clf()
+    # plt.plot(t_ax, data['strain'][plt_tr])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro sismo local DAS')
+    # plt.savefig('Imgs/SismolocalDAS.png')
+    #
+    # plt.clf()
+    # line_st, = plt.plot(st_trace, label='STEAD')
+    # line_das, = plt.plot(signal.resample(data['strain'][plt_tr], 6000), label='DAS')
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Reykjanes sismo local')
+    # plt.legend(handles=[line_st, line_das], loc='upper left')
+    # plt.savefig('Imgs/STEADLocal.png')
+    #
+    # plt.clf()
+    # plt.subplot(211)
+    # plt.plot(st_trace)
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Reykjanes sismo local')
+    # plt.subplot(212)
+    # plt.plot(signal.resample(data['strain'][plt_tr], 6000))
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.savefig('Imgs/STEADLocal1.png')
 
     # # Fig. 5a_gph
     # # Registro de sismo local con geofono
 
-    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_gph.ascii'
-    n_trazas = 26
-    plt_tr = 10
-    fs = 200
-
-    data = {
-        'head': '',
-        'strain': np.empty((1, n_trazas))
-    }
-
-    with open(file, 'r') as f:
-        for idx, line in enumerate(f):
-            if idx == 0:
-                data['head'] = line.strip()
-
-            else:
-                row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
-                data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
-
-    data['strain'] = data['strain'][1:]
-    data['strain'] = data['strain'] / data['strain'].max(axis=0)
-    data['strain'] = data['strain'].transpose()
-
-    t_ax = np.arange(len(data['strain'][plt_tr])) / fs
-
-    plt.clf()
-    plt.plot(t_ax, data['strain'][plt_tr])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registro sismo local geófono')
-    plt.savefig('Imgs/SismolocalGEO.png')
-
-    plt.clf()
-    plt.subplot(311)
-    line_das, = plt.plot(t_ax, data_das['strain'][plt_tr], label='DAS')
-    line_geo, = plt.plot(t_ax, data['strain'][plt_tr], label='Geófono')
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.legend(handles=[line_das, line_geo], loc='upper right')
-    plt.title('Registros sismo local geofono y DAS')
-
-    plt.subplot(312)
-    line_das, = plt.plot(t_ax, data_das['strain'][15], label='DAS')
-    line_geo, = plt.plot(t_ax, data['strain'][15], label='Geófono')
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.legend(handles=[line_das, line_geo], loc='upper right')
-
-    plt.subplot(313)
-    line_das, = plt.plot(t_ax, data_das['strain'][20], label='DAS')
-    line_geo, = plt.plot(t_ax, data['strain'][20], label='Geófono')
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.legend(handles=[line_das, line_geo], loc='upper right')
-    plt.savefig('Imgs/LocalComp.png')
+    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_gph.ascii'
+    # n_trazas = 26
+    # plt_tr = 10
+    # fs = 200
+    #
+    # data = {
+    #     'head': '',
+    #     'strain': np.empty((1, n_trazas))
+    # }
+    #
+    # with open(file, 'r') as f:
+    #     for idx, line in enumerate(f):
+    #         if idx == 0:
+    #             data['head'] = line.strip()
+    #
+    #         else:
+    #             row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
+    #             data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
+    #
+    # data['strain'] = data['strain'][1:]
+    # data['strain'] = data['strain'] / data['strain'].max(axis=0)
+    # data['strain'] = data['strain'].transpose()
+    #
+    # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+    #
+    # plt.clf()
+    # plt.plot(t_ax, data['strain'][plt_tr])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro sismo local geófono')
+    # plt.savefig('Imgs/SismolocalGEO.png')
+    #
+    # plt.clf()
+    # plt.subplot(311)
+    # line_das, = plt.plot(t_ax, data_das['strain'][plt_tr], label='DAS')
+    # line_geo, = plt.plot(t_ax, data['strain'][plt_tr], label='Geófono')
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.legend(handles=[line_das, line_geo], loc='upper right')
+    # plt.title('Registros sismo local geofono y DAS')
+    #
+    # plt.subplot(312)
+    # line_das, = plt.plot(t_ax, data_das['strain'][15], label='DAS')
+    # line_geo, = plt.plot(t_ax, data['strain'][15], label='Geófono')
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.legend(handles=[line_das, line_geo], loc='upper right')
+    #
+    # plt.subplot(313)
+    # line_das, = plt.plot(t_ax, data_das['strain'][20], label='DAS')
+    # line_geo, = plt.plot(t_ax, data['strain'][20], label='Geófono')
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.legend(handles=[line_das, line_geo], loc='upper right')
+    # plt.savefig('Imgs/LocalComp.png')
 
     # Fig. 5b
     # Registro de sismo local con DAS
@@ -261,54 +261,56 @@ def main():
     data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
 
-    t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+    print(f'Sismo local 1: {len(data["strain"])}')
 
-    plt.clf()
-    plt.subplot(311)
-    plt.plot(t_ax, data['strain'][plt_tr])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Trazas sismo local solo DAS')
+    # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+    #
+    # plt.clf()
+    # plt.subplot(311)
+    # plt.plot(t_ax, data['strain'][plt_tr])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Trazas sismo local solo DAS')
+    #
+    # plt.subplot(312)
+    # plt.plot(t_ax, data['strain'][1500])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    #
+    # plt.subplot(313)
+    # plt.plot(t_ax, data['strain'][2000])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.savefig('Imgs/SismolocalDAS5b.png')
+    #
+    # plt.clf()
+    # line_st, = plt.plot(st_trace, label='STEAD')
+    # line_das, = plt.plot(signal.resample(data['strain'][plt_tr], 6000), label='DAS')
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Reykjanes sismo local solo DAS')
+    # plt.legend(handles=[line_st, line_das], loc='upper left')
+    # plt.savefig('Imgs/STEADLocalDAS.png')
+    #
+    # plt.clf()
+    # plt.subplot(211)
+    # plt.plot(st_trace)
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Traza STEAD y traza DAS Reykjanes sismo local solo DAS')
+    # plt.subplot(212)
+    # plt.plot(signal.resample(data['strain'][plt_tr], 6000))
+    # plt.grid(True)
+    # plt.xlabel('Muestras [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.savefig('Imgs/STEADLocalDAS1.png')
 
-    plt.subplot(312)
-    plt.plot(t_ax, data['strain'][1500])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-
-    plt.subplot(313)
-    plt.plot(t_ax, data['strain'][2000])
-    plt.grid(True)
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.savefig('Imgs/SismolocalDAS5b.png')
-
-    plt.clf()
-    line_st, = plt.plot(st_trace, label='STEAD')
-    line_das, = plt.plot(signal.resample(data['strain'][plt_tr], 6000), label='DAS')
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Reykjanes sismo local solo DAS')
-    plt.legend(handles=[line_st, line_das], loc='upper left')
-    plt.savefig('Imgs/STEADLocalDAS.png')
-
-    plt.clf()
-    plt.subplot(211)
-    plt.plot(st_trace)
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Traza STEAD y traza DAS Reykjanes sismo local solo DAS')
-    plt.subplot(212)
-    plt.plot(signal.resample(data['strain'][plt_tr], 6000))
-    plt.grid(True)
-    plt.xlabel('Muestras [s]')
-    plt.ylabel('Strain [-]')
-    plt.savefig('Imgs/STEADLocalDAS1.png')
-
-    ########## DEMAS FIGURAS ##########
+    # DEMÁS FIGURAS
 
     # Fig.2a
 

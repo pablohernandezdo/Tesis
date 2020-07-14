@@ -16,7 +16,7 @@ def main():
     with h5py.File(st, 'r') as h5_file:
         grp = h5_file['earthquake']['local']
         for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(grp[dts][:, 0])
+            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
             break
 
     # f = scipy.io.loadmat('../Data_California/FSE-11_1080SecP_SingDec_StepTest (1).mat')
