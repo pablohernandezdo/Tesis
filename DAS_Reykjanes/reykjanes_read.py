@@ -199,9 +199,10 @@ def main():
 
     for trace in data['strain']:
         im_tr = plt.plot(t_ax, trace)
-        plt.grid(True)
+        plt.title('Trazas sismo local 1')
         plt.ylabel('Amplitud normalizada[-]')
         plt.xlabel('Tiempo [s]')
+        plt.grid(True)
         plt.tight_layout()
         ims_tr.append(im_tr)
 
@@ -215,9 +216,10 @@ def main():
     for trace in data['strain']:
         yf = sfft.fftshift(sfft.fft(trace))
         im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.grid(True)
+        plt.title('Espectro trazas sismo local 1')
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
         plt.tight_layout()
         ims_sp.append(im_sp)
 
@@ -360,9 +362,10 @@ def main():
 
     for trace in data['strain']:
         im_tr = plt.plot(t_ax, trace)
-        plt.grid(True)
+        plt.title('Trazas sismo local 2')
         plt.ylabel('Amplitud normalizada[-]')
         plt.xlabel('Tiempo [s]')
+        plt.grid(True)
         plt.tight_layout()
         ims_tr.append(im_tr)
 
@@ -376,9 +379,10 @@ def main():
     for trace in data['strain']:
         yf = sfft.fftshift(sfft.fft(trace))
         im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.grid(True)
+        plt.title('Espectros trazas sismo local 2')
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
         plt.tight_layout()
         ims_sp.append(im_sp)
 
