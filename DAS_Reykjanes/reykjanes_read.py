@@ -204,8 +204,8 @@ def main():
         ims_tr.append(im_tr)
         ims_sp.append(im_sp)
 
-    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=20, blit=True, repeat=False)
-    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=20, blit=True, repeat=False)
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
 
     ani_tr.save('Animations/Local1_das_traces.mp4')
     ani_sp.save('Animations/Local1_das_spectrums.mp4')
