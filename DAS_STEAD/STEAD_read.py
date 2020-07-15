@@ -37,8 +37,6 @@ def main():
             if idx in trtp_ids:
                 trtp.append(grp[dts][:, 0])
 
-    print(trtp_ids.shape)
-
     # Sampling frequency
     fs = 100
 
@@ -58,7 +56,7 @@ def main():
     for idx, trace in enumerate(trtp):
         plt.clf()
         plt.plot(t_ax, trace)
-        plt.title(f'Traza STEAD #{trtp_ids[1, idx]}')
+        plt.title(f'Traza STEAD #{trtp_ids[idx]}')
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
         plt.grid(True)
