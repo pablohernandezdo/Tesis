@@ -23,6 +23,10 @@ def main():
     Path("Imgs/717").mkdir(exist_ok=True)
 
     Path("Animations").mkdir(exist_ok=True)
+    Path("Animations/721").mkdir(exist_ok=True)
+    Path("Animations/751").mkdir(exist_ok=True)
+    Path("Animations/747").mkdir(exist_ok=True)
+    Path("Animations/717").mkdir(exist_ok=True)
 
     # Carga traza STEAD
 
@@ -34,8 +38,10 @@ def main():
     #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
     #         break
 
+    # File 721
     f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
@@ -51,6 +57,7 @@ def main():
     # Traces to plot numbers
     trtp_ids = random.randint(0, high=len(traces), size=n)
 
+    # Retrieve selected traces
     for idx, trace in enumerate(traces):
         if idx in trtp_ids:
             trtp.append(trace)
@@ -67,7 +74,7 @@ def main():
     # Figure to plot
     plt.figure()
 
-    # For trace in traces to print
+    # Plot n random traces with their spectrum
     for idx, trace in enumerate(trtp):
         yf = sfft.fftshift(sfft.fft(trace))
 
@@ -87,8 +94,14 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/721/Nevada721_{trtp_ids[idx]}')
 
+    # Data animation
+
+    # Spectrum animation
+
+    # File 751
     f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
@@ -104,6 +117,7 @@ def main():
     # Traces to plot numbers
     trtp_ids = random.randint(0, high=len(traces), size=n)
 
+    # Retrieve selected traces
     for idx, trace in enumerate(traces):
         if idx in trtp_ids:
             trtp.append(trace)
@@ -140,13 +154,33 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/751/Nevada751_{trtp_ids[idx]}')
 
+    # Data animation
+
+    # Spectrum animation
+
+    # File 747
     f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
+
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
 
     # Data len
     N = traces.shape[1]
@@ -180,13 +214,33 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/747/Nevada747_{trtp_ids[idx]}')
 
+    # Data animation
+
+    # Spectrum animation
+
+    # File 717
     f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
+
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
 
     # Data len
     N = traces.shape[1]
@@ -220,7 +274,9 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/717/Nevada717_{trtp_ids[idx]}')
 
+    # Data animation
 
+    # Spectrum animation
 
     # t_ax = np.arange(1, len(traces[0]) + 1) / fs
     #
