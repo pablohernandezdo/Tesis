@@ -186,6 +186,29 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
+    # Frequency axis for FFT plot
+    N = data['strain'].shape[1]
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Create animation of whole data
+    fig_tr = plt.figure()
+    fig_sp = plt.figure()
+
+    ims_tr = []
+    ims_sp = []
+
+    for trace in data['strain']:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_tr = plt.plot(trace)
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        ims_tr.append(im_tr)
+        ims_sp.append(im_sp)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=20, blit=True, repeat=False)
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=20, blit=True, repeat=False)
+
+    ani_tr.save('Animations/Local1_das_traces.mp4')
+    ani_sp.save('Animations/Local1_das_spectrums.mp4')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #

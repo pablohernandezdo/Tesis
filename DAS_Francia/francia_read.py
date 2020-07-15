@@ -71,7 +71,6 @@ def main():
         plt.savefig(f'Imgs/Francia_trace_{i}.png')
 
     # Create animation of whole data
-
     fig_tr = plt.figure()
     fig_sp = plt.figure()
 
