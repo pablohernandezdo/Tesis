@@ -87,8 +87,8 @@ def main():
 
     plt.subplot(212)
     plt.plot(xf, np.abs(yf_fo) / np.max(np.abs(yf_fo)))
-    plt.xlabel('Amplitud [-]')
-    plt.ylabel('Frecuencia [-]')
+    plt.xlabel('Frecuencia [-]')
+    plt.ylabel('Amplitud [-]')
     plt.grid(True)
     plt.tight_layout()
     plt.savefig('Imgs/TelesismoDAS_spec.png')
@@ -103,8 +103,8 @@ def main():
 
     plt.subplot(212)
     plt.plot(xf, np.abs(yf_bb) / np.max(np.abs(yf_bb)))
-    plt.xlabel('Amplitud [-]')
-    plt.ylabel('Frecuencia [-]')
+    plt.xlabel('Frecuencia [-]')
+    plt.ylabel('Amplitud [-]')
     plt.grid(True)
     plt.tight_layout()
     plt.savefig('Imgs/TelesismoBBS_spec.png')
