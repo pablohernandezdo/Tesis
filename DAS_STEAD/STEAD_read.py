@@ -67,7 +67,7 @@ def main():
 
         plt.subplot(212)
         plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.xlabel('Frecuencia [-]')
+        plt.xlabel('Frecuencia [Hz]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
         plt.tight_layout()
