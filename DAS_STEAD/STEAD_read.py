@@ -41,7 +41,7 @@ def main():
     fs = 100
 
     # Data len
-    N = trtp.shape[1]
+    N = len(trtp[0])
 
     # Time axis for signal plot
     t_ax = np.arange(N) / fs
