@@ -190,8 +190,8 @@ def main():
     N = data['strain'].shape[1]
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
-    #Time axis
-    t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+    # Time axis
+    t_ax = np.arange(N) / fs
 
     # Create animation of whole data
     fig_tr = plt.figure()
@@ -346,6 +346,44 @@ def main():
     data['strain'] = data['strain'][1:]
     data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
+
+    # Frequency axis for FFT plot
+    N = data['strain'].shape[1]
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Time axis
+    t_ax = np.arange(N) / fs
+
+    # Create animation of whole data
+    fig_tr = plt.figure()
+    ims_tr = []
+
+    for trace in data['strain']:
+        im_tr = plt.plot(t_ax, trace)
+        plt.grid(True)
+        plt.ylabel('Amplitud normalizada[-]')
+        plt.xlabel('Tiempo [s]')
+        plt.tight_layout()
+        ims_tr.append(im_tr)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=100, blit=True, repeat=False)
+    ani_tr.save('Animations/Local2_das_traces.mp4')
+
+    # Create animation of whole data spectrums
+    fig_sp = plt.figure()
+    ims_sp = []
+
+    for trace in data['strain']:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.grid(True)
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.tight_layout()
+        ims_sp.append(im_sp)
+
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=100, blit=True, repeat=False)
+    ani_sp.save('Animations/Local2_das_spectrums.mp4')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
