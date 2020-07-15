@@ -31,7 +31,7 @@ def main():
     # time= f["Time"]
     # distance = f["Distance_fiber"]
     #trtp = [0, 1600, 2650, 2850, 3100]
-    trtp = [0, 1600, 2850, 3000, 3100, 4000]
+    trtp = [0, 1600, 2650, 2850, 3000, 3100, 4000]
     fs = 100
     N = len(traces[0])
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
@@ -46,7 +46,7 @@ def main():
         plt.subplot(212)
         plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
         plt.show(block=False)
-        plt.pause(1.5)
+        plt.pause(3)
         plt.close()
 
     # 32, 53, 57, 62
