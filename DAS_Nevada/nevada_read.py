@@ -104,7 +104,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
         plt.grid(True)
-        plt.tight_layout()
         ims_tr.append(im_tr)
 
     ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
@@ -121,7 +120,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
         plt.grid(True)
-        plt.tight_layout()
         ims_sp.append(im_sp)
 
     ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
@@ -193,7 +191,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
         plt.grid(True)
-        plt.tight_layout()
         ims_tr.append(im_tr)
 
     ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
@@ -210,7 +207,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
         plt.grid(True)
-        plt.tight_layout()
         ims_sp.append(im_sp)
 
     ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
@@ -282,7 +278,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
         plt.grid(True)
-        plt.tight_layout()
         ims_tr.append(im_tr)
 
     ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
@@ -299,7 +294,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
         plt.grid(True)
-        plt.tight_layout()
         ims_sp.append(im_sp)
 
     ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
@@ -371,7 +365,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
         plt.grid(True)
-        plt.tight_layout()
         ims_tr.append(im_tr)
 
     ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
@@ -388,7 +381,6 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
         plt.grid(True)
-        plt.tight_layout()
         ims_sp.append(im_sp)
 
     ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
