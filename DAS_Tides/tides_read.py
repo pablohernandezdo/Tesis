@@ -5,26 +5,45 @@ import matplotlib.pyplot as plt
 
 from scipy.signal import butter, lfilter
 
+from pathlib import Path
 
 def main():
+    # Create images folder
+
+    Path("Imgs").mkdir(exist_ok=True)
+
     # Carga traza STEAD
 
-    st = '../Data_STEAD/Train_data.hdf5'
-
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
     # 1 registro, largo 259_094_163 muestras
     file = '../Data_Tides/CSULB_T13_EarthTide_earthtide_mean_360_519.mat'
 
     with h5py.File(file, 'r') as f:
         data = f['clipdata'][()]
-        fs = 1000
 
-    print(data.shape)
+    # Sampling frequency
+    fs = 1000
+
+    # Data len
+    N = data['strain'].shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    plt.figure()
+    plt.plot(data)
+    plt.title('Trazas dataset DAS no sísmico Tides')
+    plt.ylabel('Amplitud normalizada[-]')
+    plt.xlabel('Tiempo [s]')
+    plt.grid(True)
+    plt.savefig('Imgs/Tides_traces.png')
 
     # data = data / np.max(np.abs(data))
     # data_cut = data[:(data.size // 6000) * 6000]

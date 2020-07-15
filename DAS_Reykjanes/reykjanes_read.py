@@ -186,12 +186,14 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
-    # Frequency axis for FFT plot
+    # Data len
     N = data['strain'].shape[1]
-    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
-    # Time axis
+    # Time axis for signal plot
     t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
     # Create animation of whole data
     fig_tr = plt.figure()

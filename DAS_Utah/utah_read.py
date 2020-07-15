@@ -2,21 +2,26 @@ import h5py
 import segyio
 import numpy as np
 
-import matplotlib.pyplot as plt
-
+import scipy.fftpack as sfft
 import scipy.signal as signal
 from scipy.signal import butter, lfilter
+
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+from pathlib import Path
+
 
 def main():
     # Carga traza STEAD
 
-    st = '../Data_STEAD/Train_data.hdf5'
-
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
     f = '../Data_Utah/FORGE_78-32_iDASv3-P11_UTC190419001218.sgy'
 
@@ -26,8 +31,47 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    print(traces.shape)
-    print(fs)
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Create animation of whole data
+    fig_tr = plt.figure()
+    ims_tr = []
+
+    for trace in traces:
+        im_tr = plt.plot(t_ax, trace)
+        plt.title('Trazas dataset DAS no sísmico Utah')
+        plt.ylabel('Amplitud normalizada[-]')
+        plt.xlabel('Tiempo [s]')
+        plt.grid(True)
+        plt.tight_layout()
+        ims_tr.append(im_tr)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    ani_tr.save('Animations/Utah_traces.mp4')
+
+    # Create animation of whole data spectrums
+    fig_sp = plt.figure()
+    ims_sp = []
+
+    for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.title('Espectro trazas dataset DAS no sísmico Utah')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
+        plt.tight_layout()
+        ims_sp.append(im_sp)
+
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    ani_sp.save('Animations/Utah_spectrums.mp4')
 
     # t_ax = np.arange(1, len(traces[0]) + 1) / fs
     #
