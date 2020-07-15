@@ -31,7 +31,8 @@ def main():
         grp = h5_file['earthquake']['local']
 
         # Traces to plot ids
-        trtp_ids = random.randint(0, high=len(grp), size=n)
+        #trtp_ids = random.randint(0, high=len(grp), size=n)
+        trtp_ids = [8359, 11211, 16256, 21276]
 
         for idx, dts in enumerate(grp):
             if idx in trtp_ids:
@@ -54,11 +55,20 @@ def main():
 
     # For trace in traces to print
     for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
         plt.clf()
+        plt.subplot(211)
         plt.plot(t_ax, trace)
-        plt.title(f'Traza STEAD #{trtp_ids[idx]}')
+        plt.title(f'Traza STEAD y espectro #{trtp_ids[idx]}')
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Amplitud [-]')
+        plt.ylabel('Frecuencia [-]')
         plt.grid(True)
         plt.tight_layout()
         plt.savefig(f'Imgs/STEAD{trtp_ids[idx]}')
