@@ -2,22 +2,31 @@ import re
 import h5py
 import numpy as np
 
-import matplotlib.pyplot as plt
-
+import scipy.fftpack as sfft
 import scipy.signal as signal
+
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+from pathlib import Path
 from scipy.signal import butter, lfilter
 
 
 def main():
-    # Carga traza STEAD
+    # Create images and animations folder
 
-    st = '../Data_STEAD/Train_data.hdf5'
+    Path("Imgs").mkdir(exist_ok=True)
+    Path("Animations").mkdir(exist_ok=True)
 
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
+    # Load STEAD trace
+
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
     # Datos Utiles
 
@@ -55,27 +64,24 @@ def main():
                 val = line.strip()
                 data_bb['strain'].append(float(val))
 
-    print(f'Telesismo fo: {len(data_fo["strain"])}')
-    print(f'Telesismo bb: {len(data_bb["strain"])}')
+    t_ax = np.arange(len(data_fo['strain'])) / fs
 
-    # t_ax = np.arange(len(data_fo['strain'])) / fs
-    #
-    # plt.figure()
-    # plt.plot(t_ax, data_fo['strain'])
-    # plt.grid(True)
-    # plt.xlabel('Tiempo [s]')
-    # plt.ylabel('Strain [-]')
-    # plt.title('Registro telesismo DAS')
-    # plt.savefig('Imgs/TelesismoDAS.png')
-    #
-    # plt.clf()
-    # plt.plot(t_ax, data_bb['strain'])
-    # plt.grid(True)
-    # plt.xlabel('Tiempo [s]')
-    # plt.ylabel('Strain [-]')
-    # plt.title('Registro telesismo sismómetro')
-    # plt.savefig('Imgs/TelesismoBBS.png')
-    #
+    plt.figure()
+    plt.plot(t_ax, data_fo['strain'])
+    plt.grid(True)
+    plt.xlabel('Tiempo [s]')
+    plt.ylabel('Strain [-]')
+    plt.title('Registro Reykjanes telesismo DAS')
+    plt.savefig('Imgs/TelesismoDAS.png')
+
+    plt.clf()
+    plt.plot(t_ax, data_bb['strain'])
+    plt.grid(True)
+    plt.xlabel('Tiempo [s]')
+    plt.ylabel('Strain [-]')
+    plt.title('Registro Reykjanes telesismo sismómetro')
+    plt.savefig('Imgs/TelesismoBBS.png')
+
     # plt.clf()
     # line_fo, = plt.plot(t_ax, data_fo['strain'], label='DAS')
     # line_bb, = plt.plot(t_ax, data_bb['strain'], label='Sismómetro')
@@ -137,7 +143,6 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
-    print(f'Sismo local 1: {data["strain"].shape}')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
@@ -261,8 +266,6 @@ def main():
     data['strain'] = data['strain'][1:]
     data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
-
-    print(f'Sismo local 2: {data["strain"].shape}')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #

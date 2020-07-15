@@ -18,7 +18,7 @@ def main():
     Path("Imgs").mkdir(exist_ok=True)
     Path("Animations").mkdir(exist_ok=True)
 
-    # Carga traza STEAD
+    # Load STEAD trace
 
     # st = '../Data_STEAD/Train_data.hdf5'
     #
@@ -36,14 +36,21 @@ def main():
     traces = f["StrainFilt"]
     # time= f["Time"]
     # distance = f["Distance_fiber"]
-    #trtp = [0, 1600, 2650, 2850, 3100]
-    # trtp = [0, 1600, 2650, 2850, 3000, 3100, 4000]
-    trtp = [0, 3000, 3100, 4000]
+
+    # sampling frequency
     fs = 100
-    N = len(traces[0])
+
+    # traces to print
+    trtp = [0, 3000, 3100, 4000]
+
+    # Frequency axis for FFT plot
+    N = traces.shape[1]
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
+    # Create figure for plotting
     plt.figure()
+
+    # plot chosen traces
     for i in trtp:
         yf = sfft.fftshift(sfft.fft(traces[i]))
 
@@ -53,7 +60,7 @@ def main():
         plt.grid(True)
         plt.ylabel('Strain [-]')
         plt.xlabel('Tiempo [s]')
-        plt.title(f'Serie de tiempo y espectro #{i}')
+        plt.title(f'Serie de tiempo y espectro #{i} Francia')
 
         plt.subplot(212)
         plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
@@ -63,47 +70,26 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/Francia_trace_{i}.png')
 
-    # 32, 53, 57, 62
-    # 1600, 2650, 2850, 3100
+    # Create animation of whole data
 
-    # N = len(traces[0])
-    # fig = plt.figure()
-    #
-    # ims = []
-    # for trace in traces:
-    #     im = plt.plot(trace, animated=True)
-    #     ims.append(im)
-    #
-    # ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
-    #                                 repeat=False)
-    # ani.save('Francia_traces.mp4')
-    #
-    # fig = plt.figure()
-    #
-    # ims = []
-    # xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
-    #
-    # for trace in traces:
-    #     yf = sfft.fftshift(sfft.fft(trace))
-    #     im = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
-    #     ims.append(im)
-    #
-    # ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
-    #                                 repeat=False)
-    #
-    # ani.save('Francia_spectrums.mp4')
+    fig_tr = plt.figure()
+    fig_sp = plt.figure()
 
-    # for trace in traces:
-    #     yf = sfft.fftshift(sfft.fft(trace))
-    #     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
-    #     plt.clf()
-    #     plt.subplot(211)
-    #     plt.plot(trace)
-    #     plt.subplot(212)
-    #     plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-    #     plt.show(block=False)
-    #     plt.pause(1.5)
-    #     plt.close()
+    ims_tr = []
+    ims_sp = []
+
+    for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_tr = plt.plot(trace, animated=True)
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
+        ims_tr.append(im_tr)
+        ims_sp.append(im_sp)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=20, blit=True, repeat=False)
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=20, blit=True, repeat=False)
+
+    ani_tr.save('Francia_traces.mp4')
+    ani_sp.save('Francia_spectrums.mp4')
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
     #
