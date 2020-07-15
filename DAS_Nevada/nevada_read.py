@@ -1,6 +1,7 @@
 import h5py
 import segyio
 import numpy as np
+import numpy.random as random
 
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -28,10 +29,6 @@ def main():
     #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
     #         break
 
-    # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
-    # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
-    # f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
-
     f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
 
     with segyio.open(f, ignore_geometry=True) as segy:
@@ -40,45 +37,89 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    print('FILE PoroTomo_iDAS16043_160321073721.sgy')
-    print(traces.shape)
-    print(fs)
+    # Number of traces to plot
+    n = 4
 
-    f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
+    # Traces to plot
+    trtp = []
 
-    with segyio.open(f, ignore_geometry=True) as segy:
-        segy.mmap()
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
 
-        traces = segyio.tools.collect(segy.trace[:])
-        fs = segy.header[0][117]
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
 
-    print('FILE PoroTomo_iDAS025_160321073717.sgy')
-    print(traces.shape)
-    print(fs)
+    # Data len
+    N = traces.shape[1]
 
-    f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
 
-    with segyio.open(f, ignore_geometry=True) as segy:
-        segy.mmap()
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
-        traces = segyio.tools.collect(segy.trace[:])
-        fs = segy.header[0][117]
+    # Figure to plot
+    plt.figure()
 
-    print('FILE PoroTomo_iDAS025_160321073747.sgy')
-    print(traces.shape)
-    print(fs)
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
 
-    f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]}')
+        plt.ylabel('Tiempo [s]')
+        plt.xlabel('Amplitud [-]')
+        plt.grid(True)
 
-    with segyio.open(f, ignore_geometry=True) as segy:
-        segy.mmap()
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/Nevada{trtp_ids[idx]}')
 
-        traces = segyio.tools.collect(segy.trace[:])
-        fs = segy.header[0][117]
+    # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
+    #
+    # with segyio.open(f, ignore_geometry=True) as segy:
+    #     segy.mmap()
+    #
+    #     traces = segyio.tools.collect(segy.trace[:])
+    #     fs = segy.header[0][117]
+    #
+    # print('FILE PoroTomo_iDAS16043_160321073751.sgy')
+    # print(traces.shape)
+    # print(fs)
+    #
+    # f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+    #
+    # with segyio.open(f, ignore_geometry=True) as segy:
+    #     segy.mmap()
+    #
+    #     traces = segyio.tools.collect(segy.trace[:])
+    #     fs = segy.header[0][117]
+    #
+    # print('FILE PoroTomo_iDAS025_160321073747.sgy')
+    # print(traces.shape)
+    # print(fs)
+    #
+    #
+    # f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
+    #
+    # with segyio.open(f, ignore_geometry=True) as segy:
+    #     segy.mmap()
+    #
+    #     traces = segyio.tools.collect(segy.trace[:])
+    #     fs = segy.header[0][117]
+    #
+    # print('FILE PoroTomo_iDAS025_160321073717.sgy')
+    # print(traces.shape)
+    # print(fs)
 
-    print('FILE PoroTomo_iDAS16043_160321073751.sgy')
-    print(traces.shape)
-    print(fs)
+
 
     # t_ax = np.arange(1, len(traces[0]) + 1) / fs
     #
