@@ -56,7 +56,7 @@ def main():
     for idx, trace in enumerate(trtp):
         plt.clf()
         plt.plot(t_ax, trace)
-        plt.title(f'Traza STEAD #{trtp_ids[idx]}')
+        plt.title(f'Traza STEAD #{trtp_ids[1, idx]}')
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Tiempo [s]')
         plt.grid(True)
