@@ -30,7 +30,7 @@ def main():
     traces = f["StrainFilt"]
     # time= f["Time"]
     # distance = f["Distance_fiber"]
-    trtp = [0, 1000, 2000, 3000, 4000, 5000, 6000]
+    trtp = [0, 1600, 2650, 2850, 3100]
     fs = 100
     N = len(traces[0])
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
@@ -48,8 +48,10 @@ def main():
         plt.pause(1.5)
         plt.close()
 
+    # 32, 53, 57, 62
+    # 1600, 2650, 2850, 3100
 
-    #N = len(traces[0])
+    # N = len(traces[0])
     # fig = plt.figure()
     #
     # ims = []
