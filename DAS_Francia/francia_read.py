@@ -78,7 +78,7 @@ def main():
         im_tr = plt.plot(trace)
         ims_tr.append(im_tr)
 
-    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=500, blit=True, repeat=False)
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
     ani_tr.save('Animations/Francia_traces.mp4')
 
     # Create animation of whole data spectrums
@@ -90,7 +90,7 @@ def main():
         im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
         ims_sp.append(im_sp)
 
-    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=500, blit=True, repeat=False)
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
     ani_sp.save('Animations/Francia_spectrums.mp4')
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
