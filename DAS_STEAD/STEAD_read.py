@@ -31,11 +31,13 @@ def main():
         grp = h5_file['earthquake']['local']
 
         # Traces to plot ids
-        trtp_ids = random.randint(0, high=len(grp), size=(1, n))
+        trtp_ids = random.randint(0, high=len(grp), size=n)
 
         for idx, dts in enumerate(grp):
             if idx in trtp_ids:
                 trtp.append(grp[dts][:, 0])
+
+    print(trtp_ids.shape)
 
     # Sampling frequency
     fs = 100
