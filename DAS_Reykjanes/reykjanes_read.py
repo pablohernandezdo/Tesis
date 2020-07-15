@@ -182,7 +182,7 @@ def main():
                 data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
 
     data['strain'] = data['strain'][1:]
-    data['strain'] = data['strain'] / data['strain'].max(axis=0)
+    # data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
     data_das = data
 
