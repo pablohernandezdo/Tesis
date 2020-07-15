@@ -17,6 +17,11 @@ def main():
     # Create images and animations folder
 
     Path("Imgs").mkdir(exist_ok=True)
+    Path("Imgs/721").mkdir(exist_ok=True)
+    Path("Imgs/751").mkdir(exist_ok=True)
+    Path("Imgs/747").mkdir(exist_ok=True)
+    Path("Imgs/717").mkdir(exist_ok=True)
+
     Path("Animations").mkdir(exist_ok=True)
 
     # Carga traza STEAD
@@ -80,7 +85,7 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig(f'Imgs/Nevada721_{trtp_ids[idx]}')
+        plt.savefig(f'Imgs/721/Nevada721_{trtp_ids[idx]}')
 
     # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
     #
