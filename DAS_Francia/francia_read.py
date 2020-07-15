@@ -72,23 +72,26 @@ def main():
 
     # Create animation of whole data
     fig_tr = plt.figure()
-    fig_sp = plt.figure()
-
     ims_tr = []
+
+    for trace in traces:
+        im_tr = plt.plot(trace)
+        ims_tr.append(im_tr)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    ani_tr.save('Animations/Francia_traces.mp4')
+
+    # Create animation of whole data spectrums
+    fig_sp = plt.figure()
     ims_sp = []
 
     for trace in traces:
         yf = sfft.fftshift(sfft.fft(trace))
-        im_tr = plt.plot(trace, animated=True)
-        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
-        ims_tr.append(im_tr)
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
         ims_sp.append(im_sp)
 
-    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=20, blit=True, repeat=False)
-    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=20, blit=True, repeat=False)
-
-    ani_tr.save('Francia_traces.mp4')
-    ani_sp.save('Francia_spectrums.mp4')
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    ani_sp.save('Animations/Francia_spectrums.mp4')
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
     #
