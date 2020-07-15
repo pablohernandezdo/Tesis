@@ -37,7 +37,31 @@ def main():
             if idx in trtp_ids:
                 trtp.append(grp[dts][:, 0])
 
-    print(len(trtp))
+    # Sampling frequency
+    fs = 100
+
+    # Data len
+    N = trtp.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        plt.clf()
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza STEAD #{trtp_ids[idx]}')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Tiempo [s]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/STEAD{trtp_ids[idx]}')
 
     # plt.figure()
     # plt.plot(st_trace)
