@@ -3,25 +3,47 @@ import segyio
 import numpy as np
 
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
+import scipy.fftpack as sfft
 import scipy.signal as signal
 from scipy.signal import butter, lfilter
 
+from pathlib import Path
+
 
 def main():
+    # Create images and animations folder
+
+    Path("Imgs").mkdir(exist_ok=True)
+    Path("Animations").mkdir(exist_ok=True)
+
     # Carga traza STEAD
 
-    st = '../Data_STEAD/Train_data.hdf5'
-
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
     # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
     # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
     # f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+
+    f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    print('FILE PoroTomo_iDAS16043_160321073721.sgy')
+    print(traces.shape)
+    print(fs)
+
     f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
 
     with segyio.open(f, ignore_geometry=True) as segy:
@@ -43,18 +65,6 @@ def main():
         fs = segy.header[0][117]
 
     print('FILE PoroTomo_iDAS025_160321073747.sgy')
-    print(traces.shape)
-    print(fs)
-
-    f = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
-
-    with segyio.open(f, ignore_geometry=True) as segy:
-        segy.mmap()
-
-        traces = segyio.tools.collect(segy.trace[:])
-        fs = segy.header[0][117]
-
-    print('FILE PoroTomo_iDAS16043_160321073721.sgy')
     print(traces.shape)
     print(fs)
 
