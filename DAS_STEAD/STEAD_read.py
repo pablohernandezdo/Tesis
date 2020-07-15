@@ -20,11 +20,13 @@ def main():
 
     st = '../Data_STEAD/Train_data.hdf5'
 
-    #id = random.randint(0, high=10000, size=1)
-
     with h5py.File(st, 'r') as h5_file:
         grp = h5_file['earthquake']['local']
-        print(len(grp))
+
+        # Traces to plot
+        trtp = random.randint(0, high=len(grp), size=(1, 3))
+
+        print(trtp)
         # for idx, dts in enumerate(grp):
         #     if id == idx:
         #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
