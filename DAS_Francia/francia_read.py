@@ -31,7 +31,8 @@ def main():
     # time= f["Time"]
     # distance = f["Distance_fiber"]
     #trtp = [0, 1600, 2650, 2850, 3100]
-    trtp = [0, 1600, 2650, 2850, 3000, 3100, 4000]
+    # trtp = [0, 1600, 2650, 2850, 3000, 3100, 4000]
+    trtp = [0, 3000, 3100, 4000]
     fs = 100
     N = len(traces[0])
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
