@@ -13,9 +13,10 @@ from scipy.signal import butter, lfilter
 
 
 def main():
-    # Create images folder
+    # Create images and animations folder
 
     Path("Imgs").mkdir(exist_ok=True)
+    Path("Animations").mkdir(exist_ok=True)
 
     # Carga traza STEAD
 
