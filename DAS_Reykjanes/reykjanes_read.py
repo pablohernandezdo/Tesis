@@ -90,6 +90,7 @@ def main():
     plt.grid(True)
     plt.xlabel('Amplitud [-]')
     plt.ylabel('Frecuencia [-]')
+    plt.tight_layout()
     plt.savefig('Imgs/TelesismoDAS_spec.png')
 
     plt.clf()
@@ -105,6 +106,7 @@ def main():
     plt.grid(True)
     plt.xlabel('Amplitud [-]')
     plt.ylabel('Frecuencia [-]')
+    plt.tight_layout()
     plt.savefig('Imgs/TelesismoBBS_spec.png')
 
     # plt.figure()
