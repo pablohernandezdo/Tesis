@@ -70,8 +70,8 @@ def main():
         plt.subplot(211)
         plt.plot(t_ax, trace)
         plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]}')
-        plt.ylabel('Tiempo [s]')
-        plt.xlabel('Amplitud [-]')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
         plt.grid(True)
 
         plt.subplot(212)
