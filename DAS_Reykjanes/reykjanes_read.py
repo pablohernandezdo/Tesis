@@ -64,23 +64,64 @@ def main():
                 val = line.strip()
                 data_bb['strain'].append(float(val))
 
-    t_ax = np.arange(len(data_fo['strain'])) / fs
+    # Data len
+    N = len(data_fo['strain'])
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # FFTs
+    yf_fo = sfft.fftshift(sfft.fft(data_fo['strain']))
+    yf_bb = sfft.fftshift(sfft.fft(data_bb['strain']))
 
     plt.figure()
+    plt.subplot(211)
     plt.plot(t_ax, data_fo['strain'])
     plt.grid(True)
     plt.xlabel('Tiempo [s]')
     plt.ylabel('Strain [-]')
     plt.title('Registro Reykjanes telesismo DAS')
-    plt.savefig('Imgs/TelesismoDAS.png')
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf_fo) / np.max(np.abs(yf_fo)))
+    plt.grid(True)
+    plt.xlabel('Amplitud [-]')
+    plt.ylabel('Frecuencia [-]')
+    plt.savefig('Imgs/TelesismoDAS_spec.png')
 
     plt.clf()
+    plt.subplot(211)
     plt.plot(t_ax, data_bb['strain'])
     plt.grid(True)
     plt.xlabel('Tiempo [s]')
     plt.ylabel('Strain [-]')
     plt.title('Registro Reykjanes telesismo sismómetro')
-    plt.savefig('Imgs/TelesismoBBS.png')
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf_bb) / np.max(np.abs(yf_bb)))
+    plt.grid(True)
+    plt.xlabel('Amplitud [-]')
+    plt.ylabel('Frecuencia [-]')
+    plt.savefig('Imgs/TelesismoBBS_spec.png')
+
+    # plt.figure()
+    # plt.plot(t_ax, data_fo['strain'])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro Reykjanes telesismo DAS')
+    # plt.savefig('Imgs/TelesismoDAS.png')
+    #
+    # plt.clf()
+    # plt.plot(t_ax, data_bb['strain'])
+    # plt.grid(True)
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro Reykjanes telesismo sismómetro')
+    # plt.savefig('Imgs/TelesismoBBS.png')
 
     # plt.clf()
     # line_fo, = plt.plot(t_ax, data_fo['strain'], label='DAS')
