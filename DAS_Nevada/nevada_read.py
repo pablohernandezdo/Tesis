@@ -74,7 +74,7 @@ def main():
         plt.clf()
         plt.subplot(211)
         plt.plot(t_ax, trace)
-        plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]}')
+        plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]} archivo 721')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
@@ -87,42 +87,138 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/721/Nevada721_{trtp_ids[idx]}')
 
-    # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
-    #
-    # with segyio.open(f, ignore_geometry=True) as segy:
-    #     segy.mmap()
-    #
-    #     traces = segyio.tools.collect(segy.trace[:])
-    #     fs = segy.header[0][117]
-    #
-    # print('FILE PoroTomo_iDAS16043_160321073751.sgy')
-    # print(traces.shape)
-    # print(fs)
-    #
-    # f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
-    #
-    # with segyio.open(f, ignore_geometry=True) as segy:
-    #     segy.mmap()
-    #
-    #     traces = segyio.tools.collect(segy.trace[:])
-    #     fs = segy.header[0][117]
-    #
-    # print('FILE PoroTomo_iDAS025_160321073747.sgy')
-    # print(traces.shape)
-    # print(fs)
-    #
-    #
-    # f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
-    #
-    # with segyio.open(f, ignore_geometry=True) as segy:
-    #     segy.mmap()
-    #
-    #     traces = segyio.tools.collect(segy.trace[:])
-    #     fs = segy.header[0][117]
-    #
-    # print('FILE PoroTomo_iDAS025_160321073717.sgy')
-    # print(traces.shape)
-    # print(fs)
+    f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]} archivo 751')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/751/Nevada751_{trtp_ids[idx]}')
+
+    f = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]} archivo 747')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/747/Nevada747_{trtp_ids[idx]}')
+
+    f = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
+
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Nevada y espectro #{trtp_ids[idx]} archivo 717')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/717/Nevada717_{trtp_ids[idx]}')
 
 
 
