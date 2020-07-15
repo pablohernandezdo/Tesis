@@ -1,11 +1,12 @@
 import h5py
 import numpy as np
 
+import scipy.io as sio
+import scipy.fftpack as sfft
+import scipy.signal as signal
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-
-import scipy.io as sio
-import scipy.signal as signal
 
 from scipy.signal import butter, lfilter
 
