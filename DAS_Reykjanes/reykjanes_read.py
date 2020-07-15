@@ -190,12 +190,19 @@ def main():
     N = data['strain'].shape[1]
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
+    #Time axis
+    t_ax = np.arange(len(data['strain'][plt_tr])) / fs
+
     # Create animation of whole data
     fig_tr = plt.figure()
     ims_tr = []
 
     for trace in data['strain']:
-        im_tr = plt.plot(trace)
+        im_tr = plt.plot(t_ax, trace)
+        plt.grid(True)
+        plt.ylabel('Amplitud normalizada[-]')
+        plt.xlabel('Tiempo [s]')
+        plt.tight_layout()
         ims_tr.append(im_tr)
 
     ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=1000, blit=True, repeat=False)
@@ -208,6 +215,10 @@ def main():
     for trace in data['strain']:
         yf = sfft.fftshift(sfft.fft(trace))
         im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.grid(True)
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.tight_layout()
         ims_sp.append(im_sp)
 
     ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=1000, blit=True, repeat=False)
