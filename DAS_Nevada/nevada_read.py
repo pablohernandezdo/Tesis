@@ -80,7 +80,7 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig(f'Imgs/Nevada{trtp_ids[idx]}')
+        plt.savefig(f'Imgs/Nevada721_{trtp_ids[idx]}')
 
     # f = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
     #
