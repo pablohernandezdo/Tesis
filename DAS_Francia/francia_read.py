@@ -8,10 +8,15 @@ import scipy.signal as signal
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+from pathlib import Path
 from scipy.signal import butter, lfilter
 
 
 def main():
+    # Create images folder
+
+    Path("Imgs").mkdir(exist_ok=True)
+
     # Carga traza STEAD
 
     # st = '../Data_STEAD/Train_data.hdf5'
@@ -55,9 +60,7 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.xlabel('Frecuencia [Hz]')
         plt.tight_layout()
-        plt.show(block=False)
-        plt.pause(3)
-        plt.close()
+        plt.savefig(f'Imgs/Francia_trace_{i}.png')
 
     # 32, 53, 57, 62
     # 1600, 2650, 2850, 3100
