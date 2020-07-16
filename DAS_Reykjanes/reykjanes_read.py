@@ -434,7 +434,7 @@ def main():
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig(f'Imgs/Local1/Local2_{trtp_ids[idx]}')
+        plt.savefig(f'Imgs/Local2/Local2_{trtp_ids[idx]}')
 
     # Create animation of whole data
     # fig_tr = plt.figure()
