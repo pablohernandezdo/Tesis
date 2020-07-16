@@ -1,52 +1,196 @@
 import h5py
 import numpy as np
+import numpy.random as random
+
+import scipy.fftpack as sfft
+import scipy.signal as signal
+from scipy.signal import butter, lfilter
 
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
-from scipy.signal import butter, lfilter
+from pathlib import Path
 
 
 def main():
+    # Create images and animations folder
+
+    Path("Imgs").mkdir(exist_ok=True)
+    Path("Imgs/500Pa10sec").mkdir(exist_ok=True)
+    Path("Imgs/500Pa100sec").mkdir(exist_ok=True)
+    Path("Imgs/500Pa600sec").mkdir(exist_ok=True)
+
     # Carga traza STEAD
 
-    st = '../Data_STEAD/Train_data.hdf5'
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
-
-    # 959 canales, largo 6_002_723 muestras
-    fi = '../Data_Hydraulic/CSULB500Pa600secP_141210183813.mat'
-
-    with h5py.File(fi, 'r') as f:
-        data = f['data'][()]
-        fs = f['fs_f'][()]
-
-    print('CSULB500Pa600secP_141210183813')
-    print(data.shape)
-    print(fs)
-
+    # 959 canales, largo 119_999 muestras
+    # 500Pa10sec
     fi = '../Data_Hydraulic/CSULB500Pa10secP_141210174309.mat'
 
     with h5py.File(fi, 'r') as f:
-        data = f['data'][()]
+        traces = f['data'][()]
         fs = f['fs_f'][()]
 
-    print('CSULB500Pa10secP141210174309')
-    print(data.shape)
-    print(fs)
+    # Number of traces to plot
+    n = 4
 
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza 500Pa10sec y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/500Pa10sec/500Pa10sec_{trtp_ids[idx]}')
+
+    # 959 canales, largo 2_056_235 muestras
+    # 500Pa100sec
     fi = '../Data_Hydraulic/CSULB500Pa100secP_141210175257.mat'
 
     with h5py.File(fi, 'r') as f:
-        data = f['data'][()]
+        traces = f['data'][()]
         fs = f['fs_f'][()]
 
-    print('CSULB500Pa100secP141210175257')
-    print(data.shape)
-    print(fs)
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza 500Pa100sec y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/500Pa100sec/500Pa100sec_{trtp_ids[idx]}')
+
+    # 959 canales, largo 6_002_723 muestras
+    # 500Pa600sec
+    fi = '../Data_Hydraulic/CSULB500Pa600secP_141210183813.mat'
+
+    with h5py.File(fi, 'r') as f:
+        traces = f['data'][()]
+        fs = f['fs_f'][()]
+
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza 500Pa600sec y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/500Pa600sec/500Pa600sec_{trtp_ids[idx]}')
 
     #traces = data[:, :6000]
 

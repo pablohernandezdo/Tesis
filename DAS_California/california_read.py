@@ -101,7 +101,7 @@ def main():
     #
     # ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
     # ani_tr.save('Animations/California_traces.mp4')
-    # 
+    #
     # # Create animation of whole data spectrums
     # fig_sp = plt.figure()
     # ims_sp = []
