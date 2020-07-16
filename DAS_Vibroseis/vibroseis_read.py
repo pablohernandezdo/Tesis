@@ -1,76 +1,394 @@
 import h5py
 import segyio
 import numpy as np
+import numpy.random as random
 
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
+import scipy.fftpack as sfft
 import scipy.signal as signal
 from scipy.signal import butter, lfilter
 
+from pathlib import Path
+
 
 def main():
+    # Create images and animations folder
+
+    Path("Imgs").mkdir(exist_ok=True)
+    Path("Imgs/048").mkdir(exist_ok=True)
+    Path("Imgs/118").mkdir(exist_ok=True)
+    Path("Imgs/117").mkdir(exist_ok=True)
+    Path("Imgs/047").mkdir(exist_ok=True)
+
+    Path("Animations").mkdir(exist_ok=True)
+    Path("Animations/048").mkdir(exist_ok=True)
+    Path("Animations/118").mkdir(exist_ok=True)
+    Path("Animations/117").mkdir(exist_ok=True)
+    Path("Animations/047").mkdir(exist_ok=True)
+
     # Carga traza STEAD
 
-    st = '../Data_STEAD/Train_data.hdf5'
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
-
-    # f = '../Data_Vibroseis/PoroTomo_iDAS025_160325140047.sgy'
-    # f = '../Data_Vibroseis/PoroTomo_iDAS025_160325140117.sgy'
-    # f = '../Data_Vibroseis/PoroTomo_iDAS16043_160325140048.sgy'
-    f = '../Data_Vibroseis/PoroTomo_iDAS16043_160325140118.sgy'
-
-    # 8721 trazas de 30000 muestras
-
-    with segyio.open(f, ignore_geometry=True) as segy:
-        segy.mmap()
-
-        traces = segyio.tools.collect(segy.trace[:])
-        fs = segy.header[0][117]
-
-    print('FILE PoroTomo_iDAS16043_160325140118.sgy')
-    print(traces.shape)
-    print(fs)
-
+    # File 048
+    # 380 trazas de 30000 muestras
     f = '../Data_Vibroseis/PoroTomo_iDAS16043_160325140048.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    print('FILE PoroTomo_iDAS16043_160325140048.sgy')
-    print(traces.shape)
-    print(fs)
+    # Number of traces to plot
+    n = 4
 
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # Plot n random traces with their spectrum
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Vibroseis y espectro #{trtp_ids[idx]} archivo 048')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/048/Vibroseis048_{trtp_ids[idx]}')
+
+    # Data animation
+    fig_tr = plt.figure()
+    ims_tr = []
+
+    for trace in traces:
+        im_tr = plt.plot(t_ax, trace)
+        plt.title('Trazas dataset Vibroseis archivo 048')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Tiempo [s]')
+        plt.grid(True)
+        ims_tr.append(im_tr)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    ani_tr.save('Animations/048/Traces.mp4')
+
+    # Spectrum animation
+    fig_sp = plt.figure()
+    ims_sp = []
+
+    for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.title('Espectro trazas dataset Vibroseis archivo 721')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
+        ims_sp.append(im_sp)
+
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    ani_sp.save('Animations/048/Spectrums.mp4')
+
+    # File 118
+    # 380 trazas de 30000 muestras
+    f = '../Data_Vibroseis/PoroTomo_iDAS16043_160325140118.sgy'
+
+    # Read file
+    with segyio.open(f, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Vibroseis y espectro #{trtp_ids[idx]} archivo 118')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/118/Vibroseis118_{trtp_ids[idx]}')
+
+    # Data animation
+    fig_tr = plt.figure()
+    ims_tr = []
+
+    for trace in traces:
+        im_tr = plt.plot(t_ax, trace)
+        plt.title('Trazas dataset Vibroseis archivo 118')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Tiempo [s]')
+        plt.grid(True)
+        ims_tr.append(im_tr)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    ani_tr.save('Animations/118/Traces.mp4')
+
+    # Spectrum animation
+    fig_sp = plt.figure()
+    ims_sp = []
+
+    for trace in traces:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.title('Espectro trazas dataset Vibroseis archivo 118')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
+        ims_sp.append(im_sp)
+
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    ani_sp.save('Animations/118/Spectrums.mp4')
+
+    # File 117
+    # 8700 trazas de 30000 muestras
     f = '../Data_Vibroseis/PoroTomo_iDAS025_160325140117.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    print('FILE PoroTomo_iDAS025_160325140117.sgy')
-    print(traces.shape)
-    print(fs)
+    # Number of traces to plot
+    n = 4
 
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Vibroseis y espectro #{trtp_ids[idx]} archivo 117')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/117/Vibroseis117_{trtp_ids[idx]}')
+
+    # # Data animation
+    # fig_tr = plt.figure()
+    # ims_tr = []
+    #
+    # for trace in traces:
+    #     im_tr = plt.plot(t_ax, trace)
+    #     plt.title('Trazas dataset Vibroseis archivo 117')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Tiempo [s]')
+    #     plt.grid(True)
+    #     ims_tr.append(im_tr)
+    #
+    # ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    # ani_tr.save('Animations/117/Traces.mp4')
+    #
+    # # Spectrum animation
+    # fig_sp = plt.figure()
+    # ims_sp = []
+    #
+    # for trace in traces:
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #     im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.title('Espectro trazas dataset Vibroseis archivo 117')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Frecuencia [Hz]')
+    #     plt.grid(True)
+    #     ims_sp.append(im_sp)
+    #
+    # ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    # ani_sp.save('Animations/117/Spectrums.mp4')
+
+    # File 047
+    # 8700 trazas de 30000 muestras
     f = '../Data_Vibroseis/PoroTomo_iDAS025_160325140047.sgy'
 
+    # Read file
     with segyio.open(f, ignore_geometry=True) as segy:
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
-    print('FILE PoroTomo_iDAS025_160325140047.sgy')
-    print(traces.shape)
-    print(fs)
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Vibroseis y espectro #{trtp_ids[idx]} archivo 047')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/047/Vibroseis047_{trtp_ids[idx]}')
+
+    # # Data animation
+    # fig_tr = plt.figure()
+    # ims_tr = []
+    #
+    # for trace in traces:
+    #     im_tr = plt.plot(t_ax, trace)
+    #     plt.title('Trazas dataset Vibroseis archivo 047')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Tiempo [s]')
+    #     plt.grid(True)
+    #     ims_tr.append(im_tr)
+    #
+    # ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    # ani_tr.save('Animations/047/Traces.mp4')
+    #
+    # # Spectrum animation
+    # fig_sp = plt.figure()
+    # ims_sp = []
+    #
+    # for trace in traces:
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #     im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.title('Espectro trazas dataset Vibroseis archivo 047')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Frecuencia [Hz]')
+    #     plt.grid(True)
+    #     ims_sp.append(im_sp)
+    #
+    # ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    # ani_sp.save('Animations/047/Spectrums.mp4')
 
     # t_ax = np.arange(1, len(traces[0]) + 1) / fs
     #
