@@ -30,7 +30,6 @@ def main():
 
     # Registro de 1 minuto de sismo M1.9 a 100 Km NE del cable
     # 6848 trazas de 6000 muestras
-
     f = sio.loadmat("../Data_Francia/Earthquake_1p9_Var_BP_2p5_15Hz.mat")
 
     traces = f["StrainFilt"]
@@ -43,8 +42,13 @@ def main():
     # traces to print
     trtp = [0, 3000, 3100, 4000]
 
-    # Frequency axis for FFT plot
+    # Data len
     N = traces.shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
     # Create figure for plotting
@@ -75,7 +79,11 @@ def main():
     ims_tr = []
 
     for trace in traces:
-        im_tr = plt.plot(trace)
+        im_tr = plt.plot(t_ax, trace)
+        plt.title('Trazas dataset Francia')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Tiempo [s]')
+        plt.grid(True)
         ims_tr.append(im_tr)
 
     ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
@@ -88,6 +96,10 @@ def main():
     for trace in traces:
         yf = sfft.fftshift(sfft.fft(trace))
         im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.title('Espectro trazas dataset Francia')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
         ims_sp.append(im_sp)
 
     ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
