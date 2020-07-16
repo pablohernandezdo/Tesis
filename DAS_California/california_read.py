@@ -1,5 +1,5 @@
 import h5py
-import scipy.io
+import scipy.io as sio
 import numpy as np
 import numpy.random as random
 
@@ -29,9 +29,9 @@ def main():
     #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
     #         break
 
-    # f = scipy.io.loadmat('../Data_California/FSE-11_1080SecP_SingDec_StepTest (1).mat')
+    # f = sio.loadmat('../Data_California/FSE-11_1080SecP_SingDec_StepTest (1).mat')
     # 139 trazas de 953432 muestras (196 según documentación ?)
-    f = scipy.io.loadmat('../Data_California/FSE-06_480SecP_SingDec_StepTest (1).mat')
+    f = sio.loadmat('../Data_California/FSE-06_480SecP_SingDec_StepTest (1).mat')
 
     # Seismic traces data
     data = f['singdecmatrix']

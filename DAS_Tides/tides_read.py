@@ -33,7 +33,7 @@ def main():
         trace = f['clipdata'][()]
 
     print(trace.shape)
-    
+
     # Sampling frequency
     fs = 1000
 
