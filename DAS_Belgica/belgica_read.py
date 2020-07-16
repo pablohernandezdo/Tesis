@@ -90,7 +90,14 @@ def main():
 
     # Obtain 5 km average trace
     avg_trace = np.mean(traces[3500:4001, :], 0)
+    avg_fil1 = butter_bandpass_filter(avg_trace, 0.5, 1, fs, order=5)
+    avg_fil2 = butter_bandpass_filter(avg_trace, 0.2, 0.6, 10, order=5)
+    avg_fil3 = butter_bandpass_filter(avg_trace, 0.1, 0.3, 10, order=5)
+
     yf = sfft.fftshift(sfft.fft(avg_trace))
+    yf_fil1 = sfft.fftshift(sfft.fft(avg_fil1))
+    yf_fil2 = sfft.fftshift(sfft.fft(avg_fil2))
+    yf_fil3 = sfft.fftshift(sfft.fft(avg_fil3))
 
     plt.clf()
     plt.subplot(211)
@@ -108,7 +115,56 @@ def main():
     plt.tight_layout()
     plt.savefig(f'Imgs/Belgica_avg')
 
-    # t_ax = np.arange(len(traces[plt_tr])) / fs
+    plt.clf()
+    plt.subplot(211)
+    plt.plot(t_ax, avg_fil1)
+    plt.title(f'Traza promedio Belgica filtrada 0.5 - 1 Hz y espectro')
+    plt.xlabel('Tiempo [s]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf_fil1) / np.max(np.abs(yf_fil1)))
+    plt.xlabel('Frecuencia [Hz]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'Imgs/Belgica_avg_fil1')
+
+    plt.clf()
+    plt.subplot(211)
+    plt.plot(t_ax, avg_fil2)
+    plt.title(f'Traza promedio Belgica filtrada 0.2 - 0.6 Hz y espectro')
+    plt.xlabel('Tiempo [s]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf_fil2) / np.max(np.abs(yf_fil2)))
+    plt.xlabel('Frecuencia [Hz]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'Imgs/Belgica_avg_fil2')
+
+    plt.clf()
+    plt.subplot(211)
+    plt.plot(t_ax, avg_fil3)
+    plt.title(f'Traza promedio Belgica filtrada 0.1 - 0.3 Hz y espectro')
+    plt.xlabel('Tiempo [s]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf_fil3) / np.max(np.abs(yf_fil3)))
+    plt.xlabel('Frecuencia [Hz]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'Imgs/Belgica_avg_fil3')
+
+
+# t_ax = np.arange(len(traces[plt_tr])) / fs
     #
     # trace1 = traces[1000] / np.max(traces[1000])
     # trace2 = traces[2000] / np.max(traces[2000])
