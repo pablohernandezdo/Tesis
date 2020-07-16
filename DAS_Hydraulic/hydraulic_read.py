@@ -52,8 +52,6 @@ def main():
         if idx in trtp_ids:
             trtp.append(trace)
 
-    print(traces.shape)
-
     # Data len
     N = traces.shape[1]
 
@@ -65,6 +63,9 @@ def main():
 
     # Figure to plot
     plt.figure()
+
+    print(t_ax.shape)
+    print(traces[0].shape)
 
     # For trace in traces to print
     for idx, trace in enumerate(trtp):
