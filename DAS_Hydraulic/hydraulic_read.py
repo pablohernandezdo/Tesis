@@ -52,6 +52,8 @@ def main():
         if idx in trtp_ids:
             trtp.append(trace)
 
+    print(traces.shape)
+
     # Data len
     N = traces.shape[1]
 
