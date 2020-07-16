@@ -1,5 +1,6 @@
 import h5py
 import numpy as np
+import numpy.random as random
 
 import scipy.io as sio
 import scipy.fftpack as sfft
@@ -10,53 +11,102 @@ import matplotlib.animation as animation
 
 from scipy.signal import butter, lfilter
 
+from pathlib import Path
+
 
 def main():
-    # Carga traza STEAD
+    # Create images and animations folder
 
-    st = '../Data_STEAD/Train_data.hdf5'
+    Path("Imgs").mkdir(exist_ok=True)
+    Path("Animations").mkdir(exist_ok=True)
 
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
+    # # Carga traza STEAD
+    #
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
+
+    # Read file
     # 4192 canales, 42000 muestra por traza
-
     f = sio.loadmat("../Data_Belgica/mat_2018_08_19_00h28m05s_Parkwind_HDAS_2Dmap_StrainData_2D.mat")
 
+    # Read data
     traces = f['Data_2D']
     plt_tr = 4000
+
+    # Sampling frequency
     fs = 10
 
-    N = len(traces[0])
+    # Number of traces to plot
+    n = 4
 
-    fig = plt.figure()
+    # Traces to plot
+    trtp = []
 
-    ims = []
-    for trace in traces:
-        im = plt.plot(trace, animated=True)
-        ims.append(im)
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(traces), size=n)
 
-    ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
-                                    repeat=False)
-    ani.save('Belgica_traces.mp4')
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
 
-    fig = plt.figure()
+    # Data len
+    N = traces.shape[1]
 
-    ims = []
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
 
-    for trace in traces:
+    # Figure to plot
+    plt.figure()
+
+    # Plot n random traces with their spectrum
+    for idx, trace in enumerate(trtp):
         yf = sfft.fftshift(sfft.fft(trace))
-        im = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)), animated=True)
-        ims.append(im)
 
-    ani = animation.ArtistAnimation(fig, ims, interval=20, blit=True,
-                                    repeat=False)
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Belgica y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
 
-    ani.save('Francia_spectrums.mp4')
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/Belgica_{trtp_ids[idx]}')
+
+    # Obtain 5 km average trace
+    avg_trace = np.mean(traces[3500:4001, :], 0)
+    yf = sfft.fftshift(sfft.fft(avg_trace))
+
+    plt.clf()
+    plt.subplot(211)
+    plt.plot(t_ax, avg_trace)
+    plt.title(f'Traza promedio Belgica y espectro')
+    plt.xlabel('Tiempo [s]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    plt.xlabel('Frecuencia [Hz]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f'Imgs/Belgica_avg')
 
     # t_ax = np.arange(len(traces[plt_tr])) / fs
     #
