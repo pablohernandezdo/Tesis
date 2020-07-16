@@ -237,35 +237,35 @@ def main():
         plt.savefig(f'Imgs/Local1/Local1_{trtp_ids[idx]}')
 
     # Create animation of whole data
-    fig_tr = plt.figure()
-    ims_tr = []
-
-    for trace in data['strain']:
-        im_tr = plt.plot(t_ax, trace)
-        plt.title('Trazas dataset Reykjanes sismo local 1')
-        plt.ylabel('Amplitud [-]')
-        plt.xlabel('Tiempo [s]')
-        plt.grid(True)
-        ims_tr.append(im_tr)
-
-    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=1000, blit=True, repeat=False)
-    ani_tr.save('Animations/Reykjanes_dastraces_local1.mp4')
-
-    # Create animation of whole data spectrums
-    fig_sp = plt.figure()
-    ims_sp = []
-
-    for trace in data['strain']:
-        yf = sfft.fftshift(sfft.fft(trace))
-        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.title('Espectro trazas dataset Reykjanes sismo local 1')
-        plt.ylabel('Amplitud [-]')
-        plt.xlabel('Frecuencia [Hz]')
-        plt.grid(True)
-        ims_sp.append(im_sp)
-
-    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=1000, blit=True, repeat=False)
-    ani_sp.save('Animations/Reykjanes_dasspectrums_local1.mp4')
+    # fig_tr = plt.figure()
+    # ims_tr = []
+    #
+    # for trace in data['strain']:
+    #     im_tr = plt.plot(t_ax, trace)
+    #     plt.title('Trazas dataset Reykjanes sismo local 1')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Tiempo [s]')
+    #     plt.grid(True)
+    #     ims_tr.append(im_tr)
+    #
+    # ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=1000, blit=True, repeat=False)
+    # ani_tr.save('Animations/Reykjanes_dastraces_local1.mp4')
+    #
+    # # Create animation of whole data spectrums
+    # fig_sp = plt.figure()
+    # ims_sp = []
+    #
+    # for trace in data['strain']:
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #     im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.title('Espectro trazas dataset Reykjanes sismo local 1')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Frecuencia [Hz]')
+    #     plt.grid(True)
+    #     ims_sp.append(im_sp)
+    #
+    # ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=1000, blit=True, repeat=False)
+    # ani_sp.save('Animations/Reykjanes_dasspectrums_local1.mp4')
 
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
@@ -437,35 +437,35 @@ def main():
         plt.savefig(f'Imgs/Local1/Local2_{trtp_ids[idx]}')
 
     # Create animation of whole data
-    fig_tr = plt.figure()
-    ims_tr = []
-
-    for trace in data['strain']:
-        im_tr = plt.plot(t_ax, trace)
-        plt.title('Trazas dataset Reykjanes sismo local 2')
-        plt.ylabel('Amplitud [-]')
-        plt.xlabel('Tiempo [s]')
-        plt.grid(True)
-        ims_tr.append(im_tr)
-
-    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
-    ani_tr.save('Animations/Reykjanes_dastraces_local2.mp4')
-
-    # Create animation of whole data spectrums
-    fig_sp = plt.figure()
-    ims_sp = []
-
-    for trace in data['strain']:
-        yf = sfft.fftshift(sfft.fft(trace))
-        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.title('Espectro trazas dataset Reykjanes sismo local 2')
-        plt.ylabel('Amplitud [-]')
-        plt.xlabel('Frecuencia [Hz]')
-        plt.grid(True)
-        ims_sp.append(im_sp)
-
-    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
-    ani_sp.save('Animations/Reykjanes_dasspectrums_local2.mp4')
+    # fig_tr = plt.figure()
+    # ims_tr = []
+    #
+    # for trace in data['strain']:
+    #     im_tr = plt.plot(t_ax, trace)
+    #     plt.title('Trazas dataset Reykjanes sismo local 2')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Tiempo [s]')
+    #     plt.grid(True)
+    #     ims_tr.append(im_tr)
+    #
+    # ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=50, blit=True, repeat=False)
+    # ani_tr.save('Animations/Reykjanes_dastraces_local2.mp4')
+    #
+    # # Create animation of whole data spectrums
+    # fig_sp = plt.figure()
+    # ims_sp = []
+    #
+    # for trace in data['strain']:
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #     im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.title('Espectro trazas dataset Reykjanes sismo local 2')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.xlabel('Frecuencia [Hz]')
+    #     plt.grid(True)
+    #     ims_sp.append(im_sp)
+    #
+    # ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=50, blit=True, repeat=False)
+    # ani_sp.save('Animations/Reykjanes_dasspectrums_local2.mp4')
 
 
 # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
