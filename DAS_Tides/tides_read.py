@@ -1,11 +1,15 @@
 import h5py
 import numpy as np
+import numpy.random as random
 
 import matplotlib.pyplot as plt
 
+import scipy.fftpack as sfft
+import scipy.signal as signal
 from scipy.signal import butter, lfilter
 
 from pathlib import Path
+
 
 def main():
     # Create images folder
@@ -26,24 +30,39 @@ def main():
     file = '../Data_Tides/CSULB_T13_EarthTide_earthtide_mean_360_519.mat'
 
     with h5py.File(file, 'r') as f:
-        data = f['clipdata'][()]
+        trace = f['clipdata'][()]
 
     # Sampling frequency
     fs = 1000
 
     # Data len
-    N = data['strain'].shape[1]
+    N = trace.shape[1]
 
     # Time axis for signal plot
     t_ax = np.arange(N) / fs
 
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # FFT
+    yf = sfft.fftshift(sfft.fft(trace))
+
+    # Plot
     plt.figure()
-    plt.plot(data)
-    plt.title('Trazas dataset DAS no sísmico Tides')
-    plt.ylabel('Amplitud normalizada[-]')
+    plt.subplot(211)
+    plt.plot(t_ax, trace)
+    plt.title('Traza dataset DAS no sísmico Tides')
     plt.xlabel('Tiempo [s]')
+    plt.ylabel('Amplitud normalizada[-]')
     plt.grid(True)
-    plt.savefig('Imgs/Tides_traces.png')
+
+    plt.subplot(212)
+    plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    plt.xlabel('Frecuencia [Hz]')
+    plt.ylabel('Amplitud [-]')
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig('Imgs/Tides_trace.png')
 
     # data = data / np.max(np.abs(data))
     # data_cut = data[:(data.size // 6000) * 6000]
