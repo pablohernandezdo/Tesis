@@ -200,7 +200,7 @@ def main():
     trtp_ids = random.randint(0, high=len(data['strain']), size=n)
 
     # Retrieve selected traces
-    for idx, trace in enumerate(traces):
+    for idx, trace in enumerate(data['strain']):
         if idx in trtp_ids:
             trtp.append(trace)
 
@@ -400,7 +400,7 @@ def main():
     trtp_ids = random.randint(0, high=len(data['strain']), size=n)
 
     # Retrieve selected traces
-    for idx, trace in enumerate(traces):
+    for idx, trace in enumerate(data['strain']):
         if idx in trtp_ids:
             trtp.append(trace)
 
