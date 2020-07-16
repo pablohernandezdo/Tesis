@@ -1,6 +1,7 @@
 import re
 import h5py
 import numpy as np
+import numpy.random as random
 
 import scipy.fftpack as sfft
 import scipy.signal as signal
@@ -16,6 +17,9 @@ def main():
     # Create images and animations folder
 
     Path("Imgs").mkdir(exist_ok=True)
+    Path("Imgs/Telesismo").mkdir(exist_ok=True)
+    Path("Imgs/Local1").mkdir(exist_ok=True)
+    Path("Imgs/Local2").mkdir(exist_ok=True)
     Path("Animations").mkdir(exist_ok=True)
 
     # Load STEAD trace
@@ -91,7 +95,7 @@ def main():
     plt.ylabel('Amplitud [-]')
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig('Imgs/TelesismoDAS_spec.png')
+    plt.savefig('Imgs/Telesismo/TelesismoDAS_spec.png')
 
     plt.clf()
     plt.subplot(211)
@@ -107,7 +111,7 @@ def main():
     plt.ylabel('Amplitud [-]')
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig('Imgs/TelesismoBBS_spec.png')
+    plt.savefig('Imgs/Telesismo/TelesismoBBS_spec.png')
 
     # plt.figure()
     # plt.plot(t_ax, data_fo['strain'])
@@ -186,6 +190,20 @@ def main():
     data['strain'] = data['strain'].transpose()
     data_das = data
 
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(data['strain']), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
     # Data len
     N = data['strain'].shape[1]
 
@@ -194,6 +212,29 @@ def main():
 
     # Frequency axis for FFT plot
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Reykjanes sismo local 1 y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/Local1/Local1_{trtp_ids[idx]}')
 
     # Create animation of whole data
     fig_tr = plt.figure()
@@ -349,6 +390,20 @@ def main():
     # data['strain'] = data['strain'] / data['strain'].max(axis=0)
     data['strain'] = data['strain'].transpose()
 
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(data['strain']), size=n)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(traces):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
     # Data len
     N = data['strain'].shape[1]
 
@@ -357,6 +412,29 @@ def main():
 
     # Frequency axis for FFT plot
     xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Reykjanes sismo local 2 y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/Local1/Local2_{trtp_ids[idx]}')
 
     # Create animation of whole data
     fig_tr = plt.figure()
