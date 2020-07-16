@@ -64,16 +64,13 @@ def main():
     # Figure to plot
     plt.figure()
 
-    print(t_ax.shape)
-    print(traces[0].shape)
-
     # For trace in traces to print
     for idx, trace in enumerate(trtp):
         yf = sfft.fftshift(sfft.fft(trace))
 
         plt.clf()
         plt.subplot(211)
-        plt.plot(t_ax, trace)
+        plt.plot(np.squeeze(t_ax), trace)
         plt.title(f'Traza 500Pa10sec y espectro #{trtp_ids[idx]}')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
@@ -127,7 +124,7 @@ def main():
 
         plt.clf()
         plt.subplot(211)
-        plt.plot(t_ax, trace)
+        plt.plot(np.squeeze(t_ax), trace)
         plt.title(f'Traza 500Pa100sec y espectro #{trtp_ids[idx]}')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
@@ -181,7 +178,7 @@ def main():
 
         plt.clf()
         plt.subplot(211)
-        plt.plot(t_ax, trace)
+        plt.plot(np.squeeze(t_ax), trace)
         plt.title(f'Traza 500Pa600sec y espectro #{trtp_ids[idx]}')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
