@@ -32,6 +32,8 @@ def main():
     with h5py.File(file, 'r') as f:
         trace = f['clipdata'][()]
 
+    print(trace.shape)
+    
     # Sampling frequency
     fs = 1000
 
