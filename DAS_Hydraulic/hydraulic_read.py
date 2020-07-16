@@ -77,7 +77,7 @@ def main():
         plt.grid(True)
 
         plt.subplot(212)
-        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.plot(np.squeeze(xf), np.abs(yf) / np.max(np.abs(yf)))
         plt.xlabel('Frecuencia [Hz]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
@@ -131,7 +131,7 @@ def main():
         plt.grid(True)
 
         plt.subplot(212)
-        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.plot(np.squeeze(xf), np.abs(yf) / np.max(np.abs(yf)))
         plt.xlabel('Frecuencia [Hz]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
@@ -185,7 +185,7 @@ def main():
         plt.grid(True)
 
         plt.subplot(212)
-        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.plot(np.squeeze(xf), np.abs(yf) / np.max(np.abs(yf)))
         plt.xlabel('Frecuencia [Hz]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
