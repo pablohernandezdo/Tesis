@@ -125,34 +125,154 @@ def main():
     n_trtp = 4
 
     # Traces to plot
-    trtp = []
+    trtp_sin1 = []
+    trtp_sin2 = []
+    trtp_sin3 = []
+    trtp_sin1_ns = []
+    trtp_sin2_ns = []
+    trtp_sin3_ns = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(wvs1), size=n_trtp)
+    trtp_ids_sin1 = random.randint(0, high=len(wvs1), size=n_trtp)
+    trtp_ids_sin2 = random.randint(0, high=len(wvs2), size=n_trtp)
+    trtp_ids_sin3 = random.randint(0, high=len(wvs3), size=n_trtp)
+    trtp_ids_sin1_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp)
+    trtp_ids_sin2_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp)
+    trtp_ids_sin3_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp)
 
     # Retrieve selected traces
     for idx, trace in enumerate(wvs1):
-        if idx in trtp_ids:
-            trtp.append(trace)
+        if idx in trtp_ids_sin1:
+            trtp_sin1.append(trace)
+
+    for idx, trace in enumerate(wvs2):
+        if idx in trtp_ids_sin2:
+            trtp_sin2.append(trace)
+
+    for idx, trace in enumerate(wvs3):
+        if idx in trtp_ids_sin3:
+            trtp_sin3.append(trace)
+
+    for idx, trace in enumerate(wvs1_ns):
+        if idx in trtp_ids_sin1_ns:
+            trtp_sin1_ns.append(trace)
+
+    for idx, trace in enumerate(wvs2_ns):
+        if idx in trtp_ids_sin2_ns:
+            trtp_sin2_ns.append(trace)
+
+    for idx, trace in enumerate(wvs3_ns):
+        if idx in trtp_ids_sin3_ns:
+            trtp_sin3_ns.append(trace)
 
     # Figure to plot
     plt.figure()
 
-    # Plot n random traces with their spectrum
-    for idx, trace in enumerate(trtp):
+    # Plot n random Sin 1 traces
+    for idx, trace in enumerate(trtp_sin1):
         plt.clf()
         plt.plot(t, trace)
-        plt.title(f'Traza sinusoides 1 #{trtp_ids[idx]}')
+        plt.title(f'Traza sinusoides 1 #{trtp_ids_sin1[idx]}')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
-        plt.savefig(f'Imgs/Sin1/Sin1_{trtp_ids[idx]}')
+        plt.savefig(f'Imgs/Sin1/Sin1_{trtp_ids_sin1[idx]}')
 
+    # Plot n random Sin 2 traces
+    for idx, trace in enumerate(trtp_sin2):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides 2 #{trtp_ids_sin2[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin2/Sin2_{trtp_ids_sin2[idx]}')
+
+    # Plot n random Sin 3 traces
+    for idx, trace in enumerate(trtp_sin3):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides 3 #{trtp_ids_sin3[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin3/Sin3_{trtp_ids_sin3[idx]}')
+
+    # Plot n random Sin 1 + noise traces
+    for idx, trace in enumerate(trtp_sin1_ns):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides 1 + noise #{trtp_ids_sin1_ns[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin1_ns/Sin1_ns_{trtp_ids_sin1_ns[idx]}')
+
+    # Plot n random Sin 2 + noise traces
+    for idx, trace in enumerate(trtp_sin2_ns):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides 2 #{trtp_ids_sin2_ns[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin2_ns/Sin2_ns_{trtp_ids_sin2_ns[idx]}')
+
+    # Plot n random Sin 3 + noise traces
+    for idx, trace in enumerate(trtp_sin3_ns):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides 3 + noise #{trtp_ids_sin3_ns[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin3_ns/Sin3_ns_{trtp_ids_sin3_ns[idx]}')
 
     # Plot Padded Sine waveforms
 
+    # Traces to plot
+    trtp_padd = []
+
+    # Traces to plot numbers
+    trtp_ids_padd = random.randint(0, high=len(wvs), size=n_trtp)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(wvs):
+        if idx in trtp_ids_padd:
+            trtp_padd.append(trace)
+
+    # Plot n random Sin 1 traces
+    for idx, trace in enumerate(trtp_padd):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides padd #{trtp_ids_padd[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin_pad/Sin_pad_{trtp_ids_padd[idx]}')
 
     # Plot wavelet waveforms
+
+    # Traces to plot
+    trtp_wvlets = []
+
+    # Traces to plot numbers
+    trtp_ids_wvlets = random.randint(0, high=len(lets), size=n_trtp)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(lets):
+        if idx in trtp_ids_wvlets:
+            trtp_wvlets.append(trace)
+
+    # Plot n random wavelet
+    for idx, trace in enumerate(trtp_wvlets):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Wavelet #{trtp_ids_padd[idx]}')
+        plt.xlabel('Muestras [-]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Wavelets/wavelet_{trtp_ids_wvlets[idx]}')
 
 
 if __name__ == "__main__":
