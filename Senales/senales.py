@@ -34,9 +34,6 @@ def main():
     # sampling frequency
     fs = 100
 
-    # sampling spacing
-    T = 1.0 / fs
-
     # Time axis
     t = np.linspace(0.0, N / fs, N)
 
@@ -45,7 +42,7 @@ def main():
 
     # Frequency spans
     fr1 = np.linspace(1, 100, n)
-    fr2 = np.linspace(0, 10, n)
+    fr2 = np.linspace(0, 1, n)
 
     # Prealocate
     wvs1 = []
@@ -63,9 +60,9 @@ def main():
     wvs2 = np.array(wvs2)
     wvs3 = np.array(wvs3)
 
-    wvs1_ns = wvs1 + random.random_sample(wvs1.shape)
-    wvs2_ns = wvs2 + random.random_sample(wvs1.shape)
-    wvs3_ns = wvs3 + random.random_sample(wvs1.shape)
+    wvs1_ns = wvs1 + 0.5 * random.random_sample(wvs1.shape)
+    wvs2_ns = wvs2 + 0.5 * random.random_sample(wvs1.shape)
+    wvs3_ns = wvs3 + 0.5 * random.random_sample(wvs1.shape)
 
     # PADDED SINES
 
@@ -274,7 +271,16 @@ def main():
         plt.grid(True)
         plt.savefig(f'Imgs/Wavelets/wavelet_{trtp_ids_wvlets[idx]}')
 
+    # Plot noise
+
+    plt.clf()
+    plt.plot(ns)
+    plt.xlabel('Muestras [-]')
+    plt.ylabel('Amplitud [-]')
+    plt.title('Ruido blanco')
+    plt.grid(True)
+    plt.savefig(f'Imgs/Noise/noise.png')
+
 
 if __name__ == "__main__":
     main()
-
