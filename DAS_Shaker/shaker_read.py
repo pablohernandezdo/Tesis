@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 def main():
-    # Create images and animations folder
+    # Create images folder
 
     Path("Imgs").mkdir(exist_ok=True)
 
@@ -38,7 +38,7 @@ def main():
 
     # Sampling frequency
     fs = 200
-    
+
     # Number of traces to plot
     n = 4
 

@@ -1,0 +1,160 @@
+import pywt
+import numpy as np
+import numpy.random as random
+
+from scipy import signal
+import matplotlib.pyplot as plt
+
+from pathlib import Path
+
+
+def main():
+    # Create images folder
+
+    Path("Imgs").mkdir(exist_ok=True)
+    Path("Imgs/Noise").mkdir(exist_ok=True)
+    Path("Imgs/Sin1").mkdir(exist_ok=True)
+    Path("Imgs/Sin2").mkdir(exist_ok=True)
+    Path("Imgs/Sin3").mkdir(exist_ok=True)
+    Path("Imgs/Sin1_ns").mkdir(exist_ok=True)
+    Path("Imgs/Sin2_ns").mkdir(exist_ok=True)
+    Path("Imgs/Sin3_ns").mkdir(exist_ok=True)
+    Path("Imgs/Sin_pad").mkdir(exist_ok=True)
+    Path("Imgs/Wavelets").mkdir(exist_ok=True)
+
+    # Noise
+
+    ns = random.random_sample((1, 6000))
+
+    # Sine waves
+
+    # Number of sample points
+    N = 6000
+
+    # sampling frequency
+    fs = 100
+
+    # sampling spacing
+    T = 1.0 / fs
+
+    # Time axis
+    t = np.linspace(0.0, N / fs, N)
+
+    # Number of frequency interval steps
+    n = 100
+
+    # Frequency spans
+    fr1 = np.linspace(1, 100, n)
+    fr2 = np.linspace(0, 10, n)
+
+    # Prealocate
+    wvs1 = []
+    wvs2 = []
+    wvs3 = []
+
+    for f1, f2 in zip(fr1, fr2):
+        sig1 = np.sin(f1 * 2.0 * np.pi * t)
+        sig2 = np.sin(f2 * 2.0 * np.pi * t)
+        wvs1.append(sig1)
+        wvs2.append(sig2)
+        wvs3.append(sig1 + sig2)
+
+    wvs1 = np.array(wvs1)
+    wvs2 = np.array(wvs2)
+    wvs3 = np.array(wvs3)
+
+    wvs1_ns = wvs1 + random.random_sample(wvs1.shape)
+    wvs2_ns = wvs2 + random.random_sample(wvs1.shape)
+    wvs3_ns = wvs3 + random.random_sample(wvs1.shape)
+
+    # PADDED SINES
+
+    # Number of intermediate sample points
+    ni = [1000, 2000, 4000, 5000]
+
+    # Number of points to zero-pad
+    pad = [(N-n) // 2 for n in ni]
+
+    # Time axis for smaller waves
+    lts = [np.linspace(0.0, nis / fs, nis) for nis in ni]
+
+    # All frequencies list
+    all_fr = []
+
+    # Calculate max period for smaller waves
+    max_periods = [n_points / fs for n_points in ni]
+
+    # Calculate frequencies for smaller waves
+    for per in max_periods:
+        freqs = []
+        for i in range(1, int(per)+1):
+            if per % i == 0:
+                freqs.append(1/i)
+        all_fr.append(freqs)
+
+    # Preallocate waves
+    wvs = []
+
+    # Generate waves and zero padd
+    for idx, fr_ls in enumerate(all_fr):
+        for fr in fr_ls:
+            wv = np.sin(fr * 2.0 * np.pi * lts[idx])
+            wv = np.pad(wv, (pad[idx], pad[idx]), 'constant')
+            wvs.append(wv)
+
+    # Wavelets
+
+    # Preallocate wavelets
+    lets = []
+
+    # Discrete wavelet families
+    discrete_families = ['db', 'sym', 'coif', 'bior', 'rbio']
+
+    # Obtain wavelet waveforms, resample and append
+    for fam in discrete_families:
+        for wavelet in pywt.wavelist(fam):
+            wv = pywt.Wavelet(wavelet)
+            if wv.orthogonal:
+                [_, psi, _] = pywt.Wavelet(wavelet).wavefun(level=5)
+                psi = signal.resample(psi, 6000)
+                lets.append(psi)
+
+    # Plot Sine waveforms
+
+    # Number of traces to plot
+    n_trtp = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = random.randint(0, high=len(wvs1), size=n_trtp)
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(wvs1):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Figure to plot
+    plt.figure()
+
+    # Plot n random traces with their spectrum
+    for idx, trace in enumerate(trtp):
+        plt.clf()
+        plt.plot(t, trace)
+        plt.title(f'Traza sinusoides 1 #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.savefig(f'Imgs/Sin1/Sin1_{trtp_ids[idx]}')
+
+
+    # Plot Padded Sine waveforms
+
+
+    # Plot wavelet waveforms
+
+
+if __name__ == "__main__":
+    main()
+
