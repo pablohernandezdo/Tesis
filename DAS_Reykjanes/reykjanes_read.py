@@ -197,7 +197,7 @@ def main():
     trtp = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(data['strain']), size=n)
+    trtp_ids = random.randint(0, high=len(data['strain']), size=n).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(data['strain']):
@@ -397,7 +397,7 @@ def main():
     trtp = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(data['strain']), size=n)
+    trtp_ids = random.randint(0, high=len(data['strain']), size=n).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(data['strain']):

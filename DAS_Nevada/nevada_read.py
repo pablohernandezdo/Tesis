@@ -55,7 +55,7 @@ def main():
     trtp = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(traces), size=n)
+    trtp_ids = random.randint(0, high=len(traces), size=n).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(traces):
@@ -142,7 +142,7 @@ def main():
     trtp = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(traces), size=n)
+    trtp_ids = random.randint(0, high=len(traces), size=n).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(traces):
@@ -229,7 +229,7 @@ def main():
     trtp = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(traces), size=n)
+    trtp_ids = random.randint(0, high=len(traces), size=n).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(traces):
@@ -316,7 +316,7 @@ def main():
     trtp = []
 
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(traces), size=n)
+    trtp_ids = random.randint(0, high=len(traces), size=n).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(traces):

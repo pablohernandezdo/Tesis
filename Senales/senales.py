@@ -50,7 +50,6 @@ def main():
     wvs3 = []
 
     for f1, f2 in zip(fr1, fr2):
-        print(f1, f2)
         sig1 = np.sin(f1 * 2.0 * np.pi * t)
         sig2 = np.sin(f2 * 2.0 * np.pi * t)
         wvs1.append(sig1)
@@ -91,14 +90,14 @@ def main():
         all_fr.append(freqs)
 
     # Preallocate waves
-    wvs = []
+    wvs_pad = []
 
-    # Generate waves and zero padd
+    # Generate waves and zero pad
     for idx, fr_ls in enumerate(all_fr):
         for fr in fr_ls:
             wv = np.sin(fr * 2.0 * np.pi * lts[idx])
             wv = np.pad(wv, (pad[idx], pad[idx]), 'constant')
-            wvs.append(wv)
+            wvs_pad.append(wv)
 
     # Wavelets
 
@@ -131,12 +130,12 @@ def main():
     trtp_sin3_ns = []
 
     # Traces to plot numbers
-    trtp_ids_sin1 = random.randint(0, high=len(wvs1), size=n_trtp)
-    trtp_ids_sin2 = random.randint(0, high=len(wvs2), size=n_trtp)
-    trtp_ids_sin3 = random.randint(0, high=len(wvs3), size=n_trtp)
-    trtp_ids_sin1_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp)
-    trtp_ids_sin2_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp)
-    trtp_ids_sin3_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp)
+    trtp_ids_sin1 = random.randint(0, high=len(wvs1), size=n_trtp).sort()
+    trtp_ids_sin2 = random.randint(0, high=len(wvs2), size=n_trtp).sort()
+    trtp_ids_sin3 = random.randint(0, high=len(wvs3), size=n_trtp).sort()
+    trtp_ids_sin1_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp).sort()
+    trtp_ids_sin2_ns = random.randint(0, high=len(wvs2_ns), size=n_trtp).sort()
+    trtp_ids_sin3_ns = random.randint(0, high=len(wvs3_ns), size=n_trtp).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(wvs1):
@@ -170,7 +169,7 @@ def main():
     for idx, trace in enumerate(trtp_sin1):
         plt.clf()
         plt.plot(t, trace)
-        plt.title(f'Traza sinusoides 1 #{trtp_ids_sin1[idx]}')
+        plt.title(f'Senal sinusoides 1 #{trtp_ids_sin1[idx]}')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
@@ -229,25 +228,25 @@ def main():
     # Plot Padded Sine waveforms
 
     # Traces to plot
-    trtp_padd = []
+    trtp_pad = []
 
     # Traces to plot numbers
-    trtp_ids_padd = random.randint(0, high=len(wvs), size=n_trtp)
+    trtp_ids_pad = random.randint(0, high=len(wvs_pad), size=n_trtp).sort()
 
     # Retrieve selected traces
-    for idx, trace in enumerate(wvs):
-        if idx in trtp_ids_padd:
-            trtp_padd.append(trace)
+    for idx, trace in enumerate(wvs_pad):
+        if idx in trtp_ids_pad:
+            trtp_pad.append(trace)
 
     # Plot n random Sin 1 traces
-    for idx, trace in enumerate(trtp_padd):
+    for idx, trace in enumerate(trtp_pad):
         plt.clf()
         plt.plot(t, trace)
-        plt.title(f'Traza sinusoides padd #{trtp_ids_padd[idx]}')
+        plt.title(f'Traza sinusoides pad #{trtp_ids_pad[idx]}')
         plt.xlabel('Tiempo [s]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
-        plt.savefig(f'Imgs/Sin_pad/Sin_pad_{trtp_ids_padd[idx]}')
+        plt.savefig(f'Imgs/Sin_pad/Sin_pad_{trtp_ids_pad[idx]}')
 
     # Plot wavelet waveforms
 
@@ -255,7 +254,7 @@ def main():
     trtp_wvlets = []
 
     # Traces to plot numbers
-    trtp_ids_wvlets = random.randint(0, high=len(lets), size=n_trtp)
+    trtp_ids_wvlets = random.randint(0, high=len(lets), size=n_trtp).sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(lets):
@@ -266,7 +265,7 @@ def main():
     for idx, trace in enumerate(trtp_wvlets):
         plt.clf()
         plt.plot(t, trace)
-        plt.title(f'Wavelet #{trtp_ids_padd[idx]}')
+        plt.title(f'Wavelet #{trtp_ids_pad[idx]}')
         plt.xlabel('Muestras [-]')
         plt.ylabel('Amplitud [-]')
         plt.grid(True)
