@@ -22,9 +22,11 @@ def main():
     Path("Imgs/Sin_pad").mkdir(exist_ok=True)
     Path("Imgs/Wavelets").mkdir(exist_ok=True)
 
-    # Noise
+    # Init rng
+    rng = default_rng()
 
-    ns = random.random_sample((1, 6000))
+    # Noise
+    ns = rng.normal(0, 1, 6000)
 
     # Sine waves
 
@@ -128,9 +130,6 @@ def main():
     trtp_sin1_ns = []
     trtp_sin2_ns = []
     trtp_sin3_ns = []
-
-    # Init rng
-    rng = default_rng()
 
     # Traces to plot numbers
     trtp_ids_sin1 = rng.choice(len(wvs1), size=n_trtp, replace=False)
