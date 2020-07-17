@@ -50,6 +50,7 @@ def main():
     wvs3 = []
 
     for f1, f2 in zip(fr1, fr2):
+        print(f1, f2)
         sig1 = np.sin(f1 * 2.0 * np.pi * t)
         sig2 = np.sin(f2 * 2.0 * np.pi * t)
         wvs1.append(sig1)
