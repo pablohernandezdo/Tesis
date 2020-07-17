@@ -34,8 +34,11 @@ def main():
         segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
-        fs = segy.header[0][117]
+        # fs = segy.header[0][117] NO ES LA REAL
 
+    # Sampling frequency
+    fs = 200
+    
     # Number of traces to plot
     n = 4
 
