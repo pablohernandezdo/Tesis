@@ -62,9 +62,9 @@ def main():
     wvs2 = np.array(wvs2)
     wvs3 = np.array(wvs3)
 
-    wvs1_ns = wvs1 + 0.5 * random.random_sample(wvs1.shape)
-    wvs2_ns = wvs2 + 0.5 * random.random_sample(wvs1.shape)
-    wvs3_ns = wvs3 + 0.5 * random.random_sample(wvs1.shape)
+    wvs1_ns = wvs1 + 0.5 * rng.normal(0, 1, wvs1.shape)
+    wvs2_ns = wvs2 + 0.5 * rng.normal(0, 1, wvs2.shape)
+    wvs3_ns = wvs3 + 0.5 * rng.normal(0, 1, wvs3.shape)
 
     # PADDED SINES
 
