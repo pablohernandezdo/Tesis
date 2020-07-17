@@ -42,7 +42,7 @@ def main():
 
     # Frequency spans
     fr1 = np.linspace(1, 100, n)
-    fr2 = np.linspace(0, 1, n)
+    fr2 = np.linspace(0.01, 1, n)
 
     # Prealocate
     wvs1 = []
