@@ -1,6 +1,6 @@
 import h5py
 import numpy as np
-import numpy.random as random
+from numpy.random import default_rng
 
 import matplotlib.pyplot as plt
 
@@ -32,7 +32,13 @@ def main():
 
         # Traces to plot ids
         trtp_ids = [8359, 11211, 16256, 21276]
-        # trtp_ids = random.randint(0, high=len(grp), size=n).sort()
+
+        # # Init rng
+        # rng = default_rng()
+        #
+        # # Traces to plot numbers
+        # trtp_ids = rng.choice(len(grp), size=n, replace=False)
+        # trtp_ids.sort()
 
         for idx, dts in enumerate(grp):
             if idx in trtp_ids:

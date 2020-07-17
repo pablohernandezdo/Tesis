@@ -1,7 +1,7 @@
 import h5py
 import scipy.io as sio
 import numpy as np
-import numpy.random as random
+from numpy.random import default_rng
 
 import scipy.fftpack as sfft
 import scipy.signal as signal
@@ -46,8 +46,12 @@ def main():
     # Traces to plot
     trtp = []
 
+    # Init rng
+    rng = default_rng()
+
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(traces), size=n).sort()
+    trtp_ids = rng.choice(len(traces), size=n, replace=False)
+    trtp_ids.sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(traces):

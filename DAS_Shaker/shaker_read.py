@@ -1,7 +1,7 @@
 import h5py
 import segyio
 import numpy as np
-import numpy.random as random
+from numpy.random import default_rng
 
 import matplotlib.pyplot as plt
 
@@ -19,13 +19,13 @@ def main():
 
     # Carga traza STEAD
 
-    st = '../Data_STEAD/Train_data.hdf5'
-
-    with h5py.File(st, 'r') as h5_file:
-        grp = h5_file['earthquake']['local']
-        for idx, dts in enumerate(grp):
-            st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
-            break
+    # st = '../Data_STEAD/Train_data.hdf5'
+    #
+    # with h5py.File(st, 'r') as h5_file:
+    #     grp = h5_file['earthquake']['local']
+    #     for idx, dts in enumerate(grp):
+    #         st_trace = grp[dts][:, 0] / np.max(np.abs(grp[dts][:, 0]))
+    #         break
 
     # 1984 trazas de 12600 muestras
     f = '../Data_Shaker/large shaker NEES_130910161319 (1).sgy'
@@ -45,8 +45,12 @@ def main():
     # Traces to plot
     trtp = []
 
+    # Init rng
+    rng = default_rng()
+
     # Traces to plot numbers
-    trtp_ids = random.randint(0, high=len(traces), size=n).sort()
+    trtp_ids = rng.choice(len(traces), size=n, replace=False)
+    trtp_ids.sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(traces):

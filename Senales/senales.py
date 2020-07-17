@@ -1,6 +1,6 @@
 import pywt
 import numpy as np
-import numpy.random as random
+from numpy.random import default_rng
 
 from scipy import signal
 import matplotlib.pyplot as plt
@@ -129,13 +129,23 @@ def main():
     trtp_sin2_ns = []
     trtp_sin3_ns = []
 
+    # Init rng
+    rng = default_rng()
+
     # Traces to plot numbers
-    trtp_ids_sin1 = random.randint(0, high=len(wvs1), size=n_trtp).sort()
-    trtp_ids_sin2 = random.randint(0, high=len(wvs2), size=n_trtp).sort()
-    trtp_ids_sin3 = random.randint(0, high=len(wvs3), size=n_trtp).sort()
-    trtp_ids_sin1_ns = random.randint(0, high=len(wvs1_ns), size=n_trtp).sort()
-    trtp_ids_sin2_ns = random.randint(0, high=len(wvs2_ns), size=n_trtp).sort()
-    trtp_ids_sin3_ns = random.randint(0, high=len(wvs3_ns), size=n_trtp).sort()
+    trtp_ids_sin1 = rng.choice(len(wvs1), size=n_trtp, replace=False)
+    trtp_ids_sin2 = rng.choice(len(wvs2), size=n_trtp, replace=False)
+    trtp_ids_sin3 = rng.choice(len(wvs3), size=n_trtp, replace=False)
+    trtp_ids_sin1_ns = rng.choice(len(wvs1_ns), size=n_trtp, replace=False)
+    trtp_ids_sin2_ns = rng.choice(len(wvs2_ns), size=n_trtp, replace=False)
+    trtp_ids_sin3_ns = rng.choice(len(wvs3_ns), size=n_trtp, replace=False)
+
+    trtp_ids_sin1.sort()
+    trtp_ids_sin2.sort()
+    trtp_ids_sin3.sort()
+    trtp_ids_sin1_ns.sort()
+    trtp_ids_sin2_ns.sort()
+    trtp_ids_sin3_ns.sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(wvs1):
@@ -231,7 +241,8 @@ def main():
     trtp_pad = []
 
     # Traces to plot numbers
-    trtp_ids_pad = random.randint(0, high=len(wvs_pad), size=n_trtp).sort()
+    trtp_ids_pad = rng.choice(len(wvs_pad), size=n_trtp, replace=False)
+    trtp_ids_pad.sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(wvs_pad):
@@ -254,7 +265,8 @@ def main():
     trtp_wvlets = []
 
     # Traces to plot numbers
-    trtp_ids_wvlets = random.randint(0, high=len(lets), size=n_trtp).sort()
+    trtp_ids_wvlets = rng.choice(len(lets), size=n_trtp, replace=False)
+    trtp_ids_wvlets.sort()
 
     # Retrieve selected traces
     for idx, trace in enumerate(lets):

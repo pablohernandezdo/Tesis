@@ -1,6 +1,6 @@
 import h5py
 import numpy as np
-import numpy.random as random
+from numpy.random import default_rng
 
 import matplotlib.pyplot as plt
 
