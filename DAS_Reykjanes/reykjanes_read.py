@@ -308,29 +308,76 @@ def main():
     # # Fig. 5a_gph
     # # Registro de sismo local con geofono
 
-    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_gph.ascii'
-    # n_trazas = 26
-    # plt_tr = 10
-    # fs = 200
-    #
-    # data = {
-    #     'head': '',
-    #     'strain': np.empty((1, n_trazas))
-    # }
-    #
-    # with open(file, 'r') as f:
-    #     for idx, line in enumerate(f):
-    #         if idx == 0:
-    #             data['head'] = line.strip()
-    #
-    #         else:
-    #             row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
-    #             data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
-    #
-    # data['strain'] = data['strain'][1:]
+    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_gph.ascii'
+    n_trazas = 26
+    plt_tr = 10
+    fs = 200
+
+    data = {
+        'head': '',
+        'strain': np.empty((1, n_trazas))
+    }
+
+    with open(file, 'r') as f:
+        for idx, line in enumerate(f):
+            if idx == 0:
+                data['head'] = line.strip()
+
+            else:
+                row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
+                data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
+
+    data['strain'] = data['strain'][1:]
     # data['strain'] = data['strain'] / data['strain'].max(axis=0)
-    # data['strain'] = data['strain'].transpose()
-    #
+    data['strain'] = data['strain'].transpose()
+
+    # Number of traces to plot
+    n = 4
+
+    # Traces to plot
+    trtp = []
+
+    # Traces to plot numbers
+    trtp_ids = rng.choice(len(data['strain']), size=n, replace=False)
+    trtp_ids.sort()
+
+    # Retrieve selected traces
+    for idx, trace in enumerate(data['strain']):
+        if idx in trtp_ids:
+            trtp.append(trace)
+
+    # Data len
+    N = data['strain'].shape[1]
+
+    # Time axis for signal plot
+    t_ax = np.arange(N) / fs
+
+    # Frequency axis for FFT plot
+    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+
+    # Figure to plot
+    plt.figure()
+
+    # For trace in traces to print
+    for idx, trace in enumerate(trtp):
+        yf = sfft.fftshift(sfft.fft(trace))
+
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(t_ax, trace)
+        plt.title(f'Traza Reykjanes sismo local 1 geófono y espectro #{trtp_ids[idx]}')
+        plt.xlabel('Tiempo [s]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+
+        plt.subplot(212)
+        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.xlabel('Frecuencia [Hz]')
+        plt.ylabel('Amplitud [-]')
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(f'Imgs/Local1/Local1_geofono_{trtp_ids[idx]}')
+
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
     # plt.clf()
