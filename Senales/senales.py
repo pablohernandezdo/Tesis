@@ -43,7 +43,7 @@ def main():
     n = 100
 
     # Frequency spans
-    fr1 = np.linspace(1, 100, n)
+    fr1 = np.linspace(1, 50, n)
     fr2 = np.linspace(0.01, 1, n)
 
     # Prealocate
