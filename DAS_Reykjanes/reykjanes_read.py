@@ -37,81 +37,81 @@ def main():
     # Fig. 3fo and 3bb.
     # Comparacion entre registros de un telesismo por fibra optica y sismometro
 
-    file_fo = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_fo.ascii'
-    file_bb = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_bb.ascii'
-
-    fs = 20
-
-    data_fo = {
-        'head': '',
-        'strain': []
-    }
-
-    data_bb = {
-        'head': '',
-        'strain': []
-    }
-
-    with open(file_fo, 'r') as f:
-        for idx, line in enumerate(f):
-            if idx == 0:
-                data_fo['head'] = line.strip()
-            else:
-                val = line.strip()
-                data_fo['strain'].append(float(val))
-
-    with open(file_bb, 'r') as f:
-        for idx, line in enumerate(f):
-            if idx == 0:
-                data_bb['head'] = line.strip()
-            else:
-                val = line.strip()
-                data_bb['strain'].append(float(val))
-
-    # Data len
-    N = len(data_fo['strain'])
-
-    # Time axis for signal plot
-    t_ax = np.arange(N) / fs
-
-    # Frequency axis for FFT plot
-    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
-
-    # FFTs
-    yf_fo = sfft.fftshift(sfft.fft(data_fo['strain']))
-    yf_bb = sfft.fftshift(sfft.fft(data_bb['strain']))
-
-    plt.figure()
-    plt.subplot(211)
-    plt.plot(t_ax, data_fo['strain'])
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registro Reykjanes telesismo DAS')
-    plt.grid(True)
-
-    plt.subplot(212)
-    plt.plot(xf, np.abs(yf_fo) / np.max(np.abs(yf_fo)))
-    plt.xlabel('Frecuencia [-]')
-    plt.ylabel('Amplitud [-]')
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig('Imgs/Telesismo/TelesismoDAS_spec.png')
-
-    plt.clf()
-    plt.subplot(211)
-    plt.plot(t_ax, data_bb['strain'])
-    plt.xlabel('Tiempo [s]')
-    plt.ylabel('Strain [-]')
-    plt.title('Registro Reykjanes telesismo sismómetro')
-    plt.grid(True)
-
-    plt.subplot(212)
-    plt.plot(xf, np.abs(yf_bb) / np.max(np.abs(yf_bb)))
-    plt.xlabel('Frecuencia [-]')
-    plt.ylabel('Amplitud [-]')
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig('Imgs/Telesismo/TelesismoBBS_spec.png')
+    # file_fo = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_fo.ascii'
+    # file_bb = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_bb.ascii'
+    #
+    # fs = 20
+    #
+    # data_fo = {
+    #     'head': '',
+    #     'strain': []
+    # }
+    #
+    # data_bb = {
+    #     'head': '',
+    #     'strain': []
+    # }
+    #
+    # with open(file_fo, 'r') as f:
+    #     for idx, line in enumerate(f):
+    #         if idx == 0:
+    #             data_fo['head'] = line.strip()
+    #         else:
+    #             val = line.strip()
+    #             data_fo['strain'].append(float(val))
+    #
+    # with open(file_bb, 'r') as f:
+    #     for idx, line in enumerate(f):
+    #         if idx == 0:
+    #             data_bb['head'] = line.strip()
+    #         else:
+    #             val = line.strip()
+    #             data_bb['strain'].append(float(val))
+    #
+    # # Data len
+    # N = len(data_fo['strain'])
+    #
+    # # Time axis for signal plot
+    # t_ax = np.arange(N) / fs
+    #
+    # # Frequency axis for FFT plot
+    # xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+    #
+    # # FFTs
+    # yf_fo = sfft.fftshift(sfft.fft(data_fo['strain']))
+    # yf_bb = sfft.fftshift(sfft.fft(data_bb['strain']))
+    #
+    # plt.figure()
+    # plt.subplot(211)
+    # plt.plot(t_ax, data_fo['strain'])
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro Reykjanes telesismo DAS')
+    # plt.grid(True)
+    #
+    # plt.subplot(212)
+    # plt.plot(xf, np.abs(yf_fo) / np.max(np.abs(yf_fo)))
+    # plt.xlabel('Frecuencia [-]')
+    # plt.ylabel('Amplitud [-]')
+    # plt.grid(True)
+    # plt.tight_layout()
+    # plt.savefig('Imgs/Telesismo/TelesismoDAS_spec.png')
+    #
+    # plt.clf()
+    # plt.subplot(211)
+    # plt.plot(t_ax, data_bb['strain'])
+    # plt.xlabel('Tiempo [s]')
+    # plt.ylabel('Strain [-]')
+    # plt.title('Registro Reykjanes telesismo sismómetro')
+    # plt.grid(True)
+    #
+    # plt.subplot(212)
+    # plt.plot(xf, np.abs(yf_bb) / np.max(np.abs(yf_bb)))
+    # plt.xlabel('Frecuencia [-]')
+    # plt.ylabel('Amplitud [-]')
+    # plt.grid(True)
+    # plt.tight_layout()
+    # plt.savefig('Imgs/Telesismo/TelesismoBBS_spec.png')
 
     # plt.figure()
     # plt.plot(t_ax, data_fo['strain'])
@@ -166,79 +166,79 @@ def main():
     # Fig. 5a_fo
     # Registro de sismo local con DAS
 
-    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_fo.ascii'
-    n_trazas = 26
-    plt_tr = 10
-    fs = 200
-
-    data = {
-        'head': '',
-        'strain': np.empty((1, n_trazas))
-    }
-
-    with open(file, 'r') as f:
-        for idx, line in enumerate(f):
-            if idx == 0:
-                data['head'] = line.strip()
-
-            else:
-                row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
-                data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
-
-    data['strain'] = data['strain'][1:]
-    # data['strain'] = data['strain'] / data['strain'].max(axis=0)
-    data['strain'] = data['strain'].transpose()
-    data_das = data
-
-    # Number of traces to plot
-    n = 4
-
-    # Traces to plot
-    trtp = []
-
-    # Init rng
-    rng = default_rng()
-
-    # Traces to plot numbers
-    trtp_ids = rng.choice(len(data['strain']), size=n, replace=False)
-    trtp_ids.sort()
-
-    # Retrieve selected traces
-    for idx, trace in enumerate(data['strain']):
-        if idx in trtp_ids:
-            trtp.append(trace)
-
-    # Data len
-    N = data['strain'].shape[1]
-
-    # Time axis for signal plot
-    t_ax = np.arange(N) / fs
-
-    # Frequency axis for FFT plot
-    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
-
-    # Figure to plot
-    plt.figure()
-
-    # For trace in traces to print
-    for idx, trace in enumerate(trtp):
-        yf = sfft.fftshift(sfft.fft(trace))
-
-        plt.clf()
-        plt.subplot(211)
-        plt.plot(t_ax, trace)
-        plt.title(f'Traza Reykjanes sismo local 1 y espectro #{trtp_ids[idx]}')
-        plt.xlabel('Tiempo [s]')
-        plt.ylabel('Amplitud [-]')
-        plt.grid(True)
-
-        plt.subplot(212)
-        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.xlabel('Frecuencia [Hz]')
-        plt.ylabel('Amplitud [-]')
-        plt.grid(True)
-        plt.tight_layout()
-        plt.savefig(f'Imgs/Local1/Local1_{trtp_ids[idx]}')
+    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5a_fo.ascii'
+    # n_trazas = 26
+    # plt_tr = 10
+    # fs = 200
+    #
+    # data = {
+    #     'head': '',
+    #     'strain': np.empty((1, n_trazas))
+    # }
+    #
+    # with open(file, 'r') as f:
+    #     for idx, line in enumerate(f):
+    #         if idx == 0:
+    #             data['head'] = line.strip()
+    #
+    #         else:
+    #             row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
+    #             data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
+    #
+    # data['strain'] = data['strain'][1:]
+    # # data['strain'] = data['strain'] / data['strain'].max(axis=0)
+    # data['strain'] = data['strain'].transpose()
+    # data_das = data
+    #
+    # # Number of traces to plot
+    # n = 4
+    #
+    # # Traces to plot
+    # trtp = []
+    #
+    # # Init rng
+    # rng = default_rng()
+    #
+    # # Traces to plot numbers
+    # trtp_ids = rng.choice(len(data['strain']), size=n, replace=False)
+    # trtp_ids.sort()
+    #
+    # # Retrieve selected traces
+    # for idx, trace in enumerate(data['strain']):
+    #     if idx in trtp_ids:
+    #         trtp.append(trace)
+    #
+    # # Data len
+    # N = data['strain'].shape[1]
+    #
+    # # Time axis for signal plot
+    # t_ax = np.arange(N) / fs
+    #
+    # # Frequency axis for FFT plot
+    # xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+    #
+    # # Figure to plot
+    # plt.figure()
+    #
+    # # For trace in traces to print
+    # for idx, trace in enumerate(trtp):
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #
+    #     plt.clf()
+    #     plt.subplot(211)
+    #     plt.plot(t_ax, trace)
+    #     plt.title(f'Traza Reykjanes sismo local 1 y espectro #{trtp_ids[idx]}')
+    #     plt.xlabel('Tiempo [s]')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.grid(True)
+    #
+    #     plt.subplot(212)
+    #     plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.xlabel('Frecuencia [Hz]')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.grid(True)
+    #     plt.tight_layout()
+    #     plt.savefig(f'Imgs/Local1/Local1_{trtp_ids[idx]}')
 
     # Create animation of whole data
     # fig_tr = plt.figure()
@@ -378,6 +378,37 @@ def main():
         plt.tight_layout()
         plt.savefig(f'Imgs/Local1/Local1_geofono_{trtp_ids[idx]}')
 
+    # Create animation of whole data
+    fig_tr = plt.figure()
+    ims_tr = []
+
+    for trace in data['strain']:
+        im_tr = plt.plot(t_ax, trace)
+        plt.title('Trazas dataset Reykjanes sismo local 1 geofono')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Tiempo [s]')
+        plt.grid(True)
+        ims_tr.append(im_tr)
+
+    ani_tr = animation.ArtistAnimation(fig_tr, ims_tr, interval=1000, blit=True, repeat=False)
+    ani_tr.save('Animations/Reykjanes_dastraces_local1_geofono.mp4')
+
+    # Create animation of whole data spectrums
+    fig_sp = plt.figure()
+    ims_sp = []
+
+    for trace in data['strain']:
+        yf = sfft.fftshift(sfft.fft(trace))
+        im_sp = plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+        plt.title('Espectro trazas dataset Reykjanes sismo local 1 geofono')
+        plt.ylabel('Amplitud [-]')
+        plt.xlabel('Frecuencia [Hz]')
+        plt.grid(True)
+        ims_sp.append(im_sp)
+
+    ani_sp = animation.ArtistAnimation(fig_sp, ims_sp, interval=1000, blit=True, repeat=False)
+    ani_sp.save('Animations/Reykjanes_dasspectrums_local1_geofono.mp4')
+
     # t_ax = np.arange(len(data['strain'][plt_tr])) / fs
     #
     # plt.clf()
@@ -418,75 +449,75 @@ def main():
     # Fig. 5b
     # Registro de sismo local con DAS
 
-    file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5b.ascii'
-    n_trazas = 2551
-    plt_tr = 1000
-    fs = 200
-
-    data = {
-        'head': '',
-        'strain': np.empty((1, n_trazas))
-    }
-
-    with open(file, 'r') as f:
-        for idx, line in enumerate(f):
-            if idx == 0:
-                data['head'] = line.strip()
-
-            else:
-                row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
-                data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
-
-    data['strain'] = data['strain'][1:]
-    # data['strain'] = data['strain'] / data['strain'].max(axis=0)
-    data['strain'] = data['strain'].transpose()
-
-    # Number of traces to plot
-    n = 4
-
-    # Traces to plot
-    trtp = []
-
-    # Traces to plot numbers
-    trtp_ids = rng.choice(len(data['strain']), size=n, replace=False)
-    trtp_ids.sort()
-
-    # Retrieve selected traces
-    for idx, trace in enumerate(data['strain']):
-        if idx in trtp_ids:
-            trtp.append(trace)
-
-    # Data len
-    N = data['strain'].shape[1]
-
-    # Time axis for signal plot
-    t_ax = np.arange(N) / fs
-
-    # Frequency axis for FFT plot
-    xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
-
-    # Figure to plot
-    plt.figure()
-
-    # For trace in traces to print
-    for idx, trace in enumerate(trtp):
-        yf = sfft.fftshift(sfft.fft(trace))
-
-        plt.clf()
-        plt.subplot(211)
-        plt.plot(t_ax, trace)
-        plt.title(f'Traza Reykjanes sismo local 2 y espectro #{trtp_ids[idx]}')
-        plt.xlabel('Tiempo [s]')
-        plt.ylabel('Amplitud [-]')
-        plt.grid(True)
-
-        plt.subplot(212)
-        plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
-        plt.xlabel('Frecuencia [Hz]')
-        plt.ylabel('Amplitud [-]')
-        plt.grid(True)
-        plt.tight_layout()
-        plt.savefig(f'Imgs/Local2/Local2_{trtp_ids[idx]}')
+    # file = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure5b.ascii'
+    # n_trazas = 2551
+    # plt_tr = 1000
+    # fs = 200
+    #
+    # data = {
+    #     'head': '',
+    #     'strain': np.empty((1, n_trazas))
+    # }
+    #
+    # with open(file, 'r') as f:
+    #     for idx, line in enumerate(f):
+    #         if idx == 0:
+    #             data['head'] = line.strip()
+    #
+    #         else:
+    #             row = np.asarray(list(map(float, re.sub(' +', ' ', line).strip().split(' '))))
+    #             data['strain'] = np.concatenate((data['strain'], np.expand_dims(row, 0)))
+    #
+    # data['strain'] = data['strain'][1:]
+    # # data['strain'] = data['strain'] / data['strain'].max(axis=0)
+    # data['strain'] = data['strain'].transpose()
+    #
+    # # Number of traces to plot
+    # n = 4
+    #
+    # # Traces to plot
+    # trtp = []
+    #
+    # # Traces to plot numbers
+    # trtp_ids = rng.choice(len(data['strain']), size=n, replace=False)
+    # trtp_ids.sort()
+    #
+    # # Retrieve selected traces
+    # for idx, trace in enumerate(data['strain']):
+    #     if idx in trtp_ids:
+    #         trtp.append(trace)
+    #
+    # # Data len
+    # N = data['strain'].shape[1]
+    #
+    # # Time axis for signal plot
+    # t_ax = np.arange(N) / fs
+    #
+    # # Frequency axis for FFT plot
+    # xf = np.linspace(-fs / 2.0, fs / 2.0 - 1 / fs, N)
+    #
+    # # Figure to plot
+    # plt.figure()
+    #
+    # # For trace in traces to print
+    # for idx, trace in enumerate(trtp):
+    #     yf = sfft.fftshift(sfft.fft(trace))
+    #
+    #     plt.clf()
+    #     plt.subplot(211)
+    #     plt.plot(t_ax, trace)
+    #     plt.title(f'Traza Reykjanes sismo local 2 y espectro #{trtp_ids[idx]}')
+    #     plt.xlabel('Tiempo [s]')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.grid(True)
+    #
+    #     plt.subplot(212)
+    #     plt.plot(xf, np.abs(yf) / np.max(np.abs(yf)))
+    #     plt.xlabel('Frecuencia [Hz]')
+    #     plt.ylabel('Amplitud [-]')
+    #     plt.grid(True)
+    #     plt.tight_layout()
+    #     plt.savefig(f'Imgs/Local2/Local2_{trtp_ids[idx]}')
 
     # Create animation of whole data
     # fig_tr = plt.figure()
