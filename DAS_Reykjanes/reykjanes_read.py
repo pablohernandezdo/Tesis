@@ -196,9 +196,9 @@ def main():
     # # Traces to plot
     # trtp = []
     #
-    # # Init rng
-    # rng = default_rng()
-    #
+    # Init rng
+    rng = default_rng()
+
     # # Traces to plot numbers
     # trtp_ids = rng.choice(len(data['strain']), size=n, replace=False)
     # trtp_ids.sort()
