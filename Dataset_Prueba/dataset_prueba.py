@@ -56,6 +56,7 @@ def main():
 
     trace = traces[965]
     resamp_trace = signal.resample(trace, 3000)
+    resamp_trace = np.pad(resamp_trace, (0, 3000), 'wrap')
 
     plt.figure()
     plt.subplot(211)
