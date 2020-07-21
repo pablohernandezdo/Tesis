@@ -39,7 +39,7 @@ def main():
 
     # Resample
 
-    ratio = 5
+    ratio = 0.2
     converter = 'sinc_best'
     data_fo['strain'] = samplerate.resample(data_fo['strain'], ratio, converter)
 
