@@ -244,6 +244,12 @@ def main():
     # Average 5km of measurements
     avg_data = np.mean(data[3500:4001, :], 0)
 
+    # Resample
+    avg_data = signal.resample(avg_data, 6000)
+
+    # Normalize
+    avg_data = avg_data / np.max(np.abs(avg_data))
+
     # Numpy to Torch
     avg_data = torch.from_numpy(avg_data).to(device).unsqueeze(0)
 
