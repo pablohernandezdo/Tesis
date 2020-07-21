@@ -28,7 +28,7 @@ def main():
     # # Load data
     # traces = Francia["StrainFilt"]
     #
-    # # Add valid traces to dataset file
+    # # Add valid traces to dataset
     # for trace in traces:
     #     if np.max(np.abs(trace)):
     #         seismic_dset = np.vstack((seismic_dset, trace))
@@ -49,6 +49,7 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
+    # Add traces to dataset
     for trace in traces:
         resamp_trace = signal.resample(trace, 3000)
         resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
@@ -64,6 +65,7 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
+    # Add traces to dataset
     for trace in traces:
         resamp_trace = signal.resample(trace, 3000)
         resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
@@ -79,6 +81,7 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
+    # Add traces to dataset
     for trace in traces:
         resamp_trace = signal.resample(trace, 3000)
         resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
@@ -94,6 +97,7 @@ def main():
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
 
+    # Add traces to dataset
     for trace in traces:
         resamp_trace = signal.resample(trace, 3000)
         resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
@@ -102,12 +106,16 @@ def main():
     print(seismic_dset.shape)
 
     # # Dataset Belgica
-    #
-    # Belgica = sio.loadmat("../Data_Belgica/mat_2018_08_19_00h28m05s_Parkwind_HDAS_2Dmap_StrainData_2D.mat")
-    #
-    # # Read data
-    # traces = f['Data_2D']
-    # plt_tr = 4000
+
+    Belgica = sio.loadmat("../Data_Belgica/mat_2018_08_19_00h28m05s_Parkwind_HDAS_2Dmap_StrainData_2D.mat")
+
+    # Read data
+    traces = Belgica['Data_2D']
+
+    # Add traces to dataset
+    for trace in traces:
+        trace = signal.resample(trace, 6000)
+        seismic_dset = np.vstack((seismic_dset, trace))
 
     # Sampling frequency
 

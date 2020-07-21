@@ -49,40 +49,41 @@ def main():
 
     # For every trace in the file
     for trace in data:
-        # Filter
-        fil_trace = butter_bandpass_filter(trace, 0.5, 1, fs, order=5)
+        if np.max(np.abs(trace)):
+            # Filter
+            fil_trace = butter_bandpass_filter(trace, 0.5, 1, fs, order=5)
 
-        # Resample
-        resamp_trace = signal.resample(trace, 6000)
-        resamp_fil_trace = signal.resample(fil_trace, 6000)
+            # Resample
+            resamp_trace = signal.resample(trace, 6000)
+            resamp_fil_trace = signal.resample(fil_trace, 6000)
 
-        # Normalize
-        resamp_trace = resamp_trace / np.max(np.abs(resamp_trace))
-        resamp_fil_trace = resamp_fil_trace / np.max(np.abs(resamp_fil_trace))
+            # Normalize
+            resamp_trace = resamp_trace / np.max(np.abs(resamp_trace))
+            resamp_fil_trace = resamp_fil_trace / np.max(np.abs(resamp_fil_trace))
 
-        # Numpy to Torch
-        resamp_trace = torch.from_numpy(resamp_trace).to(device).unsqueeze(0)
-        resamp_fil_trace = torch.from_numpy(resamp_fil_trace).to(device).unsqueeze(0)
+            # Numpy to Torch
+            resamp_trace = torch.from_numpy(resamp_trace).to(device).unsqueeze(0)
+            resamp_fil_trace = torch.from_numpy(resamp_fil_trace).to(device).unsqueeze(0)
 
-        # Prediction
-        out_trace = net(resamp_trace.float())
-        out_fil_trace = net(resamp_fil_trace.float())
+            # Prediction
+            out_trace = net(resamp_trace.float())
+            out_fil_trace = net(resamp_fil_trace.float())
 
-        pred_trace = torch.round(out_trace.data).item()
-        pred_fil_trace = torch.round(out_fil_trace.data).item()
+            pred_trace = torch.round(out_trace.data).item()
+            pred_fil_trace = torch.round(out_fil_trace.data).item()
 
-        # Count traces
-        total += 1
+            # Count traces
+            total += 1
 
-        if pred_trace:
-            tr_seismic += 1
-        else:
-            tr_noise += 1
+            if pred_trace:
+                tr_seismic += 1
+            else:
+                tr_noise += 1
 
-        if pred_fil_trace:
-            fil_seismic += 1
-        else:
-            fil_noise += 1
+            if pred_fil_trace:
+                fil_seismic += 1
+            else:
+                fil_noise += 1
 
     # Results
     print(f'Inferencia Francia:\n\n'
