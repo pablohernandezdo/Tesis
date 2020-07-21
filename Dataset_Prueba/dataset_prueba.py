@@ -2,6 +2,7 @@ import re
 import h5py
 import numpy as np
 
+import scipy.io as sio
 from scipy import signal
 
 import matplotlib.pyplot as plt
@@ -12,6 +13,25 @@ from scipy.signal import butter, lfilter
 
 
 def main():
+
+    # Dataset sismico, no sismico
+
+    seismic_dset = np.empty((1, 6000))
+    nseismic_dset = np.empty((1, 6000))
+
+    # Dataset Francia
+
+    # Read file
+    Francia = sio.loadmat("../Data_Francia/Earthquake_1p9_Var_BP_2p5_15Hz.mat")
+
+    # Load data
+    traces = Francia["StrainFilt"]
+
+    for trace in traces:
+        if np.max(np.abs(trace)):
+            1 / np.max(np.abs(trace))
+
+
     # Dataset Reykjanes
 
     # Telesismo Fibra optica
@@ -34,7 +54,8 @@ def main():
                 data_fo['strain'].append(float(val))
 
     data_fo['strain'] = signal.resample(np.asarray(data_fo['strain']), 6000)
-    print(data_fo['strain'].shape)
+
+    # Dataset sísmico
 
 
 if __name__ == "__main__":
