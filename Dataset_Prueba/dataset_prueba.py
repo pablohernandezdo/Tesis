@@ -1,5 +1,6 @@
 import re
 import h5py
+import segyio
 import numpy as np
 
 import scipy.io as sio
@@ -19,47 +20,66 @@ def main():
     seismic_dset = np.empty((1, 6000))
     nseismic_dset = np.empty((1, 6000))
 
-    # Dataset Francia
+    # # Dataset Francia (Hay 606 trazas nulas)
+    #
+    # # Read file
+    # Francia = sio.loadmat("../Data_Francia/Earthquake_1p9_Var_BP_2p5_15Hz.mat")
+    #
+    # # Load data
+    # traces = Francia["StrainFilt"]
+    #
+    # # Add valid traces to dataset file
+    # for trace in traces:
+    #     if np.max(np.abs(trace)):
+    #         seismic_dset = np.vstack((seismic_dset, trace))
+    #
+    # # Remove initial definition row
+    # seismic_dset = seismic_dset[1:]
+
+
+    # Dataset Nevada
+
+    # File 721
+    Nevada721 = '../Data_Nevada/PoroTomo_iDAS16043_160321073721.sgy'
 
     # Read file
-    Francia = sio.loadmat("../Data_Francia/Earthquake_1p9_Var_BP_2p5_15Hz.mat")
+    with segyio.open(Nevada721, ignore_geometry=True) as segy:
+        segy.mmap()
 
-    # Load data
-    traces = Francia["StrainFilt"]
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
 
     for trace in traces:
-        if np.max(np.abs(trace)):
-            seismic_dset = np.vstack((seismic_dset, trace))
+        trace = signal.resample(trace, 3000)
+        trace = np.pad(trace, (0, 3000), 'constant')
+        break
 
-    seismic_dset = seismic_dset[1:]
-
-    print(f'seismic dset shape: {seismic_dset.shape}')
-
-
-    # Dataset Reykjanes
-
-    # Telesismo Fibra optica
-
-    file_fo = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_fo.ascii'
-
-    fs = 20
-
-    data_fo = {
-        'head': '',
-        'strain': []
-    }
-
-    with open(file_fo, 'r') as f:
-        for idx, line in enumerate(f):
-            if idx == 0:
-                data_fo['head'] = line.strip()
-            else:
-                val = line.strip()
-                data_fo['strain'].append(float(val))
-
-    data_fo['strain'] = signal.resample(np.asarray(data_fo['strain']), 6000)
-
-    # Dataset sísmico
+    plt.figure()
+    plt.plot(trace)
+    plt.show()
+    
+    # # Dataset Reykjanes
+    #
+    # # Telesismo Fibra optica
+    #
+    # file_fo = '../Data_Reykjanes/Jousset_et_al_2018_003_Figure3_fo.ascii'
+    #
+    # fs = 20
+    #
+    # data_fo = {
+    #     'head': '',
+    #     'strain': []
+    # }
+    #
+    # with open(file_fo, 'r') as f:
+    #     for idx, line in enumerate(f):
+    #         if idx == 0:
+    #             data_fo['head'] = line.strip()
+    #         else:
+    #             val = line.strip()
+    #             data_fo['strain'].append(float(val))
+    #
+    # data_fo['strain'] = signal.resample(np.asarray(data_fo['strain']), 6000)
 
 
 if __name__ == "__main__":
