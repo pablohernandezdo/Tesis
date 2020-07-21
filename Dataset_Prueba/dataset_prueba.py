@@ -1,9 +1,8 @@
 import re
 import h5py
-import samplerate
 import numpy as np
 
-import scipy.signal as signal
+from scipy import signal
 
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -34,24 +33,8 @@ def main():
                 val = line.strip()
                 data_fo['strain'].append(float(val))
 
-    data_fo['strain'] = np.asarray(data_fo['strain'])
+    data_fo['strain'] = signal.resample(np.asarray(data_fo['strain']), 6000)
     print(data_fo['strain'].shape)
-
-    # Resample
-
-    ratio = 0.2
-    converter = 'sinc_best'
-    data_fo['strain'] = samplerate.resample(data_fo['strain'], ratio, converter)
-
-    print(data_fo['strain'].shape)
-
-    plt.figure()
-    plt.plot(data_fo['strain'])
-    plt.show()
-
-    plt.clf()
-    plt.plot(data_fo['strain'][-6000:])
-    plt.show()
 
 
 if __name__ == "__main__":
