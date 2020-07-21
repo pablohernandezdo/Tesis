@@ -50,14 +50,17 @@ def main():
         fs = segy.header[0][117]
 
     for trace in traces:
-        trace = signal.resample(trace, 3000)
-        trace = np.pad(trace, (0, 3000), 'constant')
+        resamp_trace = signal.resample(trace, 3000)
+        # resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
         break
 
     plt.figure()
+    plt.subplot(211)
     plt.plot(trace)
+    plt.subplot(212)
+    plt.plot(resamp_trace)
     plt.show()
-    
+
     # # Dataset Reykjanes
     #
     # # Telesismo Fibra optica
