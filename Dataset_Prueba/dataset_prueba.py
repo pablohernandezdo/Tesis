@@ -44,7 +44,7 @@ def main():
 
     # Read file
     with segyio.open(Nevada721, ignore_geometry=True) as segy:
-        segy.mmap()
+        #segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
@@ -59,7 +59,7 @@ def main():
 
     # Read file
     with segyio.open(Nevada751, ignore_geometry=True) as segy:
-        segy.mmap()
+        #segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
@@ -74,7 +74,7 @@ def main():
 
     # Read file
     with segyio.open(Nevada747, ignore_geometry=True) as segy:
-        segy.mmap()
+        #segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
@@ -89,7 +89,7 @@ def main():
 
     # Read file
     with segyio.open(Nevada717, ignore_geometry=True) as segy:
-        segy.mmap()
+        #segy.mmap()
 
         traces = segyio.tools.collect(segy.trace[:])
         fs = segy.header[0][117]
@@ -100,6 +100,16 @@ def main():
         seismic_dset = np.vstack((seismic_dset, resamp_trace))
 
     print(seismic_dset.shape)
+
+    # # Dataset Belgica
+    #
+    # Belgica = sio.loadmat("../Data_Belgica/mat_2018_08_19_00h28m05s_Parkwind_HDAS_2Dmap_StrainData_2D.mat")
+    #
+    # # Read data
+    # traces = f['Data_2D']
+    # plt_tr = 4000
+
+    # Sampling frequency
 
     # # Dataset Reykjanes
     #
