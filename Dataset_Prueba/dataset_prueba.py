@@ -52,9 +52,54 @@ def main():
     for trace in traces:
         resamp_trace = signal.resample(trace, 3000)
         resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
-        break
+        seismic_dset = np.vstack((seismic_dset, resamp_trace))
 
-    print(resamp_trace.shape)
+    # File 751
+    Nevada751 = '../Data_Nevada/PoroTomo_iDAS16043_160321073751.sgy'
+
+    # Read file
+    with segyio.open(Nevada751, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    for trace in traces:
+        resamp_trace = signal.resample(trace, 3000)
+        resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
+        seismic_dset = np.vstack((seismic_dset, resamp_trace))
+
+    # File 747
+    Nevada747 = '../Data_Nevada/PoroTomo_iDAS025_160321073747.sgy'
+
+    # Read file
+    with segyio.open(Nevada747, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    for trace in traces:
+        resamp_trace = signal.resample(trace, 3000)
+        resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
+        seismic_dset = np.vstack((seismic_dset, resamp_trace))
+
+    # File 717
+    Nevada717 = '../Data_Nevada/PoroTomo_iDAS025_160321073717.sgy'
+
+    # Read file
+    with segyio.open(Nevada717, ignore_geometry=True) as segy:
+        segy.mmap()
+
+        traces = segyio.tools.collect(segy.trace[:])
+        fs = segy.header[0][117]
+
+    for trace in traces:
+        resamp_trace = signal.resample(trace, 3000)
+        resamp_trace = np.pad(resamp_trace, (0, 3000), 'constant')
+        seismic_dset = np.vstack((seismic_dset, resamp_trace))
+
+    print(seismic_dset.shape)
 
     # # Dataset Reykjanes
     #
