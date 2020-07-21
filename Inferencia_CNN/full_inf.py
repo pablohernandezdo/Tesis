@@ -14,7 +14,7 @@ from model import *
 def main():
     # Args
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_name", default='Default_model', help="Classifier model path")
+    parser.add_argument("--model_name", default='CBN_10epch', help="Classifier model path")
     parser.add_argument("--classifier", default='C', help="Choose classifier architecture, C, CBN")
     args = parser.parse_args()
 
