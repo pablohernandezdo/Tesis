@@ -29,7 +29,11 @@ def main():
 
     for trace in traces:
         if np.max(np.abs(trace)):
-            1 / np.max(np.abs(trace))
+            seismic_dset = np.vstack((seismic_dset, trace))
+
+    seismic_dset = seismic_dset[1:]
+
+    print(f'seismic dset shape: {seismic_dset.shape}')
 
 
     # Dataset Reykjanes
