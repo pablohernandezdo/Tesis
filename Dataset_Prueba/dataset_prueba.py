@@ -1,5 +1,6 @@
 import re
 import h5py
+import samplerate
 import numpy as np
 
 import scipy.signal as signal
@@ -33,7 +34,17 @@ def main():
                 val = line.strip()
                 data_fo['strain'].append(float(val))
 
-    print(np.asarray(data_fo['strain']).shape)
+    data_fo['strain'] = np.asarray(data_fo['strain'])
+    print(data_fo['strain'].shape)
+
+    # Resample
+
+    ratio = 5
+    converter = 'sinc_best'
+    data_fo['strain'] = samplerate.resample(data_fo['strain'], ratio, converter)
+
+    print(data_fo['strain'].shape)
+
 
 if __name__ == "__main__":
     main()
