@@ -15,7 +15,7 @@ def main():
     # Args
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", default='CBN_10epch', help="Classifier model path")
-    parser.add_argument("--classifier", default='C', help="Choose classifier architecture, C, CBN")
+    parser.add_argument("--classifier", default='CBN', help="Choose classifier architecture, C, CBN")
     args = parser.parse_args()
 
     # Select training device
