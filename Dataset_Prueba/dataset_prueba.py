@@ -45,6 +45,14 @@ def main():
 
     print(data_fo['strain'].shape)
 
+    plt.figure()
+    plt.plot(data_fo['strain'])
+    plt.show()
+
+    plt.clf()
+    plt.plot(data_fo['strain'][-6000:])
+    plt.show()
+
 
 if __name__ == "__main__":
     main()
