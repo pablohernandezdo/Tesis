@@ -144,7 +144,6 @@ def main():
           f'Predicted fil_seismic: {fil_seismic}, predicted fil_noise: {fil_noise}\n')
 
 
-
 def butter_bandpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
     low = lowcut / nyq

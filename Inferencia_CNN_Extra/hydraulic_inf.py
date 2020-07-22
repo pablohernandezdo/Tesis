@@ -88,7 +88,6 @@ def main():
           f'Predicted seismic: {tr_seismic}, predicted noise: {tr_noise}\n'
           f'Predicted fil_seismic: {fil_seismic}, predicted fil_noise: {fil_noise}\n')
 
-
     file = '../../Data_Hydraulic/CSULB500Pa10secP_141210174309.mat'
 
     # Read file data
@@ -142,7 +141,6 @@ def main():
           f'Total traces: {total}\n'
           f'Predicted seismic: {tr_seismic}, predicted noise: {tr_noise}\n'
           f'Predicted fil_seismic: {fil_seismic}, predicted fil_noise: {fil_noise}\n')
-
 
     file = '../../Data_Hydraulic/CSULB500Pa100secP_141210175257.mat'
 

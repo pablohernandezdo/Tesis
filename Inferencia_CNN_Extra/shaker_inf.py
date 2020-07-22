@@ -33,7 +33,7 @@ def main():
     net.load_state_dict(torch.load('../../STEAD_CNN/models/' + args.model_name + '.pth'))
     net.eval()
 
-    # Load Nevada data file 1
+    # Load Shaker dataset file 1
     f = '../../Data_Shaker/large shaker NEES_130910161319 (1).sgy'
 
     # Read data

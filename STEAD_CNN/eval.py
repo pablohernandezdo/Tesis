@@ -90,8 +90,8 @@ def main():
     ev_1 = eval_1 - start_time
 
     print(f'Training Evaluation results: \n\n\n'
-          f'correct: {correct}, total: {total}\n'
-          f'True positives: {tp}\n\n'
+          f'correct: {correct}, total: {total}\n\n'
+          f'True positives: {tp}\n'
           f'False positives: {fp}\n'
           f'True negatives: {tn}\n'
           f'False negatives: {fn}\n\n'
