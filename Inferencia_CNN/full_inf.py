@@ -47,7 +47,7 @@ def main():
     # Count traces
     total_seismic = 0
     total_nseismic = 0
-    tp, fp, tn, fn = 0, 0
+    tp, fp, tn, fn = 0, 0, 0, 0
 
     # For every trace in the file
     for trace in data:
