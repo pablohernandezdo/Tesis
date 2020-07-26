@@ -53,8 +53,8 @@ def main():
         test_seis_ids = seismic_ids[args.train_traces + args.val_traces:args.train_traces + args.val_traces+args.test_traces]
         test_noise_ids = noise_ids[args.train_noise + args.val_noise:args.train_noise + args.val_noise+args.test_noise]
 
-        print(f'seismic_ids: {seismic_ids}'
-              f'noise_ids: {noise_ids}'
+        print(f'seismic_ids: {seismic_ids}\n'
+              f'noise_ids: {noise_ids}\n'
               f'train_seis: {train_seis_ids}\n'
               f'train_noise: {train_noise_ids}\n'
               f'val_seis: {val_seis_ids}\n'
