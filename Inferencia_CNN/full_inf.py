@@ -978,7 +978,7 @@ def main():
 
     # Results
     print(f'Total seismic traces: {total_seismic}\n'
-          f'Total non seismic traces: {total_nseismic}'
+          f'Total non seismic traces: {total_nseismic}\n'
           f'True positives: {tp}\n'
           f'False positives: {fp}\n'
           f'True negatives: {tn}\n'
