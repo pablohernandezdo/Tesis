@@ -55,11 +55,9 @@ def main():
         test_seismic_bar = tqdm.tqdm(total=args.test_traces, desc='Test seismic')
 
         # Train, validation and test non seismic progress bars
-        val_noise_bar = tqdm.tqdm(total=args.val_noise, desc='Validation traces')
         train_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise')
+        val_noise_bar = tqdm.tqdm(total=args.val_noise, desc='Validation noise')
         test_noise_bar = tqdm.tqdm(total=args.test_noise, desc='Test noise')
-
-
 
         # Create new train and test files
         with h5py.File(args.train_file, 'w') as train_dst,\
@@ -78,11 +76,6 @@ def main():
             test_dst_wv = test_dst.create_group('earthquake/local')
             test_dst_ns = test_dst.create_group('non_earthquake/noise')
 
-            # Number of seismic and noise waves copied
-            wv_copied = 0
-            ns_copied = 0
-
-
             # For every dataset in source seismic group
             for idx, dset in enumerate(src_seis):
 
@@ -92,7 +85,6 @@ def main():
                     data = src_seis[dset]
 
                     # Copy seismic trace to new train file
-                    wv_copied += 1
                     train_dst_wv.copy(data, dset)
                     train_seismic_bar.update()
 
@@ -102,7 +94,6 @@ def main():
                     data = src_seis[dset]
 
                     # Copy seismic trace to new train file
-                    wv_copied += 1
                     val_dst_wv.copy(data, dset)
                     val_seismic_bar.update()
 
@@ -112,7 +103,6 @@ def main():
                     data = src_seis[dset]
 
                     # Copy seismic trace to new train file
-                    wv_copied += 1
                     test_dst_wv.copy(data, dset)
                     test_seismic_bar.update()
 
@@ -125,7 +115,6 @@ def main():
                     data = src_ns[dset]
 
                     # Copy noise trace to new noise file
-                    ns_copied += 1
                     train_dst_ns.copy(data, dset)
                     train_noise_bar.update()
 
@@ -135,7 +124,6 @@ def main():
                     data = src_ns[dset]
 
                     # Copy seismic trace to new train file
-                    ns_copied += 1
                     val_dst_ns.copy(data, dset)
                     val_noise_bar.update()
 
@@ -145,7 +133,6 @@ def main():
                     data = src_ns[dset]
 
                     # Copy seismic trace to new train file
-                    ns_copied += 1
                     test_dst_ns.copy(data, dset)
                     test_noise_bar.update()
 
