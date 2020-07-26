@@ -49,6 +49,18 @@ def main():
         test_seis_ids = seismic_ids[args.train_traces + args.val_traces:args.train_traces + args.val_traces+args.test_traces]
         test_noise_ids = noise_ids[args.train_noise + args.val_noise:args.train_noise + args.val_noise+args.test_noise]
 
+        # Train, validation and test seismic progress bars
+        train_seismic_bar = tqdm.tqdm(total=args.train_traces, desc='Train seismic')
+        val_seismic_bar = tqdm.tqdm(total=args.val_traces, desc='Validation seismic')
+        test_seismic_bar = tqdm.tqdm(total=args.test_traces, desc='Test seismic')
+
+        # Train, validation and test non seismic progress bars
+        val_noise_bar = tqdm.tqdm(total=args.val_noise, desc='Validation traces')
+        train_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise')
+        test_noise_bar = tqdm.tqdm(total=args.test_noise, desc='Test noise')
+
+
+
         # Create new train and test files
         with h5py.File(args.train_file, 'w') as train_dst,\
                 h5py.File(args.val_file, 'w') as val_dst, \
@@ -70,15 +82,6 @@ def main():
             wv_copied = 0
             ns_copied = 0
 
-            # Seismic, validation and test progress bars
-            train_seismic_bar = tqdm.tqdm(total=args.train_traces, desc='Train seismic')
-            train_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise')
-
-            val_seismic_bar = tqdm.tqdm(total=args.val_traces, desc='Validation seismic')
-            val_noise_bar = tqdm.tqdm(total=args.val_noise, desc='Validation traces')
-
-            test_seismic_bar = tqdm.tqdm(total=args.test_traces, desc='Test seismic')
-            test_noise_bar = tqdm.tqdm(total=args.test_noise, desc='Test noise')
 
             # For every dataset in source seismic group
             for idx, dset in enumerate(src_seis):
