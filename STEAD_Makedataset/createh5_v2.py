@@ -70,12 +70,18 @@ def main():
             wv_copied = 0
             ns_copied = 0
 
-            # Seismic and noise groups progress bars
-            seismicbar = tqdm.tqdm(src_seis, desc='Total seismic traces')
-            noisebar = tqdm.tqdm(src_ns, desc='Total noise traces')
+            # Seismic, validation and test progress bars
+            train_seismic_bar = tqdm.tqdm(total=args.train_traces, desc='Train seismic')
+            train_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise')
+
+            val_seismic_bar = tqdm.tqdm(total=args.val_traces, desc='Validation seismic')
+            val_noise_bar = tqdm.tqdm(total=args.val_noise, desc='Validation traces')
+
+            test_seismic_bar = tqdm.tqdm(total=args.test_traces, desc='Test seismic')
+            test_noise_bar = tqdm.tqdm(total=args.test_noise, desc='Test noise')
 
             # For every dataset in source seismic group
-            for idx, dset in enumerate(seismicbar):
+            for idx, dset in enumerate(src_seis):
 
                 if idx in train_seis_ids:
 
@@ -83,8 +89,9 @@ def main():
                     data = src_seis[dset]
 
                     # Copy seismic trace to new train file
-                    train_dst_wv.copy(data, dset)
                     wv_copied += 1
+                    train_dst_wv.copy(data, dset)
+                    train_seismic_bar.update()
 
                 if idx in val_seis_ids:
 
@@ -92,8 +99,9 @@ def main():
                     data = src_seis[dset]
 
                     # Copy seismic trace to new train file
-                    val_dst_wv.copy(data, dset)
                     wv_copied += 1
+                    val_dst_wv.copy(data, dset)
+                    val_seismic_bar.update()
 
                 if idx in test_seis_ids:
 
@@ -101,11 +109,12 @@ def main():
                     data = src_seis[dset]
 
                     # Copy seismic trace to new train file
-                    test_dst_wv.copy(data, dset)
                     wv_copied += 1
+                    test_dst_wv.copy(data, dset)
+                    test_seismic_bar.update()
 
             # For every dataset in source noise group
-            for idx, dset in enumerate(noisebar):
+            for idx, dset in enumerate(src_ns):
 
                 if idx in train_noise_ids:
 
@@ -113,8 +122,9 @@ def main():
                     data = src_ns[dset]
 
                     # Copy noise trace to new noise file
-                    train_dst_ns.copy(data, dset)
                     ns_copied += 1
+                    train_dst_ns.copy(data, dset)
+                    train_noise_bar.update()
 
                 if idx in val_noise_ids:
 
@@ -122,8 +132,9 @@ def main():
                     data = src_ns[dset]
 
                     # Copy seismic trace to new train file
-                    val_dst_ns.copy(data, dset)
                     ns_copied += 1
+                    val_dst_ns.copy(data, dset)
+                    val_noise_bar.update()
 
                 if idx in test_noise_ids:
 
@@ -131,11 +142,10 @@ def main():
                     data = src_ns[dset]
 
                     # Copy seismic trace to new train file
-                    test_dst_ns.copy(data, dset)
                     ns_copied += 1
+                    test_dst_ns.copy(data, dset)
+                    test_noise_bar.update()
 
-    seismicbar.close()
-    noisebar.close()
-    
+
 if __name__ == '__main__':
     main()
