@@ -49,6 +49,10 @@ def main():
         test_seis_ids = seismic_ids[args.train_traces + args.val_traces:args.train_traces + args.val_traces+args.test_traces]
         test_noise_ids = noise_ids[args.train_noise + args.val_noise:args.train_noise + args.val_noise+args.test_noise]
 
+        # tqdm progress bars
+        trn_traces_bar = tqdm.tqdm(total=len(train_seis_ids), desc='Train traces', position=0)
+        trn_noise_bar = tqdm.tqdm(total=len(train_noise_ids), desc='Train noise', position=1)
+
         # Create new train and test files
         with h5py.File(args.train_file, 'w') as train_dst,\
                 h5py.File(args.val_file, 'w') as val_dst, \
@@ -70,10 +74,6 @@ def main():
             wv_copied = 0
             ns_copied = 0
 
-            # # tqdm progress bars
-            # trn_traces_bar = tqdm.tqdm(total=args.train_traces, desc='Train traces', position=0)
-            # trn_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise', position=1)
-
             # For every dataset in source seismic group
             for idx, dset in enumerate(src_seis):
 
@@ -85,6 +85,7 @@ def main():
                     # Copy seismic trace to new train file
                     train_dst_wv.copy(data, dset)
                     wv_copied += 1
+                    trn_traces_bar.update(1)
 
                 if idx in val_seis_ids:
 
@@ -115,6 +116,8 @@ def main():
                     # Copy noise trace to new noise file
                     train_dst_ns.copy(data, dset)
                     ns_copied += 1
+                    trn_noise_bar.update(1)
+
 
                 if idx in val_noise_ids:
 
