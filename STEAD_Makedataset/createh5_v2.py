@@ -74,10 +74,11 @@ def main():
             wv_copied = 0
             ns_copied = 0
 
-            trbar = tqdm.tqdm(src_seis, desc='Total seismic traces')
+            seismicbar = tqdm.tqdm(src_seis, desc='Total seismic traces')
+            noisebar = tqdm.tqdm(src_ns, desc='Total noise traces')
 
             # For every dataset in source seismic group
-            for idx, dset in enumerate(trbar):
+            for idx, dset in enumerate(seismicbar):
 
                 if idx in train_seis_ids:
 
@@ -108,7 +109,7 @@ def main():
                     wv_copied += 1
 
             # For every dataset in source noise group
-            for idx, dset in enumerate(src_ns):
+            for idx, dset in enumerate(noisebar):
 
                 if idx in train_noise_ids:
 
