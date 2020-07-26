@@ -11,9 +11,9 @@ def main():
     # Args
     parser = argparse.ArgumentParser(description='Dataset creation parameters')
     parser.add_argument('--source_file', default='STEAD.hdf5', help='Source HDF5 file path')
-    parser.add_argument('--train_file', default='Train_data.hdf5', help='Output train HDF5 file path')
-    parser.add_argument('--val_file', default='Validation_data.hdf5', help='Output validation HDF5 file path')
-    parser.add_argument('--test_file', default='Test_data.hdf5', help='Output test HDF5 file path')
+    parser.add_argument('--train_file', default='Train_data_v2.hdf5', help='Output train HDF5 file path')
+    parser.add_argument('--val_file', default='Validation_data_v2.hdf5', help='Output validation HDF5 file path')
+    parser.add_argument('--test_file', default='Test_data_v2.hdf5', help='Output test HDF5 file path')
     parser.add_argument('--train_traces', type=int, default=60, help='Number of training seismic traces to copy')
     parser.add_argument('--train_noise', type=int, default=60, help='Number of training noise traces to copy')
     parser.add_argument('--val_traces', type=int, default=20, help='Number of validation seismic traces to copy')
