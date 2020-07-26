@@ -14,12 +14,12 @@ def main():
     parser.add_argument('--train_file', default='Train_data_v2.hdf5', help='Output train HDF5 file path')
     parser.add_argument('--val_file', default='Validation_data_v2.hdf5', help='Output validation HDF5 file path')
     parser.add_argument('--test_file', default='Test_data_v2.hdf5', help='Output test HDF5 file path')
-    parser.add_argument('--train_traces', type=int, default=60, help='Number of training seismic traces to copy')
-    parser.add_argument('--train_noise', type=int, default=60, help='Number of training noise traces to copy')
-    parser.add_argument('--val_traces', type=int, default=20, help='Number of validation seismic traces to copy')
-    parser.add_argument('--val_noise', type=int, default=20, help='Number of validation noise traces to copy')
-    parser.add_argument('--test_traces', type=int, default=20, help='Number of test seismic traces to copy')
-    parser.add_argument('--test_noise', type=int, default=20, help='Number of test noise traces to copy')
+    parser.add_argument('--train_traces', type=int, default=6000, help='Number of training seismic traces to copy')
+    parser.add_argument('--train_noise', type=int, default=6000, help='Number of training noise traces to copy')
+    parser.add_argument('--val_traces', type=int, default=2000, help='Number of validation seismic traces to copy')
+    parser.add_argument('--val_noise', type=int, default=2000, help='Number of validation noise traces to copy')
+    parser.add_argument('--test_traces', type=int, default=2000, help='Number of test seismic traces to copy')
+    parser.add_argument('--test_noise', type=int, default=2000, help='Number of test noise traces to copy')
     args = parser.parse_args()
 
     # Init rng
