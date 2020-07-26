@@ -134,6 +134,8 @@ def main():
                     test_dst_ns.copy(data, dset)
                     ns_copied += 1
 
-
+    seismicbar.close()
+    noisebar.close()
+    
 if __name__ == '__main__':
     main()
