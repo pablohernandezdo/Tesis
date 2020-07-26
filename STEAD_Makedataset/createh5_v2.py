@@ -14,12 +14,12 @@ def main():
     parser.add_argument('--train_file', default='Train_data_v2.hdf5', help='Output train HDF5 file path')
     parser.add_argument('--val_file', default='Validation_data_v2.hdf5', help='Output validation HDF5 file path')
     parser.add_argument('--test_file', default='Test_data_v2.hdf5', help='Output test HDF5 file path')
-    parser.add_argument('--train_traces', type=int, default=60, help='Number of training seismic traces to copy')
-    parser.add_argument('--train_noise', type=int, default=60, help='Number of training noise traces to copy')
-    parser.add_argument('--val_traces', type=int, default=20, help='Number of validation seismic traces to copy')
-    parser.add_argument('--val_noise', type=int, default=20, help='Number of validation noise traces to copy')
-    parser.add_argument('--test_traces', type=int, default=20, help='Number of test seismic traces to copy')
-    parser.add_argument('--test_noise', type=int, default=20, help='Number of test noise traces to copy')
+    parser.add_argument('--train_traces', type=int, default=6, help='Number of training seismic traces to copy')
+    parser.add_argument('--train_noise', type=int, default=6, help='Number of training noise traces to copy')
+    parser.add_argument('--val_traces', type=int, default=2, help='Number of validation seismic traces to copy')
+    parser.add_argument('--val_noise', type=int, default=2, help='Number of validation noise traces to copy')
+    parser.add_argument('--test_traces', type=int, default=2, help='Number of test seismic traces to copy')
+    parser.add_argument('--test_noise', type=int, default=2, help='Number of test noise traces to copy')
     parser.add_argument('--snr_db', type=float, default=0.0, help='Minimum signal to noise ratio')
     parser.add_argument('--azimuth', type=float, default=0.0, help='Back_azimuth_deg parameter')
     parser.add_argument('--source_magnitude', type=float, default=0.0, help='Minimum source magnitude')
@@ -53,12 +53,14 @@ def main():
         test_seis_ids = seismic_ids[args.train_traces + args.val_traces:args.train_traces + args.val_traces+args.test_traces]
         test_noise_ids = noise_ids[args.train_noise + args.val_noise:args.train_noise + args.val_noise+args.test_noise]
 
-        print(f'train_seis: {train_seis_ids.shape}\n'
-              f'train_noise: {train_noise_ids.shape}\n'
-              f'val_seis: {val_seis_ids.shape}\n'
-              f'val_noise: {val_noise_ids.shape}\n'
-              f'test_seis: {test_seis_ids.shape}\n'
-              f'test_noise: {test_noise_ids.shape}')
+        print(f'seismic_ids: {seismic_ids}'
+              f'noise_ids: {noise_ids}'
+              f'train_seis: {train_seis_ids}\n'
+              f'train_noise: {train_noise_ids}\n'
+              f'val_seis: {val_seis_ids}\n'
+              f'val_noise: {val_noise_ids}\n'
+              f'test_seis: {test_seis_ids}\n'
+              f'test_noise: {test_noise_ids}')
 
         # # Create new train and test files
         # with h5py.File(args.train_file, 'w') as train_dst:
