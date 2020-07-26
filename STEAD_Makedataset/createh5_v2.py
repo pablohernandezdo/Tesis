@@ -14,12 +14,12 @@ def main():
     parser.add_argument('--train_file', default='Train_data_v2.hdf5', help='Output train HDF5 file path')
     parser.add_argument('--val_file', default='Validation_data_v2.hdf5', help='Output validation HDF5 file path')
     parser.add_argument('--test_file', default='Test_data_v2.hdf5', help='Output test HDF5 file path')
-    parser.add_argument('--train_traces', type=int, default=6, help='Number of training seismic traces to copy')
-    parser.add_argument('--train_noise', type=int, default=6, help='Number of training noise traces to copy')
-    parser.add_argument('--val_traces', type=int, default=2, help='Number of validation seismic traces to copy')
-    parser.add_argument('--val_noise', type=int, default=2, help='Number of validation noise traces to copy')
-    parser.add_argument('--test_traces', type=int, default=2, help='Number of test seismic traces to copy')
-    parser.add_argument('--test_noise', type=int, default=2, help='Number of test noise traces to copy')
+    parser.add_argument('--train_traces', type=int, default=60, help='Number of training seismic traces to copy')
+    parser.add_argument('--train_noise', type=int, default=60, help='Number of training noise traces to copy')
+    parser.add_argument('--val_traces', type=int, default=20, help='Number of validation seismic traces to copy')
+    parser.add_argument('--val_noise', type=int, default=20, help='Number of validation noise traces to copy')
+    parser.add_argument('--test_traces', type=int, default=20, help='Number of test seismic traces to copy')
+    parser.add_argument('--test_noise', type=int, default=20, help='Number of test noise traces to copy')
     parser.add_argument('--snr_db', type=float, default=0.0, help='Minimum signal to noise ratio')
     parser.add_argument('--azimuth', type=float, default=0.0, help='Back_azimuth_deg parameter')
     parser.add_argument('--source_magnitude', type=float, default=0.0, help='Minimum source magnitude')
@@ -33,7 +33,7 @@ def main():
     with h5py.File(args.source_file, 'r') as source:
 
         # Retrieve file groups
-        src_wv = source['earthquake']['local']
+        src_seis = source['earthquake']['local']
         src_ns = source['non_earthquake']['noise']
 
         # Total number of traces to copy
@@ -41,7 +41,7 @@ def main():
         ns2copy = args.train_noise + args.val_noise + args.test_noise
 
         # Traces to copy
-        seismic_ids = rng.choice(len(src_wv), size=seis2copy, replace=False)
+        seismic_ids = rng.choice(len(src_seis), size=seis2copy, replace=False)
         noise_ids = rng.choice(len(src_ns), size=ns2copy, replace=False)
 
         train_seis_ids = seismic_ids[:args.train_traces]
@@ -53,29 +53,108 @@ def main():
         test_seis_ids = seismic_ids[args.train_traces + args.val_traces:args.train_traces + args.val_traces+args.test_traces]
         test_noise_ids = noise_ids[args.train_noise + args.val_noise:args.train_noise + args.val_noise+args.test_noise]
 
-        print(f'seismic_ids: {seismic_ids}\n'
-              f'noise_ids: {noise_ids}\n'
-              f'train_seis: {train_seis_ids}\n'
-              f'train_noise: {train_noise_ids}\n'
-              f'val_seis: {val_seis_ids}\n'
-              f'val_noise: {val_noise_ids}\n'
-              f'test_seis: {test_seis_ids}\n'
-              f'test_noise: {test_noise_ids}')
+        # Create new train and test files
+        with h5py.File(args.train_file, 'w') as train_dst,\
+                h5py.File(args.val_file, 'w') as val_dst, \
+                h5py.File(args.test_file, 'w') as test_dst:
 
-        # # Create new train and test files
-        # with h5py.File(args.train_file, 'w') as train_dst:
-        #
-        #     # Create new train file groups
-        #     train_dst_wv = train_dst.create_group('earthquake/local')
-        #     train_dst_ns = train_dst.create_group('non_earthquake/noise')
-        #
-        #     # Number of seismic and noise waves copied
-        #     wv_copied = 0
-        #     ns_copied = 0
-        #
-        #     # tqdm progress bars
-        #     trn_traces_bar = tqdm.tqdm(total=args.train_traces, desc='Train traces', position=0)
-        #     trn_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise', position=1)
+            # Create new train file groups
+            train_dst_wv = train_dst.create_group('earthquake/local')
+            train_dst_ns = train_dst.create_group('non_earthquake/noise')
+
+            # Create new val file groups
+            val_dst_wv = val_dst.create_group('earthquake/local')
+            val_dst_ns = val_dst.create_group('non_earthquake/noise')
+
+            # Create new test file groups
+            test_dst_wv = test_dst.create_group('earthquake/local')
+            test_dst_ns = test_dst.create_group('non_earthquake/noise')
+
+            # Number of seismic and noise waves copied
+            wv_copied = 0
+            ns_copied = 0
+
+            # # tqdm progress bars
+            # trn_traces_bar = tqdm.tqdm(total=args.train_traces, desc='Train traces', position=0)
+            # trn_noise_bar = tqdm.tqdm(total=args.train_noise, desc='Train noise', position=1)
+
+            # For every dataset in source seismic group
+            for idx, dset in enumerate(src_seis):
+
+                if idx in train_seis_ids:
+
+                    # Retrieve dataset object
+                    data = src_seis[dset]
+
+                    # Check creation conditions
+                    if (min(data.attrs['snr_db']) > args.snr_db and
+                            float(data.attrs['source_magnitude']) > args.source_magnitude and
+                            float(data.attrs['source_distance_km']) < args.source_distance_km):
+
+                        # Copy seismic trace to new train file
+                        train_dst_wv.copy(data, dset)
+                        wv_copied += 1
+
+                if idx in val_seis_ids:
+
+                    # Retrieve dataset object
+                    data = src_seis[dset]
+
+                    # Check creation conditions
+                    if (min(data.attrs['snr_db']) > args.snr_db and
+                            float(data.attrs['source_magnitude']) > args.source_magnitude and
+                            float(data.attrs['source_distance_km']) < args.source_distance_km):
+
+                        # Copy seismic trace to new train file
+                        val_dst_wv.copy(data, dset)
+                        wv_copied += 1
+
+                if idx in test_seis_ids:
+
+                    # Retrieve dataset object
+                    data = src_seis[dset]
+
+                    # Check creation conditions
+                    if (min(data.attrs['snr_db']) > args.snr_db and
+                            float(data.attrs['source_magnitude']) > args.source_magnitude and
+                            float(data.attrs['source_distance_km']) < args.source_distance_km):
+
+                        # Copy seismic trace to new train file
+                        test_dst_wv.copy(data, dset)
+                        wv_copied += 1
+
+            # For every dataset in source noise group
+            for idx, dset in enumerate(src_ns):
+
+                if idx in train_noise_ids:
+
+                    # Retrieve dataset object
+                    data = src_ns[dset]
+
+                    # Copy noise trace to new noise file
+                    train_dst_ns.copy(data, dset)
+                    ns_copied += 1
+
+                if idx in val_noise_ids:
+
+                    # Retrieve dataset object
+                    data = src_ns[dset]
+
+                    # Copy seismic trace to new train file
+                    val_dst_ns.copy(data, dset)
+                    ns_copied += 1
+
+                if idx in test_noise_ids:
+
+                    # Retrieve dataset object
+                    data = src_ns[dset]
+
+                    # Copy seismic trace to new train file
+                    test_dst_ns.copy(data, dset)
+                    ns_copied += 1
+
+    print(f'traces copied: {wv_copied}'
+          f'noise copied: {ns_copied}')
 
 
 if __name__ == '__main__':
