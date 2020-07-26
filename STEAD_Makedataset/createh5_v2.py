@@ -20,10 +20,6 @@ def main():
     parser.add_argument('--val_noise', type=int, default=20, help='Number of validation noise traces to copy')
     parser.add_argument('--test_traces', type=int, default=20, help='Number of test seismic traces to copy')
     parser.add_argument('--test_noise', type=int, default=20, help='Number of test noise traces to copy')
-    parser.add_argument('--snr_db', type=float, default=0.0, help='Minimum signal to noise ratio')
-    parser.add_argument('--azimuth', type=float, default=0.0, help='Back_azimuth_deg parameter')
-    parser.add_argument('--source_magnitude', type=float, default=0.0, help='Minimum source magnitude')
-    parser.add_argument('--source_distance_km', type=float, default=1000.0, help='Maximum source distance in km')
     args = parser.parse_args()
 
     # Init rng
@@ -86,42 +82,27 @@ def main():
                     # Retrieve dataset object
                     data = src_seis[dset]
 
-                    # Check creation conditions
-                    if (min(data.attrs['snr_db']) > args.snr_db and
-                            float(data.attrs['source_magnitude']) > args.source_magnitude and
-                            float(data.attrs['source_distance_km']) < args.source_distance_km):
-
-                        # Copy seismic trace to new train file
-                        train_dst_wv.copy(data, dset)
-                        wv_copied += 1
+                    # Copy seismic trace to new train file
+                    train_dst_wv.copy(data, dset)
+                    wv_copied += 1
 
                 if idx in val_seis_ids:
 
                     # Retrieve dataset object
                     data = src_seis[dset]
 
-                    # Check creation conditions
-                    if (min(data.attrs['snr_db']) > args.snr_db and
-                            float(data.attrs['source_magnitude']) > args.source_magnitude and
-                            float(data.attrs['source_distance_km']) < args.source_distance_km):
-
-                        # Copy seismic trace to new train file
-                        val_dst_wv.copy(data, dset)
-                        wv_copied += 1
+                    # Copy seismic trace to new train file
+                    val_dst_wv.copy(data, dset)
+                    wv_copied += 1
 
                 if idx in test_seis_ids:
 
                     # Retrieve dataset object
                     data = src_seis[dset]
 
-                    # Check creation conditions
-                    if (min(data.attrs['snr_db']) > args.snr_db and
-                            float(data.attrs['source_magnitude']) > args.source_magnitude and
-                            float(data.attrs['source_distance_km']) < args.source_distance_km):
-
-                        # Copy seismic trace to new train file
-                        test_dst_wv.copy(data, dset)
-                        wv_copied += 1
+                    # Copy seismic trace to new train file
+                    test_dst_wv.copy(data, dset)
+                    wv_copied += 1
 
             # For every dataset in source noise group
             for idx, dset in enumerate(src_ns):
@@ -153,7 +134,7 @@ def main():
                     test_dst_ns.copy(data, dset)
                     ns_copied += 1
 
-    print(f'traces copied: {wv_copied}'
+    print(f'traces copied: {wv_copied}\n'
           f'noise copied: {ns_copied}')
 
 
